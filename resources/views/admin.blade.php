@@ -16,18 +16,15 @@ class="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-whi
       </th>
       <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
         <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-          Fecha
+          Email
         </p>
       </th>
       <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
         <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-          Tipo
+          Contraseña
         </p>
       </th>
-      <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
-        <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-            Sede</p>
-      </th>
+      
       
     </tr>
   </thead>
@@ -35,24 +32,20 @@ class="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-whi
       <tr>
         <td class="p-4 border-b border-blue-gray-50">
           <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-            EX240001
+            
           </p>
         </td>
         <td class="p-4 border-b border-blue-gray-50">
           <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-              01/01/25
+              
           </p>
         </td>
         <td class="p-4 border-b border-blue-gray-50">
           <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-            Biopsia
+            
           </p>
         </td>
-        <td class="p-4 border-b border-blue-gray-50">
-          <a href="#" class="block font-sans text-sm antialiased font-medium leading-normal text-blue-gray-900">
-            Cordoba
-          </a>
-        </td>
+        
       </tr>
 
     </tbody>

@@ -7,9 +7,14 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Muestras</h1>
+    {{-- <h1>Muestras</h1>
     @foreach ($muestras as $m)
       <p>{{ $m->id }} {{ $m->fecha }} {{ $m->tipo->nombre }}</p>
-    @endforeach
+    @endforeach --}}
+
+
+
+
+    
 </body>
 </html>
