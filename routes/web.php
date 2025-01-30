@@ -11,3 +11,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/usuarios', [UserController::class,'all']);
 
 Route::get('/', [TipoController::class, 'mostrar']);
+
+Route::get('/laboratorio', function () {
+    return view('laboratorio');
+});
