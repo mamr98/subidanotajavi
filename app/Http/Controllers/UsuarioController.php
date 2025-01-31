@@ -89,6 +89,6 @@ class UsuarioController extends Controller
 
     public function logout()
 {
-    return redirect('/login'); // Redirige al formulario de inicio de sesión
+    return view('login'); 
 }
 }
