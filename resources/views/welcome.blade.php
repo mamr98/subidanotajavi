@@ -12,9 +12,10 @@
       <p>{{ $m->id }} {{ $m->fecha }} {{ $m->tipo->nombre }}</p>
     @endforeach --}}
 
+  <h1>Has iniciado Sesion con {{$email}}</h1>
 
-
-
+  <a href="{{ route('logout') }}"><button>Cerrar Sesion</button></a>
+  
     
 </body>
 </html>

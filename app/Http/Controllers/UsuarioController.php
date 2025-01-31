@@ -74,4 +74,21 @@ class UsuarioController extends Controller
         $usuario->delete(); 
         return response()->json(['mensaje' => 'Usuario eliminado correctamente'], 201);
     }
+
+    public function login(Request $request)
+    {
+        $usuario = Usuario::where('email', $request->email)->where('password', $request->password)->first();
+        if($usuario){
+            return view('welcome', ['email' => $request->email]);
+        }
+        else{
+            return view('login');
+        }
+        
+    }
+
+    public function logout()
+{
+    return redirect('/login'); // Redirige al formulario de inicio de sesión
+}
 }

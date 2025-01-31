@@ -27,5 +27,9 @@ Route::delete('/admin/destroy/{email}',[UsuarioController::class,'destroy']);
 Route::put('/admin/update/{email}',[UsuarioController::class,'update']);
 
 
+Route::post('/login',[UsuarioController::class,'login'])->name('login.post');
+Route::get('/logout', [UsuarioController::class, 'logout'])->name('logout');
+
+
 Route::get('/laboratorio',[MuestraController::class,'welcome']);
 
