@@ -19,22 +19,19 @@ Route::get('/laboratorio/crear',[MuestraController::class,'save']);
 
 Route::post('/login',[UsuarioController::class,'login'])->name('login.post');
 
+Route::get('/laboratorio',[MuestraController::class,'welcome']);
+    
+Route::get('/admin',[UsuarioController::class,'show']);
+Route::get('/logout', [UsuarioController::class, 'logout'])->name('logout');
 
-Route::middleware(['auth'])->group(function(){
 
-    
+Route::post('/admin/create',[UsuarioController::class,'create']);
+
+Route::delete('/admin/destroy/{email}',[UsuarioController::class,'destroy']);
+
+Route::put('/admin/update/{email}',[UsuarioController::class,'update']);
 
 
-    Route::get('/laboratorio',[MuestraController::class,'welcome']);
-    
-    Route::get('/admin',[UsuarioController::class,'show']);
-    Route::get('/logout', [UsuarioController::class, 'logout'])->name('logout');
-    
-    
-    Route::post('/admin/create',[UsuarioController::class,'create']);
-    
-    Route::delete('/admin/destroy/{email}',[UsuarioController::class,'destroy']);
-    
-    Route::put('/admin/update/{email}',[UsuarioController::class,'update']);
+/* Route::middleware(['auth'])->group(function(){
 });
-
+ */
