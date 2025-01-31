@@ -21,8 +21,11 @@ class UsuarioController extends Controller
     public function create(Request $request)
     {
         $usuario= new Usuario();
-        $usuario->email = $request['email'];
-        $usuario->password = $request['password'];
+        $usuario->email = $request->input('email');
+        $usuario->password = $request->input('password');
+        $usuario->save();
+
+        return response()->json(['mensaje' => 'Usuario creado correctamente'], 201);
 
     }
 
@@ -40,7 +43,7 @@ class UsuarioController extends Controller
     public function show()
     {
         $usuarios = Usuario::all();
-        return response()->json($usuarios);
+        return view('admin')->with(['usuarios'=>$usuarios]);
     }
 
     /**
@@ -54,9 +57,9 @@ class UsuarioController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $email)
+    public function update(Request $request, $email)
     {
-        $usuario = Usuario::find($email);
+        $usuario = Usuario::where('email', $email)->first();
         $usuario->email = $request['email'];
         $usuario->password = $request['password'];
     }
@@ -64,9 +67,10 @@ class UsuarioController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $email)
+    public function destroy($email)
     {
-        $usuario = Usuario::find($email);
+        $usuario = Usuario::where('email', $email)->first();
         $usuario->delete(); 
+        return response()->json(['mensaje' => 'Usuario eliminado correctamente'], 201);
     }
 }

@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
 @section('content')
-<button id = "crear-usuario">Crear usuario</button>
-<button id = "eliminar-usuario">Eliminar usuario</button>
-<button id = "modificar-usuario">Modificar usuario</button>
+<button id = "crear_usuario">Crear usuario</button>
+<button id = "eliminar_usuario">Eliminar usuario</button>
+<button id = "modificar_usuario">Modificar usuario</button>
 <div
 class="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-white shadow-md rounded-xl bg-clip-border">
 <table class="w-full text-left table-auto min-w-max">
@@ -28,20 +28,24 @@ class="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-whi
       
     </tr>
   </thead>
-  <tbody>
+  <tbody id="mostrar_usuario">
       <tr>
         <td class="p-4 border-b border-blue-gray-50">
-          <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-            
+            @foreach ($usuarios as $u)
+      <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $u->id }}</p>
+    @endforeach
           </p>
         </td>
         <td class="p-4 border-b border-blue-gray-50">
-          <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-              
+            @foreach ($usuarios as $u)
+            <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $u->email }}</p>
+          @endforeach
           </p>
         </td>
         <td class="p-4 border-b border-blue-gray-50">
-          <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+          @foreach ($usuarios as $u)
+            <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $u->password }}</p>
+          @endforeach
             
           </p>
         </td>

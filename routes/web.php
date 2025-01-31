@@ -16,6 +16,14 @@ Route::get('/usuarios', [UserController::class,'all']);
 
 //Route::get('/laboratorio',[MuestraController::class,'index']);
 Route::get('/laboratorio/crear',[MuestraController::class,'save']);
-Route::get('/admin',[UsuarioController::class,'index']);
+
+
+Route::get('/admin',[UsuarioController::class,'show']);
+
+Route::post('/admin/create',[UsuarioController::class,'create']);
+
+Route::delete('/admin/destroy/{email}',[UsuarioController::class,'destroy']);
+
+
 Route::get('/laboratorio',[MuestraController::class,'welcome']);
 
