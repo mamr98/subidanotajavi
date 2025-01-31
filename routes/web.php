@@ -8,7 +8,7 @@ use App\Http\Controllers\UsuarioController;
 
 Route::get('/', function () {
     return view('login');
-});
+})->name('login');
 
 Route::get('/usuarios', [UserController::class,'all']);
 
@@ -17,19 +17,24 @@ Route::get('/usuarios', [UserController::class,'all']);
 //Route::get('/laboratorio',[MuestraController::class,'index']);
 Route::get('/laboratorio/crear',[MuestraController::class,'save']);
 
-
-Route::get('/admin',[UsuarioController::class,'show']);
-
-Route::post('/admin/create',[UsuarioController::class,'create']);
-
-Route::delete('/admin/destroy/{email}',[UsuarioController::class,'destroy']);
-
-Route::put('/admin/update/{email}',[UsuarioController::class,'update']);
-
-
 Route::post('/login',[UsuarioController::class,'login'])->name('login.post');
-Route::get('/logout', [UsuarioController::class, 'logout'])->name('logout');
 
 
-Route::get('/laboratorio',[MuestraController::class,'welcome']);
+Route::middleware(['auth'])->group(function(){
+
+    
+
+
+    Route::get('/laboratorio',[MuestraController::class,'welcome']);
+    
+    Route::get('/admin',[UsuarioController::class,'show']);
+    Route::get('/logout', [UsuarioController::class, 'logout'])->name('logout');
+    
+    
+    Route::post('/admin/create',[UsuarioController::class,'create']);
+    
+    Route::delete('/admin/destroy/{email}',[UsuarioController::class,'destroy']);
+    
+    Route::put('/admin/update/{email}',[UsuarioController::class,'update']);
+});
 

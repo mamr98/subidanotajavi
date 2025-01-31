@@ -11,8 +11,10 @@
     @foreach ($muestras as $m)
       <p>{{ $m->id }} {{ $m->fecha }} {{ $m->tipo->nombre }}</p>
     @endforeach --}}
+  @isset($email)
+        <h1>Has iniciado Sesion con {{$email}}</h1>
+  @endisset
 
-  <h1>Has iniciado Sesion con {{$email}}</h1>
 
   <a href="{{ route('logout') }}"><button>Cerrar Sesion</button></a>
   

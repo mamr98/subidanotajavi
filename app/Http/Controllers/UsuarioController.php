@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UsuarioController extends Controller
 {
@@ -82,13 +83,18 @@ class UsuarioController extends Controller
             return view('welcome', ['email' => $request->email]);
         }
         else{
-            return view('login');
+           /*  toastr()->error('Error a la hora de iniciar sesion', 'Error!'); */
+            return redirect('/');
         }
         
     }
 
-    public function logout()
-{
-    return view('login'); 
+    public function logout(Request $request){
+        /* Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        Session::flush(); //limpiar sesion */
+
+        return redirect()->route('login'); 
 }
 }
