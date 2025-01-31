@@ -24,6 +24,8 @@ Route::post('/admin/create',[UsuarioController::class,'create']);
 
 Route::delete('/admin/destroy/{email}',[UsuarioController::class,'destroy']);
 
+Route::put('/admin/update/{email}',[UsuarioController::class,'update']);
+
 
 Route::get('/laboratorio',[MuestraController::class,'welcome']);
 

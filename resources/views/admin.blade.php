@@ -3,7 +3,7 @@
 @section('content')
 <button id = "crear_usuario">Crear usuario</button>
 <button id = "eliminar_usuario">Eliminar usuario</button>
-<button id = "modificar_usuario">Modificar usuario</button>
+<button id = "modificar_contrasena">Modificar contraseña</button>
 <div
 class="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-white shadow-md rounded-xl bg-clip-border">
 <table class="w-full text-left table-auto min-w-max">

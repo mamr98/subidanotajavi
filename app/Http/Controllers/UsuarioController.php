@@ -60,8 +60,9 @@ class UsuarioController extends Controller
     public function update(Request $request, $email)
     {
         $usuario = Usuario::where('email', $email)->first();
-        $usuario->email = $request['email'];
         $usuario->password = $request['password'];
+        $usuario->save();
+        return response()->json(['mensaje' => 'Usuario actualizado correctamente'], 201);
     }
 
     /**
