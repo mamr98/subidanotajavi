@@ -31,5 +31,5 @@ Route::post('/login',[UsuarioController::class,'login'])->name('login.post');
 Route::get('/logout', [UsuarioController::class, 'logout'])->name('logout');
 
 
-Route::get('/laboratorio',[MuestraController::class,'welcome']);
+Route::get('/laboratorio',[MuestraController::class,'index']);
 
