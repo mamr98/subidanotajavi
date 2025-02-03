@@ -18,8 +18,11 @@ return new class extends Migration
             $table->enum('rol', ['usuario','administrador']);  
             //usamos enum para tener solo los valores que nosotros queramos
             $table->boolean('estado');
+            $table->unsignedBigInteger('idSede');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('idSede')->references('id')->on('sede');
         });
     }
 

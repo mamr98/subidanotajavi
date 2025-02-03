@@ -11,18 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('calidad', function (Blueprint $table) {
+        Schema::create('muestras_interpretacion', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
+            $table->string('calidad');
+            $table->unsignedBigInteger('idMuestras');
+            $table->unsignedBigInteger('idInterpretacion');
             $table->timestamps();
-            $table->softDeletes();
+
+            $table->foreign('idMuestras')->references('id')->on('muestras');
+            $table->foreign('idInterpretacion')->references('id')->on('interpretacion');
         });
     }
-
-    // Datos a tener en cuenta para el formulario
-    // *****        El nombre de las calidades son  E1,E2,E3 hasta E9             *****
-    // *****        Cambian las letra pero todas del 1 al 9                       *****
-                
 
     /**
      * Reverse the migrations.

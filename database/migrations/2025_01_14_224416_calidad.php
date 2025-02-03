@@ -11,21 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('imagen', function (Blueprint $table) {
+        Schema::create('calidad', function (Blueprint $table) {
             $table->id();
-            $table->string('ruta');
-            $table->enum('zoom', ['4','10','40','100']); 
-            $table->unsignedBigInteger('idMuestras');
+            $table->string('nombre');
+            $table->unsignedBigInteger('idTipoEstudio');
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('idMuestras')->references('id')->on('muestras');
+            $table->foreign('idTipoEstudio')->references('id')->on('tipo_estudio');
         });
     }
-    
+
     // Datos a tener en cuenta para el formulario
-    // *****   Tendrá x valores y ya, tanto ruta como zoom    *****
-    
+    // *****        El nombre de las calidades son  E1,E2,E3 hasta E9             *****
+    // *****        Cambian las letra pero todas del 1 al 9                       *****
+                
+
     /**
      * Reverse the migrations.
      */
