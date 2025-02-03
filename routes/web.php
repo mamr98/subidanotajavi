@@ -8,7 +8,8 @@ use App\Http\Controllers\UsuarioController;
 
 Route::get('/', function () {
     return view('login');
-});
+})->name('login');
+
 
 Route::get('/usuarios', [UserController::class,'all']);
 
