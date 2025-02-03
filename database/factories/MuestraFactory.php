@@ -21,6 +21,8 @@ class MuestraFactory extends Factory
         return [
             'fecha' => fake()->date(),
             'idTipo' => fake()->randomElement($tipo),
+            'codigo' => random_int(1,5),
+            'organo' => '',
         ];
     }
 }
