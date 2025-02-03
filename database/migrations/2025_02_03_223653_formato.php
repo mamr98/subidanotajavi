@@ -19,6 +19,9 @@ return new class extends Migration
             $table->softDeletes();
         });
     }
+    // Datos a tener en cuenta para el formulario
+    // *****     Para saber en que formato esta, si etanol, si formol o fresco       *****
+
 
     /**
      * Reverse the migrations.

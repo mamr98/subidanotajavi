@@ -19,6 +19,9 @@ return new class extends Migration
         });
     }
 
+    // Datos a tener en cuenta para el formulario
+    // *****        Un select con el tipo de interpretación que se debe de tener                    *****
+
     /**
      * Reverse the migrations.
      */

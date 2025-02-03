@@ -20,6 +20,9 @@ return new class extends Migration
         });
     }
 
+    // Datos a tener en cuenta para el formulario
+    // *****      Saber la localización con su respectivo nombre de corresponde y su código correspondiente  ****
+
     /**
      * Reverse the migrations.
      */

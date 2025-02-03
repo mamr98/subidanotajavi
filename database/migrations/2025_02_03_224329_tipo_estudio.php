@@ -20,6 +20,10 @@ return new class extends Migration
         });
     }
 
+    // Datos a tener en cuenta para el formulario
+    // *****        El nombre del tipo de estudio serían 5 tipos de estudios                   *****
+    // *****        La descripción sería pues una descripción                                  *****
+
     /**
      * Reverse the migrations.
      */
