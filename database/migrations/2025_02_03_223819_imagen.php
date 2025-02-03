@@ -19,7 +19,10 @@ return new class extends Migration
             $table->softDeletes();
         });
     }
-
+    
+    // Datos a tener en cuenta para el formulario
+    // *****   Tendrá x valores y ya, tanto ruta como zoom    *****
+    
     /**
      * Reverse the migrations.
      */

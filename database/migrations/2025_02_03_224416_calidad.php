@@ -19,6 +19,11 @@ return new class extends Migration
         });
     }
 
+    // Datos a tener en cuenta para el formulario
+    // *****        El nombre de las calidades son  E1,E2,E3 hasta E9             *****
+    // *****        Cambian las letra pero todas del 1 al 9                       *****
+                
+
     /**
      * Reverse the migrations.
      */
