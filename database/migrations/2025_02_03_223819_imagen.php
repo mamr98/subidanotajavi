@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('usuario', function (Blueprint $table) {
+        Schema::create('imagen', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->enum('rol', ['usuario','administrador']);  
-            //usamos enum para tener solo los valores que nosotros queramos
-            $table->boolean('estado');
+            $table->string('ruta');
+            $table->enum('zoom', ['4','10','40','100']); 
             $table->timestamps();
             $table->softDeletes();
         });

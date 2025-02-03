@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('muestras', function (Blueprint $table) {
             $table->id();
             $table->date('fecha');
+            $table->string('codigo');
+            $table->string('organo');
             $table->unsignedBigInteger('idTipo');
             $table->timestamps();
 
