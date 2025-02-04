@@ -80,12 +80,29 @@ class UsuarioController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($email)
+    public function destroy($id)
     {
-        $usuario = Usuario::where('email', $email)->first();
+        $usuario = Usuario::where('id', $id)->first();
         $usuario->delete(); 
         return response()->json(['mensaje' => 'Usuario eliminado correctamente'], 201);
     }
+
+    public function desactivar($id)
+    {
+        $usuario = Usuario::where('id', $id)->first();
+        $usuario->estado = 0;
+        $usuario->save();
+        return response()->json(['mensaje' => 'Usuario eliminado correctamente'], 201);
+    }
+
+    public function activar($id)
+    {
+        $usuario = Usuario::where('id', $id)->first();
+        $usuario->estado = 1;
+        $usuario->save();
+        return response()->json(['mensaje' => 'Usuario eliminado correctamente'], 201);
+    }
+
 
     public function login(Request $request)
     {

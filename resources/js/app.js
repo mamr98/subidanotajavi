@@ -8,7 +8,6 @@ const modal = document.querySelector('#modal')
 const modal_update = document.getElementById('modal_update');
  modal.style.visibility="hidden"
  modal_update.style.visibility="hidden"
-/* const eliminarUsuario = document.querySelector('#eliminar_usuario'); */
 
 
 
@@ -77,56 +76,84 @@ crearUsuario.addEventListener('click', () => {
 });
 
 
+const desactivar = document.querySelectorAll('.desactivar'); 
+desactivar.forEach(boton => {
+    boton.addEventListener('click', () => {
 
+        const id = boton.id;
+        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        fetch('admin/desactivar/'+id, {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token
+            }
+        })
+        .then(respuesta => {
+            if (!respuesta.ok) {
+                // Manejo de errores: Intenta leer el error del servidor (JSON o texto)
+                return respuesta.text().then(err => {
+                    try {
+                        const jsonError = JSON.parse(err); // Intenta parsear como JSON
+                        throw new Error(jsonError.message || 'Error en la solicitud');
+                    } catch (e) {
+                        throw new Error(err || 'Error en la solicitud'); // Si no es JSON, muestra el texto
+                    }
+                });
+            }
+            return respuesta.json(); // Si la respuesta es ok, intenta parsear como JSON
+        })
+        .then(data => {
+            console.log(data);
+            Swal.fire('Éxito', 'Usuario eliminado correctamente', 'success');
+            location.reload()
+        })
+        .catch(error => {
+            console.error("Error en la petición:", error);
+            Swal.fire('Error', error.message, 'error');
+        });
+});
+});
 
-/* eliminarUsuario.addEventListener('click', () => {
-    Swal.fire({
-        title: 'Introduce el email del usuario a eliminar',
-        html: `
-        <form action="">
-        <label for="email">Email</label><br>
-        <input type="text" id="email"/><br>
-        </form>`, // Input type password para mayor seguridad
-        confirmButtonText: "Eliminar",
-        showCancelButton: true,
-    }).then((result) => {
-        if (result.isConfirmed) {
-            const email = document.querySelector("#email").value;
-            const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+const activar = document.querySelectorAll('.activar'); 
+activar.forEach(boton => {
+    boton.addEventListener('click', () => {
 
-            fetch('admin/destroy/'+email, {
-                method: "DELETE",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': token
-                }
-            })
-            .then(respuesta => {
-                if (!respuesta.ok) {
-                    // Manejo de errores: Intenta leer el error del servidor (JSON o texto)
-                    return respuesta.text().then(err => {
-                        try {
-                            const jsonError = JSON.parse(err); // Intenta parsear como JSON
-                            throw new Error(jsonError.message || 'Error en la solicitud');
-                        } catch (e) {
-                            throw new Error(err || 'Error en la solicitud'); // Si no es JSON, muestra el texto
-                        }
-                    });
-                }
-                return respuesta.json(); // Si la respuesta es ok, intenta parsear como JSON
-            })
-            .then(data => {
-                console.log(data);
-                Swal.fire('Éxito', 'Usuario eliminado correctamente', 'success');
-                location.reload()
-            })
-            .catch(error => {
-                console.error("Error en la petición:", error);
-                Swal.fire('Error', error.message, 'error');
-            });
-        }
-    });
-}); */
+        const id = boton.id;
+        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        fetch('admin/activar/'+id, {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token
+            }
+        })
+        .then(respuesta => {
+            if (!respuesta.ok) {
+                // Manejo de errores: Intenta leer el error del servidor (JSON o texto)
+                return respuesta.text().then(err => {
+                    try {
+                        const jsonError = JSON.parse(err); // Intenta parsear como JSON
+                        throw new Error(jsonError.message || 'Error en la solicitud');
+                    } catch (e) {
+                        throw new Error(err || 'Error en la solicitud'); // Si no es JSON, muestra el texto
+                    }
+                });
+            }
+            return respuesta.json(); // Si la respuesta es ok, intenta parsear como JSON
+        })
+        .then(data => {
+            console.log(data);
+            Swal.fire('Éxito', 'Usuario eliminado correctamente', 'success');
+            location.reload()
+        })
+        .catch(error => {
+            console.error("Error en la petición:", error);
+            Swal.fire('Error', error.message, 'error');
+        });
+});
+});
+
 
 const modificar = document.querySelectorAll('.modificar'); // Obtén todos los botones con la clase "modificar"
 

@@ -29,7 +29,9 @@ Route::get('/logout', [UsuarioController::class, 'logout'])->name('logout');
 
 Route::post('/admin/create',[UsuarioController::class,'create'])->name('crear.usuario');;
 
-Route::delete('/admin/destroy/{email}',[UsuarioController::class,'destroy']);
+Route::delete('/admin/desactivar/{id}',[UsuarioController::class,'desactivar']);
+
+Route::delete('/admin/activar/{id}',[UsuarioController::class,'activar']);
 
 Route::put('/admin/update/{id}', [UsuarioController::class, 'update']);
 
