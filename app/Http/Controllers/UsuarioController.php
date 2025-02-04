@@ -87,7 +87,7 @@ class UsuarioController extends Controller
                        ->first();
         
         if ($usuario->rol === "usuario") {
-            return view('welcome');
+            return view('welcome')->with(['email' => $request->email]);
 
         } 
 
