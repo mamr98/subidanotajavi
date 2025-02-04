@@ -24,6 +24,22 @@ class="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-whi
           Contraseña
         </p>
       </th>
+
+      <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+        <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+          Rol
+        </p>
+      </th>
+      <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+        <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+          Estado
+        </p>
+      </th>
+      <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+        <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+          Id Sede
+        </p>
+      </th>
       
       
     </tr>
@@ -46,9 +62,29 @@ class="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-whi
           @foreach ($usuarios as $u)
             <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $u->password }}</p>
           @endforeach
-            
           </p>
         </td>
+
+      </td>
+      <td class="p-4 border-b border-blue-gray-50">
+        @foreach ($usuarios as $u)
+          <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $u->rol }}</p>
+        @endforeach
+        </p>
+      </td>
+    </td>
+    <td class="p-4 border-b border-blue-gray-50">
+      @foreach ($usuarios as $u)
+        <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $u->estado }}</p>
+      @endforeach
+      </p>
+    </td>
+    <td class="p-4 border-b border-blue-gray-50">
+      @foreach ($usuarios as $u)
+        <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $u->idSede }}</p>
+      @endforeach
+      </p>
+    </td>
         
       </tr>
 

@@ -19,9 +19,10 @@ Route::get('/laboratorio/crear',[MuestraController::class,'save']);
 
 Route::post('/login',[UsuarioController::class,'login'])->name('login.post');
 
-Route::get('/laboratorio',[MuestraController::class,'welcome']);
+Route::get('/laboratorio',[MuestraController::class,'welcome'])->name('welcome');
     
-Route::get('/admin',[UsuarioController::class,'show']);
+Route::get('/admin',[UsuarioController::class,'show'])->name('administrador');
+
 Route::get('/logout', [UsuarioController::class, 'logout'])->name('logout');
 
 
@@ -33,6 +34,7 @@ Route::put('/admin/update/{email}',[UsuarioController::class,'update']);
 
 
 Route::post('/login',[UsuarioController::class,'login'])->name('login.post');
+
 Route::get('/logout', [UsuarioController::class, 'logout'])->name('logout');
 
 

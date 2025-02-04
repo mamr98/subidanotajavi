@@ -17,6 +17,16 @@ crearUsuario.addEventListener('click', () => {
 
         <label for="password">Contraseña</label><br>
         <input type="text" id="password"/><br> 
+
+
+        <label for="password">rol</label><br>
+        <select id="rol">
+        <option value="usuario">usuario</option>
+        <option value="administrador">administrador</option>
+        </select><br> 
+
+        <label for="idSede">ID Sede</label><br>
+        <input type="text" id="idSede"/><br> 
         </form>`, // Input type password para mayor seguridad
         confirmButtonText: "Guardar",
         showCancelButton: true,
@@ -24,8 +34,11 @@ crearUsuario.addEventListener('click', () => {
         if (result.isConfirmed) {
             const email = document.querySelector("#email").value;
             const password = document.querySelector("#password").value;
+            const rol = document.querySelector("#rol").value;
+            const idSede = document.querySelector("#idSede").value;
 
             const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
 
             fetch('admin/create', {
                 method: "POST",
@@ -35,7 +48,9 @@ crearUsuario.addEventListener('click', () => {
                 },
                 body: JSON.stringify({
                     email: email,
-                    password: password
+                    password: password,
+                    rol: rol,
+                    idSede: idSede,
                 })
             })
             .then(respuesta => {
