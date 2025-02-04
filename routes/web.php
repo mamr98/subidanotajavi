@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SedeController;
 use App\Http\Controllers\TipoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MuestraController;
@@ -26,11 +27,14 @@ Route::get('/admin',[UsuarioController::class,'show'])->name('administrador');
 Route::get('/logout', [UsuarioController::class, 'logout'])->name('logout');
 
 
-Route::post('/admin/create',[UsuarioController::class,'create']);
+Route::post('/admin/create',[UsuarioController::class,'create'])->name('crear.usuario');;
 
 Route::delete('/admin/destroy/{email}',[UsuarioController::class,'destroy']);
 
-Route::put('/admin/update/{email}',[UsuarioController::class,'update']);
+Route::put('/admin/update/{id}', [UsuarioController::class, 'update']);
+
+
+Route::get('/admin/{id}',[UsuarioController::class,'usuario']);
 
 
 Route::post('/login',[UsuarioController::class,'login'])->name('login.post');
@@ -40,3 +44,5 @@ Route::get('/logout', [UsuarioController::class, 'logout'])->name('logout');
 
 Route::get('/laboratorio',[MuestraController::class,'index']);
 
+
+Route::get('/sede/{id}',[UsuarioController::class,'sedeUsuario']);

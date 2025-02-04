@@ -1,4 +1,5 @@
 @extends('adminlte::page')
+<meta content="{{ csrf_token() }}" name="csrf-token" />
 
 @section('content')
 <button id = "crear_usuario">Crear usuario</button>
@@ -45,51 +46,112 @@ class="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-whi
     </tr>
   </thead>
   <tbody id="mostrar_usuario">
+    @foreach ($usuarios as $u)
       <tr>
         <td class="p-4 border-b border-blue-gray-50">
-            @foreach ($usuarios as $u)
+            
       <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $u->id }}</p>
-    @endforeach
+
           </p>
         </td>
         <td class="p-4 border-b border-blue-gray-50">
-            @foreach ($usuarios as $u)
+
             <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $u->email }}</p>
-          @endforeach
+
           </p>
         </td>
         <td class="p-4 border-b border-blue-gray-50">
-          @foreach ($usuarios as $u)
+
             <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $u->password }}</p>
-          @endforeach
+
           </p>
         </td>
 
       </td>
       <td class="p-4 border-b border-blue-gray-50">
-        @foreach ($usuarios as $u)
+
           <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $u->rol }}</p>
-        @endforeach
+
         </p>
       </td>
     </td>
     <td class="p-4 border-b border-blue-gray-50">
-      @foreach ($usuarios as $u)
+
         <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $u->estado }}</p>
-      @endforeach
+
       </p>
     </td>
     <td class="p-4 border-b border-blue-gray-50">
-      @foreach ($usuarios as $u)
+
         <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $u->idSede }}</p>
-      @endforeach
+
       </p>
     </td>
-        
+    <td id="botones">
+      <button id="{{$u->id}}" class="modificar">Modificar</button>
+      <button id="{{$u->id}}" class="eliminar">Eliminar</button>
+    </td>        
       </tr>
+      @endforeach
 
     </tbody>
 </table>
+
+<form id="modal">
+  @csrf
+  <label for="email">Email</label><br>
+  <input type="text" id="email"/><br>
+
+  <label for="password">Contraseña</label><br>
+  <input type="text" id="password"/><br> 
+
+  <label for="rol">Rol</label><br>
+  <select id="rol">
+      <option value="usuario">Usuario</option>
+      <option value="administrador">Administrador</option>
+  </select><br> 
+
+  <label for="estado">Estado</label><br>
+  <select id="estado">
+      <option value="1">Activo</option>
+      <option value="0">Pausado</option>
+  </select><br> 
+
+  <label for="idSede">Sede</label><br>
+  <select id="idSede">
+      @foreach ($sedes as $se)
+      <option id="{{$se->id}}">{{$se->nombre}}</option>
+      @endforeach
+  </select><br> 
+</form>
+
+<form id="modal_update">
+  @csrf
+  <label for="email">Email</label><br>
+  <input type="text" id="email2"/><br>
+
+  <label for="password">Contraseña</label><br>
+  <input type="text" id="password2"/><br> 
+
+  <label for="rol">Rol</label><br>
+  <select id="rol2">
+      <option value="usuario">Usuario</option>
+      <option value="administrador">Administrador</option>
+  </select><br> 
+
+  <label for="estado2">Estado</label><br>
+  <select id="estado2">
+      <option value="1">Activo</option>
+      <option value="0">Pausado</option>
+  </select><br> 
+
+  <label for="idSede">Sede</label><br>
+  <select id="idSede2">
+      @foreach ($sedes as $se)
+      <option id="{{$se->id}}">{{$se->nombre}}</option>
+      @endforeach
+  </select><br> 
+</form>
 </div>
 @endsection
 @vite(['resources/js/app.js'])

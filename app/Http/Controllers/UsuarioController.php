@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Sede;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Hilalahmad\PhpToastr\Toastr;
@@ -26,8 +27,8 @@ class UsuarioController extends Controller
         $usuario->email = $request->input('email');
         $usuario->password = $request->input('password');
         $usuario->rol = $request->input('rol');
-        $usuario->estado = true;
-        $usuario->idSede = $request->input('idSede');;
+        $usuario->estado = $request->input('estado');
+        $usuario->idSede = $request->input('idSede');
         $usuario->save();
 
         return response()->json(['mensaje' => 'Usuario creado correctamente'], 201);
@@ -48,7 +49,8 @@ class UsuarioController extends Controller
     public function show()
     {
         $usuarios = Usuario::all();
-        return view('admin')->with(['usuarios'=>$usuarios]);
+        $sedes = Sede::all();
+        return view('admin')->with(['usuarios'=>$usuarios, 'sedes' => $sedes]);
     }
 
     /**
@@ -62,14 +64,19 @@ class UsuarioController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $email)
+    public function update(Request $request, $id)
     {
-        $usuario = Usuario::where('email', $email)->first();
-        $usuario->password = $request['password'];
+        $usuario = Usuario::find($id);
+    
+        $usuario->email = $request->input('email');
+        $usuario->password = $request->input('password');
+        $usuario->rol = $request->input('rol');
+        $usuario->estado = $request->input('estado');
+        $usuario->idSede = $request->input('idSede');
         $usuario->save();
-        return response()->json(['mensaje' => 'Usuario actualizado correctamente'], 201);
+    
+        return response()->json(['mensaje' => 'Usuario actualizado correctamente'], 200);
     }
-
     /**
      * Remove the specified resource from storage.
      */
@@ -83,26 +90,51 @@ class UsuarioController extends Controller
     public function login(Request $request)
     {
         $usuario = Usuario::where('email', $request->email)
-                       ->where('password', $request->password) // Aquí agregas el segundo parámetro
+                       ->where('password', $request->password)
                        ->first();
+        if($usuario){
+            if( $usuario->estado == true){
+
+                if ($usuario->rol === "usuario") {
+                    return view('welcome');
         
-        if ($usuario->rol === "usuario") {
-            return view('welcome');
-
-        } 
-
-        if ($usuario->rol === "administrador") {
-            return redirect()->route('administrador'); 
-
-        } 
+                } 
         
+                if ($usuario->rol === "administrador") {
+                    return redirect()->route('administrador'); 
+        
+                } 
+                }
+            
+    
+            else {
+                $toastr = new Toastr();
+                $toastr->warning('El Usuario está inactivo. Intente nuevamente.','topRight'); 
+        
+                return view('login');
+            }
+        }
         else {
             $toastr = new Toastr();
-            $toastr->warning('Datos incorrectos. Intente nuevamente.','topRight'); 
+            $toastr->warning('Datos Incorrectos. Intente nuevamente.','topRight'); 
     
             return view('login');
         }
     }
+
+    public function usuario($id){
+        $usuario = Usuario::where('id', $id)->first();
+        return response()->json($usuario,200);
+    }
+
+    public function sedeUsuario($id){
+        $sede = Sede::where('id', $id)->first();
+        return response()->json($sede,200);
+    }
+        
+
+        
+
     
 
     public function logout(Request $request){
