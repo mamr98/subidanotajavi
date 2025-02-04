@@ -25,12 +25,6 @@
         <div class="card-body">
             <p class="login-box-msg">Inicia sesión para comenzar tu sesión</p>
 
-            @if(session('error'))
-                <script>
-                    toastr.error("{{ session('error') }}");
-                </script>
-            @endif
-
             <form action="{{ route('login.post') }}" method="post">
                 @csrf 
                 <div class="input-group mb-3">
@@ -42,7 +36,7 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="Contraseña" name="password" required>
+                    <input type="text" class="form-control" placeholder="Contraseña" name="password" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>

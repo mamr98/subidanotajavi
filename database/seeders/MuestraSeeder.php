@@ -13,6 +13,6 @@ class MuestraSeeder extends Seeder
      */
     public function run(): void
     {
-        Muestra::factory(100)->create();
+       /*  Muestra::factory(100)->create(); */
     }
 }

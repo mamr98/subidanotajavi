@@ -12,7 +12,13 @@ class Usuario extends Model
     protected $fillable = [
         'email',
         'password',
+        'rol',
+        'estado',
+        'idSede',
     ];
-    
+
+    public function sede(){
+        return $this->belongsTo(Sede::class,'idSede','id');
+    }
     use HasFactory;
 }

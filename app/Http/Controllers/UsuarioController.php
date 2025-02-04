@@ -25,6 +25,9 @@ class UsuarioController extends Controller
         $usuario= new Usuario();
         $usuario->email = $request->input('email');
         $usuario->password = $request->input('password');
+        $usuario->rol = $request->input('rol');
+        $usuario->estado = true;
+        $usuario->idSede = $request->input('idSede');;
         $usuario->save();
 
         return response()->json(['mensaje' => 'Usuario creado correctamente'], 201);
@@ -79,21 +82,28 @@ class UsuarioController extends Controller
 
     public function login(Request $request)
     {
-        $usuario = Usuario::where('email', $request->email)->first();
-    
-        // Depuración: Imprimir los datos recibidos
-       /*  dd($usuario, $request->all()); */
-    
-        if ($usuario && password_verify($request->password, $usuario->password)) {
-            return redirect()->route('welcome', ['email' => $request->email]);
-        } else {
+        $usuario = Usuario::where('email', $request->email)
+                       ->where('password', $request->password) // Aquí agregas el segundo parámetro
+                       ->first();
+        
+        if ($usuario->rol === "usuario") {
+            return view('welcome');
+
+        } 
+
+        if ($usuario->rol === "administrador") {
+            return redirect()->route('administrador'); 
+
+        } 
+        
+        else {
             $toastr = new Toastr();
             $toastr->warning('Datos incorrectos. Intente nuevamente.','topRight'); 
-
-            return view('login'); 
+    
+            return view('login');
         }
     }
-
+    
 
     public function logout(Request $request){
         /* Auth::logout();
