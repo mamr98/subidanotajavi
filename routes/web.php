@@ -43,3 +43,7 @@ Route::get('/laboratorio',[MuestraController::class,'index']);
 Route::get('/interpretaciones', function () {
     return view('interpretaciones');
 })->name('interpretaciones');
+
+Route::get('/imagenes', function () {
+    return view('imagenes');
+})->name('imagenes');
