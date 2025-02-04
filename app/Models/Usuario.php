@@ -16,6 +16,9 @@ class Usuario extends Model
         'estado',
         'idSede',
     ];
-    
+
+    public function sede(){
+        return $this->belongsTo(Sede::class,'idSede','id');
+    }
     use HasFactory;
 }

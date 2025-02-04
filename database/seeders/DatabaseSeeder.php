@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             TipoSeeder::class,
             MuestraSeeder::class,
+            SedeSeeder::class,
         ]);
 
         User::factory(100)->create();
