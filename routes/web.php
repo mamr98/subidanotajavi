@@ -40,3 +40,6 @@ Route::get('/logout', [UsuarioController::class, 'logout'])->name('logout');
 
 Route::get('/laboratorio',[MuestraController::class,'index']);
 
+Route::get('/interpretaciones', function () {
+    return view('interpretaciones');
+})->name('interpretaciones');
