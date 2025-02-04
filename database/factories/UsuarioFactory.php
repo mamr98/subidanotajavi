@@ -21,6 +21,9 @@ class UsuarioFactory extends Factory
         return [
             'email',
             'password', 
+            'rol',
+            'estado',
+            'idSede',
         ];
     }
 }

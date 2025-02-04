@@ -14,8 +14,11 @@ return new class extends Migration
         Schema::create('interpretacion', function (Blueprint $table) {
             $table->id();
             $table->string('texto');
+            $table->unsignedBigInteger('idTipoEstudio');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('idTipoEstudio')->references('id')->on('tipo_estudio');
         });
     }
 

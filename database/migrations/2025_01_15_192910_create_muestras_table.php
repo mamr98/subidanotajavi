@@ -17,9 +17,17 @@ return new class extends Migration
             $table->string('codigo');
             $table->string('organo');
             $table->unsignedBigInteger('idTipo');
+            $table->unsignedBigInteger('idFormato');
+            $table->unsignedBigInteger('idCalidad');
+            $table->unsignedBigInteger('idUsuario');
+            $table->unsignedBigInteger('idSede');
             $table->timestamps();
 
             $table->foreign('idTipo')->references('id')->on('tipo');
+            $table->foreign('idFormato')->references('id')->on('formato');
+            $table->foreign('idCalidad')->references('id')->on('calidad');
+            $table->foreign('idUsuario')->references('id')->on('usuario');
+            $table->foreign('idSede')->references('id')->on('sede');
         });
     }
 
