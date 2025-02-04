@@ -27,15 +27,15 @@
       </nav>
 
     <!-- Título -->
-    <h1 class="flex items-center text-4xl text-sky-950 mt-6 justify-center font-bold">Nuevo Informe</h1>
+    <h1 class="flex items-center text-4xl text-sky-950 mt-6 justify-center font-bold">Informe de muestra</h1>
 
     <div class="flex justify-center mt-6">
         <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-6xl">
             <!-- Información de la muestra -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <span class="bg-gray-200 px-4 py-2 rounded-lg text-gray-700">Código: 804003</span>
+                <span class="bg-gray-200 px-4 py-2 rounded-lg text-gray-700">Código de la muestra: 804003</span>
                 <span class="bg-gray-200 px-4 py-2 rounded-lg text-gray-700">Fecha muestra: 2024-05-31</span>
-                <span class="bg-gray-200 px-4 py-2 rounded-lg text-gray-700">correo@medac.es</span>
+                <span class="bg-gray-200 px-4 py-2 rounded-lg text-gray-700">Correo Usuario: correo@medac.es</span>
             </div>
 
             <!-- Información de la muestra con <p> -->
@@ -59,19 +59,19 @@
             <!-- Imágenes estandarizadas -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div>
-                    <img src="{{ asset('image1.jpg') }}" class="w-full h-40 object-cover rounded-lg shadow-md">
+                    <img src="{{ asset('image1.jpg') }}" alt="img1" class="w-full h-40 object-cover rounded-lg shadow-md">
                     <p class="w-full mt-2 p-2 border rounded-md bg-gray-100 text-gray-700 text-center">Tipo de aumento</p>
                 </div>
                 <div>
-                    <img src="{{ asset('image2.jpg') }}" class="w-full h-40 object-cover rounded-lg shadow-md">
+                    <img src="{{ asset('image2.jpg') }}"alt="img2" class="w-full h-40 object-cover rounded-lg shadow-md">
                     <p class="w-full mt-2 p-2 border rounded-md bg-gray-100 text-gray-700 text-center">Tipo de aumento</p>
                 </div>
                 <div>
-                    <img src="{{ asset('image3.jpg') }}" class="w-full h-40 object-cover rounded-lg shadow-md">
+                    <img src="{{ asset('image3.jpg') }}"alt="img3" class="w-full h-40 object-cover rounded-lg shadow-md">
                     <p class="w-full mt-2 p-2 border rounded-md bg-gray-100 text-gray-700 text-center">Tipo de aumento</p>
                 </div>
                 <div>
-                    <img src="{{ asset('image4.jpg') }}" class="w-full h-40 object-cover rounded-lg shadow-md">
+                    <img src="{{ asset('image4.jpg') }}"alt="img4" class="w-full h-40 object-cover rounded-lg shadow-md">
                     <p class="w-full mt-2 p-2 border rounded-md bg-gray-100 text-gray-700 text-center">Tipo de aumento</p>
                 </div>
                 
@@ -81,11 +81,11 @@
             <div class="mt-6">
                 <h2 class="text-lg font-semibold text-gray-700 bg-gray-200 p-2 rounded-lg">Descripciones</h2>
                 <div class="mt-2 p-4 border rounded-md bg-gray-100">
-                    <strong>codigo1</strong>
+                    <strong>Titulo Anotación1</strong>
                     <p>Anotacion1</p>
                 </div>
                 <div class="mt-2 p-4 border rounded-md bg-gray-100">
-                    <strong>codigo2</strong>
+                    <strong>Titulo Anotación2</strong>
                     <p>Anotacion2</p>
                 </div>
             </div>
