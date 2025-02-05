@@ -6,20 +6,17 @@ use App\Models\Muestra;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Sede extends Model
+class Formato extends Model
 {
-    protected $table = 'sede';
+    protected $table = "formato";
 
     protected $fillable = [
-        'nombre',
         'codigo',
+        'nombre',
     ];
 
-    public function usuario(){
-        return $this->hasMany(Usuario::class,'idSede','id');
-    }
     public function muestras(){
-        return $this->hasMany(Muestra::class,'idSede','id');
+        return $this->hasMany(Muestra::class,'idFormato','id');
     }
     use HasFactory;
 }
