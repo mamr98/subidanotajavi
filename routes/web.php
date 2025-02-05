@@ -58,7 +58,3 @@ Route::get('/listamuestras', function () {
 Route::get('/muestrasadmin', function () {
     return view('muestrasadmin');
 })->name('muestrasadmin');
-
-Route::get('/formulariomuestra', function () {
-    return view('formulariomuestra');
-})->name('formulariomuestra');
