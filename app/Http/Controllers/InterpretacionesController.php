@@ -8,6 +8,6 @@ class InterpretacionesController extends Controller
 {
     public function index(){
 
-        return redirect()->route('interpretaciones'); 
+        return view('interpretaciones'); 
 }
 }
