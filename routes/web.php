@@ -6,6 +6,7 @@ use App\Http\Controllers\TipoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MuestraController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\InterpretacionesController;
 
 Route::get('/', function () {
     return view('login');
@@ -46,8 +47,6 @@ Route::get('/logout', [UsuarioController::class, 'logout'])->name('logout');
 
 Route::get('/laboratorio',[MuestraController::class,'index']);
 
-Route::get('/interpretaciones', function () {
-    return view('interpretaciones');
-})->name('interpretaciones');
+Route::get('/interpretaciones',[InterpretacionesController::class,'index'])->name('interpretaciones');
 
 Route::get('/sede/{id}',[UsuarioController::class,'sedeUsuario']);

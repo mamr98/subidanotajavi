@@ -113,7 +113,8 @@ class UsuarioController extends Controller
             if( $usuario->estado == true){
 
                 if ($usuario->rol === "usuario") {
-                    return view('welcome');
+                    $email = $request->email;
+                    return view('welcome')->with(['email' => $email]);
         
                 } 
         

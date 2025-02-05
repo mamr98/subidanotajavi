@@ -19,11 +19,7 @@ class UsuarioFactory extends Factory
     {
         $usuario = Usuario::all();
         return [
-            'email',
-            'password', 
-            'rol',
-            'estado',
-            'idSede',
+            //
         ];
     }
 }
