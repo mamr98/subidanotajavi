@@ -21,7 +21,7 @@ Route::get('/laboratorio/crear',[MuestraController::class,'save']);
 
 Route::post('/login',[UsuarioController::class,'login'])->name('login.post');
 
-Route::get('/laboratorio',[MuestraController::class,'welcome'])->name('welcome');
+Route::post('/laboratorio',[MuestraController::class,'welcome'])->name('welcome');
     
 Route::get('/admin',[UsuarioController::class,'show'])->name('administrador');
 

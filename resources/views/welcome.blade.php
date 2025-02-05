@@ -26,7 +26,7 @@
   <h1 class="flex items-center text-5xl text-sky-950 mt-32 justify-center font-bold">Generar informes</h1>
 <div class="min-h-screen flex items-center justify-center">
   <div class="bg-white p-6 rounded-lg shadow-lg mb-60 w-full max-w-4xl">
-      <form class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <form {{-- action="{{ route('muestra.store') }}" method="POST" --}} class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <!-- Código de la muestra -->
           <div>
               <label for="codigo" class=" block text-sm font-bold text-sky-800">Código de la muestra:</label>
@@ -122,7 +122,7 @@
 
           <!-- Botón Siguiente -->
           <div class="md:col-span-2 flex justify-end">
-             <a href="{{route('interpretaciones')}}"><button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Siguiente</button></a>
+             <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Siguiente</button>
           </div>
       </form>
   </div>

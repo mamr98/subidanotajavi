@@ -10,4 +10,8 @@ class MuestraController extends Controller
         return view('welcome');
 
     }
+    /* function store(Request $request){
+        
+
+    } */
 }
