@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SedeController;
 use App\Http\Controllers\TipoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MuestraController;
@@ -26,11 +27,16 @@ Route::get('/admin',[UsuarioController::class,'show'])->name('administrador');
 Route::get('/logout', [UsuarioController::class, 'logout'])->name('logout');
 
 
-Route::post('/admin/create',[UsuarioController::class,'create']);
+Route::post('/admin/create',[UsuarioController::class,'create'])->name('crear.usuario');;
 
-Route::delete('/admin/destroy/{email}',[UsuarioController::class,'destroy']);
+Route::delete('/admin/desactivar/{id}',[UsuarioController::class,'desactivar']);
 
-Route::put('/admin/update/{email}',[UsuarioController::class,'update']);
+Route::delete('/admin/activar/{id}',[UsuarioController::class,'activar']);
+
+Route::put('/admin/update/{id}', [UsuarioController::class, 'update']);
+
+
+Route::get('/admin/{id}',[UsuarioController::class,'usuario']);
 
 
 Route::post('/login',[UsuarioController::class,'login'])->name('login.post');
@@ -44,6 +50,4 @@ Route::get('/interpretaciones', function () {
     return view('interpretaciones');
 })->name('interpretaciones');
 
-Route::get('/muestras', function () {
-    return view('muestras');
-})->name('muestras');
+Route::get('/sede/{id}',[UsuarioController::class,'sedeUsuario']);
