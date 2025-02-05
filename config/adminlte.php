@@ -329,7 +329,7 @@ return [
         ],
         [
             'text' => 'Muestras',
-            'url' => 'laboratorio',
+            'url' => 'muestrasadmin',
             'icon' => 'far fa-fw fa-file',
             'label' => 4,
             'label_color' => 'success',

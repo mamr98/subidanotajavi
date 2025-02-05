@@ -54,3 +54,11 @@ Route::get('/sede/{id}',[UsuarioController::class,'sedeUsuario']);
 Route::get('/listamuestras', function () {
     return view('listamuestras');
 })->name('listamuestras');
+
+Route::get('/muestrasadmin', function () {
+    return view('muestrasadmin');
+})->name('muestrasadmin');
+
+Route::get('/formulariomuestra', function () {
+    return view('formulariomuestra');
+})->name('formulariomuestra');
