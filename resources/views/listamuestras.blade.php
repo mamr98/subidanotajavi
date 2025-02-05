@@ -24,9 +24,9 @@
   </nav>
 
   
-  <h1 class="flex items-center text-sky-950 text-5xl mt-32 justify-center font-bold">Lista muestras</h1>
-  <div class="min-h-screen flex items-center justify-center">
-    <div class="bg-white p-6 rounded-lg shadow-lg mb-60 inline-block max-w-fit">
+  <h1 class="flex items-center text-sky-950 text-5xl mt-28 -mb-44 justify-center font-bold">Lista muestras</h1>
+  <div class="min-h-screen flex flex-col items-center justify-center">
+    <div class="bg-white p-6 rounded-lg shadow-lg mb-10 inline-block max-w-fit">
         <table class="w-full text-left table-auto min-w-max">
             <thead>
                 <tr>
@@ -101,13 +101,12 @@
                 </tr>
             </tbody>
         </table>
-        <div class="col-span-2 mt-4 flex justify-end space-x-4">
-            <button type="button" class="px-6 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Crear muestra</button>
-            <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Siguiente</button>
-          </div>
     </div>
+    <button type="button" class="px-4 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+        Crear muestra
+    </button>
 </div>
-  
+
 </body>
 @vite(['resources/css/app.css'])
 </html>

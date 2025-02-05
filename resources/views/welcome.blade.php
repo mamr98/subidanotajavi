@@ -23,111 +23,75 @@
     </div>
   </nav>
 
-  <h1 class="flex items-center text-5xl text-sky-950 mt-32 justify-center font-bold">Generar informes</h1>
-<div class="min-h-screen flex items-center justify-center">
-  <div class="bg-white p-6 rounded-lg shadow-lg mb-60 w-full max-w-4xl">
-      <form class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <!-- Código de la muestra -->
-          <div>
-              <label for="codigo" class=" block text-sm font-bold text-sky-800">Código de la muestra:</label>
-              <input type="text" id="codigo" name="codigo" placeholder="Código" class=" border-2 mt-1 block w-full  rounded-md border-sky-800">
-          </div>
-
-          <!-- Fecha de recolección -->
-          <div>
-              <label for="fecha" class=" ml-4 block text-sm font-bold text-sky-800">Fecha de recolección:</label>
-              <input type="date" id="fecha" name="fecha" class=" ml-4 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
-          </div>
-
-          <!-- Naturaleza de la muestra -->
-          <div>
-              <label for="naturaleza" class="block text-sm font-bold text-sky-800">Naturaleza de la muestra:</label>
-              <select id="naturaleza" name="naturaleza" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  
-              </select>
-          </div>
-
-          <!-- Opciones biopsia -->
-          <div>
-              <label for="biopsia" class=" ml-4 block text-sm font-bold text-sky-800">Opciones biopsia:</label>
-              <select id="biopsia" name="biopsia" class=" ml-4 mt-1 block w-full  rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-              </select>
-          </div>
-
-          <!-- Conservación de muestra -->
-          <div>
-              <label for="conservacion" class="block text-sm font-bold text-sky-800">Conservación de muestra:</label>
-              <select id="conservacion" name="conservacion" class="mt-1 block w-full  rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                  <option></option>
-                  <option></option>
-                  <option></option>
-              </select>
-          </div>
-
-          <!-- Centro de procedencia -->
-          <div>
-              <label for="centro" class=" ml-4 block text-sm font-bold text-sky-800">Centro de procedencia:</label>
-              <select id="centro" name="centro" class=" ml-4 mt-1 block w-full  rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                  <option></option>
-                  <option value=""></option>
-                  <option value=""> </option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
-              </select>
-          </div>
-
-          <!-- Imágenes de la muestra -->
-          <div class="md:col-span-2">
-              <label class="block text-sm  text-sky-800 font-bold">Imágenes de la muestra:</label>
-              <input type="file" id="imagenes" name="imagenes" class="mt-4 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-              <button class="px-6 py-2 mt-4 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">+</button>
-          </div>
-
-          <!-- Botones -->
-          <div class="col-span-2 mt-4 flex justify-end space-x-4">
-            <button type="button" class="px-6 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Crear muestra</button>
-            <a href="{{route('interpretaciones')}}"><button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Siguiente</button></a>
-          </div>
-      </form>
+  <h1 class="flex items-center text-5xl text-sky-950 mt-32 -mb-44 justify-center font-bold">Generar informes</h1>
+  <div class="min-h-screen flex flex-col items-center justify-center">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
+        <form class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Código de la muestra -->
+            <div>
+                <label for="codigo" class="block text-sm font-bold text-sky-800">Código de la muestra:</label>
+                <input type="text" id="codigo" name="codigo" placeholder="Código" class="border-2 mt-1 block w-full rounded-md border-sky-800">
+            </div>
+  
+            <!-- Fecha de recolección -->
+            <div>
+                <label for="fecha" class="ml-4 block text-sm font-bold text-sky-800">Fecha de recolección:</label>
+                <input type="date" id="fecha" name="fecha" class="ml-4 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+  
+            <!-- Naturaleza de la muestra -->
+            <div>
+                <label for="naturaleza" class="block text-sm font-bold text-sky-800">Naturaleza de la muestra:</label>
+                <select id="naturaleza" name="naturaleza" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value=""></option>
+                </select>
+            </div>
+  
+            <!-- Opciones biopsia -->
+            <div>
+                <label for="biopsia" class="ml-4 block text-sm font-bold text-sky-800">Opciones biopsia:</label>
+                <select id="biopsia" name="biopsia" class="ml-4 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value=""></option>
+                </select>
+            </div>
+  
+            <!-- Conservación de muestra -->
+            <div>
+                <label for="conservacion" class="block text-sm font-bold text-sky-800">Conservación de muestra:</label>
+                <select id="conservacion" name="conservacion" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option></option>
+                </select>
+            </div>
+  
+            <!-- Centro de procedencia -->
+            <div>
+                <label for="centro" class="ml-4 block text-sm font-bold text-sky-800">Centro de procedencia:</label>
+                <select id="centro" name="centro" class="ml-4 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option></option>
+                </select>
+            </div>
+  
+            <!-- Imágenes de la muestra -->
+            <div class="md:col-span-2">
+                <label class="block text-sm text-sky-800 font-bold">Imágenes de la muestra:</label>
+                <input type="file" id="imagenes" name="imagenes" class="mt-4 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                <button class="px-6 py-2 mt-4 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">+</button>
+            </div>
+  
+            <!-- Botón "Siguiente" alineado a la derecha -->
+            <div class="col-span-2 mt-4 flex justify-end space-x-4">
+              <a href="{{route('interpretaciones')}}">
+                <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Siguiente</button>
+              </a>
+            </div>
+        </form>
+    </div>
   </div>
-</div>
+  
+  <button type="button" class="mt-0 px-4 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 block mx-auto">
+    Listar muestras
+  </button>
+  
 </body>
 @vite(['resources/css/app.css'])
 </html>
