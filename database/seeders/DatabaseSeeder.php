@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             MuestraSeeder::class,
             SedeSeeder::class,
             UsuarioSeeder::class,
+            FormatoSeeder::class,
         ]);
 
         User::factory(100)->create();
