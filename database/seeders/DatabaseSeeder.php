@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\TipoEstudio;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -20,6 +21,8 @@ class DatabaseSeeder extends Seeder
             SedeSeeder::class,
             UsuarioSeeder::class,
             FormatoSeeder::class,
+            TipoEstudioSeeder::class,
+            CalidadSeeder::class,
         ]);
 
         User::factory(100)->create();
