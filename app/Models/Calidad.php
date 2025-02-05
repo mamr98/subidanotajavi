@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Muestra;
 use App\Models\TipoEstudio;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Calidad extends Model
 {
@@ -19,7 +20,7 @@ class Calidad extends Model
         return $this->hasMany(Muestra::class,'idCalidad','id');
     }
 
-    public function tipoEstudio(){
+    public function tipo_estudio(){
         return $this->belongsTo(TipoEstudio::class,'idTipoEstudio','id');
     }
 

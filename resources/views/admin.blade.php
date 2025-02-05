@@ -160,4 +160,4 @@ class="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-whi
 </form>
 </div>
 @endsection
-@vite(['resources/js/app.js'])
+@vite(['resources/css/app' ,'resources/js/app.js'])
