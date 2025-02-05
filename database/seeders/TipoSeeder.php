@@ -13,11 +13,21 @@ class TipoSeeder extends Seeder
      */
     public function run(): void
     {
-        Tipo::factory(100)->create();
+        $nombreTipo = [
+            'B' => 'Biopsias',
+            'BV' => 'Biopsias Veterinarias',
+            'CB' => 'Cavidad Bucal',
+            'CV' => 'Citología Vaginal',
+            'EX' => 'Extensión Sanguínea',
+            'O' => 'Orinas',
+            'E' => 'Esputos',
+            'ES' => 'Semen',
+            'I' => 'Improntas',
+            'F' => 'Frotis',
+        ];
 
-        Tipo::factory()->create([
-            'codigo' => 'hh',
-            'nombre' => 'biopsia',
-        ]);
+        foreach ($nombreTipo as $key => $value) {
+            Tipo::factory()->create(['codigo'=>$key,'nombre'=>$value]);
+        }
     }
 }
