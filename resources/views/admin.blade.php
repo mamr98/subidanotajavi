@@ -2,7 +2,7 @@
 <meta content="{{ csrf_token() }}" name="csrf-token" />
 
 @section('content')
-<button id = "crear_usuario">Crear usuario</button>
+<button style=" margin-left: 28%; padding: 10px 20px; background-color: black; color: white; border: none; border-radius: 5px; cursor: pointer;" id = "crear_usuario">Crear usuario</button>
 <div
 class="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-white shadow-md rounded-xl bg-clip-border">
 <table class="w-full text-left table-auto min-w-max">
@@ -91,9 +91,11 @@ class="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-whi
       </p>
     </td>
     <td id="botones">
-      <button id="{{$u->id}}" class="modificar">Modificar</button>
-      <button id="{{$u->id}}" class="desactivar">Desactivar</button>
-      <button id="{{$u->id}}" class="activar">Activar</button>
+      <button style="padding: 10px 20px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$u->id}}" class="modificar">Modificar</button>
+      <button style="padding: 10px 20px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$u->id}}" class="desactivar">Desactivar</button>
+      <button style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$u->id}}" class="activar">Activar</button>
+      
+      
     </td>        
       </tr>
       @endforeach
