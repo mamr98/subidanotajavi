@@ -78,7 +78,7 @@
                 <button class="px-6 py-2 mt-4 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">+</button>
             </div>
   
-            <!-- Botón "Siguiente" alineado a la derecha -->
+            <!-- Botón siguiente-->
             <div class="col-span-2 mt-4 flex justify-end space-x-4">
               <a href="{{route('interpretaciones')}}">
                 <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Siguiente</button>
