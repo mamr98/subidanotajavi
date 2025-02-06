@@ -35,16 +35,41 @@ class MuestraController extends Controller
 }
 
 
-    public function show()
-    {
-        $muestras = Muestra::all();
-        return view('listamuestras')->with(['muestras'=>$muestras]);
-    }
+public function show()
+{
+    $muestras = Muestra::all();
+    $tipos = Tipo::all();
+    $formatos = Formato::all();
+    $calidades = Calidad::all();
+    $usuarios = Usuario::all();
+    $sedes = Sede::all();
+    return view('listamuestras')->with([
+        'muestras' => $muestras,
+        'tipos' => $tipos,
+        'formatos' => $formatos,
+        'calidades' => $calidades,
+        'usuarios' => $usuarios,
+        'sedes' => $sedes,
+    ]);
+}
+
 
     public function showAdmin()
     {
         $muestras = Muestra::all();
-        return view('muestrasadmin')->with(['muestras'=>$muestras]);
+    $tipos = Tipo::all();
+    $formatos = Formato::all();
+    $calidades = Calidad::all();
+    $usuarios = Usuario::all();
+    $sedes = Sede::all();
+    return view('muestrasadmin')->with([
+        'muestras' => $muestras,
+        'tipos' => $tipos,
+        'formatos' => $formatos,
+        'calidades' => $calidades,
+        'usuarios' => $usuarios,
+        'sedes' => $sedes,
+    ]);
     }
 
     public function update(Request $request, $id)
