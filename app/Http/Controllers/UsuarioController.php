@@ -114,7 +114,7 @@ class UsuarioController extends Controller
 
                 if ($usuario->rol === "usuario") {
                     $email = $request->email;
-                    return view('welcome')->with(['email' => $email]);
+                    return redirect()->route('listamuestras')->with(['email' => $email]);
         
                 } 
         
