@@ -58,3 +58,11 @@ Route::get('/listamuestras', function () {
 Route::get('/muestrasadmin', function () {
     return view('muestrasadmin');
 })->name('muestrasadmin');
+
+Route::get('/principal', function () {
+    return view('principal');
+})->name('principal');
+
+Route::get('/inicio', function () {
+    return view('inicio');
+})->name('inicio');
