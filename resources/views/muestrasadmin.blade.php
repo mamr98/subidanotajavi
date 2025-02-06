@@ -1,4 +1,5 @@
 @extends('adminlte::page')
+@vite(['resources/js/muestras.js','resources/css/app.css'])
 <meta content="{{ csrf_token() }}" name="csrf-token" />
 
 @section('content')
@@ -207,4 +208,3 @@ class="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-whi
 </form>
 </div>
 @endsection
-@vite(['resources/js/muestras.js'])
