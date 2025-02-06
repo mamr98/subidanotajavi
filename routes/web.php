@@ -62,12 +62,14 @@ Route::get('/muestra/{id}',[MuestraController::class,'muestra']);
 
 Route::delete('/listamuestras/destroy/{id}',[MuestraController::class,'destroy']);
 
-Route::get('/muestrasadmin', function () {
-    return view('muestrasadmin');
-})->name('muestrasadmin');
+
 
 Route::get('/listamuestras/tipo/{id}',[MuestraController::class,'tipo']);
 Route::get('/listamuestras/formato/{id}',[MuestraController::class,'formato']);
 Route::get('/listamuestras/calidad/{id}',[MuestraController::class,'calidad']);
 Route::get('/listamuestras/usuario/{id}',[MuestraController::class,'usuario']);
 Route::get('/listamuestras/sede/{id}',[MuestraController::class,'sede']);
+
+
+
+Route::get('/muestrasadmin',[MuestraController::class,'showAdmin'])->name('muestrasadmin');

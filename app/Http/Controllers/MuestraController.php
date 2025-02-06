@@ -41,6 +41,12 @@ class MuestraController extends Controller
         return view('listamuestras')->with(['muestras'=>$muestras]);
     }
 
+    public function showAdmin()
+    {
+        $muestras = Muestra::all();
+        return view('muestrasadmin')->with(['muestras'=>$muestras]);
+    }
+
     public function update(Request $request, $id)
     {
         $muestra = Muestra::find($id);
