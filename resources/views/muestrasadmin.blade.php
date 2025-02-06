@@ -2,7 +2,7 @@
 <meta content="{{ csrf_token() }}" name="csrf-token" />
 
 @section('content')
-<button class="ml-[40%] px-5 py-2 bg-black text-white rounded-md cursor-pointer" id = "crear_usuario">Crear muestra</button>
+<button style=" margin-left: 40%; padding: 10px 20px; background-color: black; color: white; border: none; border-radius: 5px; cursor: pointer;" id = "crear_muestra">Crear muestra</button>
 <div
 class="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-white shadow-md rounded-xl bg-clip-border">
 <table class="w-full text-left table-auto min-w-max">
@@ -10,176 +10,201 @@ class="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-whi
     <tr>
       <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
         <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-          ID
+            ID
         </p>
-      </th>
-      <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
-        <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-            Código muestra
-        </p>
-      </th>
-      <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
-        <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-            Fecha de recolección
-        </p>
-      </th>
-
-      <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
-        <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-            Naturaleza de la muestra
-        </p>
-      </th>
-      <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
-        <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-            Opciones de biopsia
-        </p>
-      </th>
-      <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
-        <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-            Conservación de la muestra
-        </p>
-      </th>
-      <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
-        <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-            Centro de procedencia
-        </p>
-      </th>
-
-      <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
-        <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-            Imágenes de la muestra
-        </p>
-      </th>
-
-      <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
-        <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-            Acciones
-        </p>
-      </th>
-      
-      
+    </th>
+        <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+            <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                Fecha de recolección
+            </p>
+        </th>
+        <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+            <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                Código muestra
+            </p>
+        </th>
+        <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+            <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                Organo
+            </p>
+        </th>
+        <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+            <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                Tipo
+            </p>
+        </th>
+        <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+            <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                Formato
+            </p>
+        </th>
+        <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+            <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                Calidad
+            </p>
+        </th>
+        <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+            <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                Usuario
+            </p>
+        </th>
+        <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+            <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                Sede
+            </p>
+        </th>
     </tr>
-  </thead>
-  <tbody id="">
-    {{-- @foreach ($usuarios as $u) --}}
-      <tr>
-
-        <td class="p-4 border-b border-blue-gray-50">
-            
-            <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{-- {{ $u->id }} --}}1</p>
-      
-                </p>
-              </td>
-
-        <td class="p-4 border-b border-blue-gray-50">
-            
-      <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{-- {{ $u->id }} --}}EX24002</p>
-
-          </p>
-        </td>
-        <td class="p-4 border-b border-blue-gray-50">
-
-            <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{-- {{ $u->email }} --}} 14/02/2025</p>
-
-          </p>
-        </td>
-        <td class="p-4 border-b border-blue-gray-50">
-
-            <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{-- {{ $u->password }} --}} Biopsia</p>
-
-          </p>
-        </td>
-
-      </td>
+</thead>
+  <tbody id="mostrar_muestras">
+    @foreach ($muestras as $m)
+    <tr>
       <td class="p-4 border-b border-blue-gray-50">
-
-          <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{-- {{ $u->rol }} --}} Corazón</p>
-
-        </p>
-      </td>
+        <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $m->id }}</p>
     </td>
-    <td class="p-4 border-b border-blue-gray-50">
-
-        <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{-- {{ $u->estado }} --}} Fresco </p>
-
-      </p>
-    </td>
-    <td class="p-4 border-b border-blue-gray-50">
-
-        <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{-- {{ $u->idSede }} --}} Córdoba</p>
-
-      </p>
-    </td>
-    <td class="p-4 border-b border-blue-gray-50">
-        <img id="img" src="" alt="img">
-    </td>
-    <td id="botones" class="flex flex-col gap-2">
-      <button class="px-5 py-2 bg-blue-500 text-white border-none rounded-md cursor-pointer"{{-- id="{{$u->id}}" --}} class="modificar">Modificar</button>
-      <button class="px-5 py-2 bg-red-600 text-white border-none rounded-md cursor-pointer"  {{-- id="{{$u->id}}" --}} class="desactivar">Desactivar</button>
-      <button class="px-5 py-2 bg-green-500  text-white border-none rounded-md cursor-pointer" {{-- id="{{$u->id}}" --}} class="activar">Activar</button>
-    </td>        
-      </tr>
-      
-      {{-- @endforeach --}}
-
-    </tbody>
+        <td class="p-4 border-b border-blue-gray-50">
+            <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $m->fecha }}</p>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+            <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $m->codigo }}</p>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+            <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $m->organo }}</p>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+            <p id="{{ $m->idTipo }}" class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 tipo"></p>
+          </td>
+          <td class="p-4 border-b border-blue-gray-50">
+            <p id="{{ $m->idFormato }}" class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 formato"></p>
+          </td>
+          <td class="p-4 border-b border-blue-gray-50">
+            <p id="{{ $m->idCalidad }}" class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 calidad"></p>
+          </td>
+          <td class="p-4 border-b border-blue-gray-50">
+            <p id="{{ $m->idUsuario }}" class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 usuario"></p>
+          </td>
+          <td class="p-4 border-b border-blue-gray-50">
+            <p id="{{ $m->idSede }}" class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 sede"></p>
+          </td>
+          <td>
+            <button style="padding: 10px 20px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$m->id}}" class="modificar">Modificar</button>
+          <button style="padding: 10px 20px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$m->id}}" class="eliminar">Eliminar</button>
+          </td>
+        </tr>
+    @endforeach
+</tbody>
 </table>
 
-<form id="modal">
+<form id="modal_add" class="p-6 bg-gray-100 rounded-lg shadow-md">
   @csrf
-  <label for="">Email</label><br>
-  <input type="text" id=""/><br>
-
-  <label for="">Contraseña</label><br>
-  <input type="text" id=""/><br> 
-
-  <label for="">Rol</label><br>
-  <select id="">
-      <option value="usuario">Usuario</option>
-      <option value="administrador">Administrador</option>
-  </select><br> 
-
-  <label for="">Estado</label><br>
-  <select id="">
-      <option value="1">Activo</option>
-      <option value="0">Pausado</option>
-  </select><br> 
-
-  <label for="">Sede</label><br>
-  <select id="">
-      {{-- @foreach ($sedes as $se)
-      <option id="{{$se->id}}">{{$se->nombre}}</option>
-      @endforeach --}}
-  </select><br> 
+  <div class="mb-4">
+      <label for="fecha" class="block text-gray-700 font-medium mb-1">Fecha de recolección:</label>
+      <input type="date" id="fecha" name="fecha" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+  </div>
+  <div class="mb-4">
+      <label for="codigo" class="block text-gray-700 font-medium mb-1">Código muestra:</label>
+      <input type="text" id="codigo" name="codigo" placeholder="Código" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+  </div>
+  <div class="mb-4">
+      <label for="organo" class="block text-gray-700 font-medium mb-1">Órgano:</label>
+      <select id="organo" name="organo" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+          <option value="BC">Corazón</option>
+          <option value="BB">Bazo</option>
+          <option value="BH">Hígado</option>
+          <option value="BF">Feto</option>
+          <option value="BES">Estómago</option>
+          <option value="BCB">Cerebro</option>
+          <option value="BR">Riñón</option>
+          <option value="BL">Lengua</option>
+          <option value="BU">Útero</option>
+          <option value="BO">Ovario</option>
+          <option value="BI">Intestino</option>
+          <option value="BTF">Trompa de Falopio</option>
+          <option value="BEF">Esófago</option>
+          <option value="BPA">Páncreas</option>
+          <option value="BT">Testículo</option>
+          <option value="BPI">Piel</option>
+          <option value="BP">Pulmón</option>
+      </select>
+  </div>
+  <div class="grid grid-cols-2 gap-4">
+      <div>
+          <label for="idTipo" class="block text-gray-700 font-medium mb-1">idTipo:</label>
+          <input type="text" id="idTipo" name="idTipo" placeholder="idTipo" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+      </div>
+      <div>
+          <label for="idFormato" class="block text-gray-700 font-medium mb-1">idFormato:</label>
+          <input type="text" id="idFormato" name="idFormato" placeholder="idFormato" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+      </div>
+      <div>
+          <label for="idCalidad" class="block text-gray-700 font-medium mb-1">idCalidad:</label>
+          <input type="text" id="idCalidad" name="idCalidad" placeholder="idCalidad" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+      </div>
+      <div>
+          <label for="idUsuario" class="block text-gray-700 font-medium mb-1">idUsuario:</label>
+          <input type="text" id="idUsuario" name="idUsuario" placeholder="idUsuario" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+      </div>
+      <div>
+          <label for="idSede" class="block text-gray-700 font-medium mb-1">idSede:</label>
+          <input type="text" id="idSede" name="idSede" placeholder="idSede" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+      </div>
+  </div>
 </form>
 
-<form id="modal_update">
+<form id="modal_update" class="p-6 bg-gray-100 rounded-lg shadow-md">
   @csrf
-  <label for="">Email</label><br>
-  <input type="text" id=""/><br>
-
-  <label for="">Contraseña</label><br>
-  <input type="text" id=""/><br> 
-
-  <label for="">Rol</label><br>
-  <select id="">
-      <option value="usuario">Usuario</option>
-      <option value="administrador">Administrador</option>
-  </select><br> 
-
-  <label for="">Estado</label><br>
-  <select id="">
-      <option value="1">Activo</option>
-      <option value="0">Pausado</option>
-  </select><br> 
-
-  <label for="">Sede</label><br>
-  <select id="">
-      {{-- @foreach ($sedes as $se)
-      <option id="{{$se->id}}">{{$se->nombre}}</option>
-      @endforeach --}}
-  </select><br> 
+  <div class="mb-4">
+      <label for="fecha" class="block text-gray-700 font-medium mb-1">Fecha de recolección:</label>
+      <input type="date" id="fecha2" name="fecha" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+  </div>
+  <div class="mb-4">
+      <label for="codigo" class="block text-gray-700 font-medium mb-1">Código muestra:</label>
+      <input type="text" id="codigo2" name="codigo" placeholder="Código" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+  </div>
+  <div class="mb-4">
+      <label for="organo" class="block text-gray-700 font-medium mb-1">Órgano:</label>
+      <select id="organo2" name="organo" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+          <option value="BC">Corazón</option>
+          <option value="BB">Bazo</option>
+          <option value="BH">Hígado</option>
+          <option value="BF">Feto</option>
+          <option value="BES">Estómago</option>
+          <option value="BCB">Cerebro</option>
+          <option value="BR">Riñón</option>
+          <option value="BL">Lengua</option>
+          <option value="BU">Útero</option>
+          <option value="BO">Ovario</option>
+          <option value="BI">Intestino</option>
+          <option value="BTF">Trompa de Falopio</option>
+          <option value="BEF">Esófago</option>
+          <option value="BPA">Páncreas</option>
+          <option value="BT">Testículo</option>
+          <option value="BPI">Piel</option>
+          <option value="BP">Pulmón</option>
+      </select>
+  </div>
+  <div class="grid grid-cols-2 gap-4">
+      <div>
+          <label for="idTipo" class="block text-gray-700 font-medium mb-1">idTipo:</label>
+          <input type="text" id="idTipo2" name="idTipo" placeholder="idTipo" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+      </div>
+      <div>
+          <label for="idFormato" class="block text-gray-700 font-medium mb-1">idFormato:</label>
+          <input type="text" id="idFormato2" name="idFormato" placeholder="idFormato" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+      </div>
+      <div>
+          <label for="idCalidad" class="block text-gray-700 font-medium mb-1">idCalidad:</label>
+          <input type="text" id="idCalidad2" name="idCalidad" placeholder="idCalidad" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+      </div>
+      <div>
+          <label for="idUsuario" class="block text-gray-700 font-medium mb-1">idUsuario:</label>
+          <input type="text" id="idUsuario2" name="idUsuario" placeholder="idUsuario" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+      </div>
+      <div>
+          <label for="idSede" class="block text-gray-700 font-medium mb-1">idSede:</label>
+          <input type="text" id="idSede2" name="idSede" placeholder="idSede" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+      </div>
+  </div>
 </form>
 </div>
 @endsection
-@vite(['resources/css/app.css','resources/js/app.js'])
+@vite(['resources/js/muestras.js'])

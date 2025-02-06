@@ -6,6 +6,7 @@ use App\Http\Controllers\TipoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MuestraController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\MuestrasController;
 use App\Http\Controllers\InterpretacionesController;
 
 Route::get('/', function () {
@@ -28,7 +29,7 @@ Route::get('/admin',[UsuarioController::class,'show'])->name('administrador');
 Route::get('/logout', [UsuarioController::class, 'logout'])->name('logout');
 
 
-Route::post('/admin/create',[UsuarioController::class,'create'])->name('crear.usuario');;
+Route::post('/admin/create',[UsuarioController::class,'create'])->name('crear.usuario');
 
 Route::delete('/admin/desactivar/{id}',[UsuarioController::class,'desactivar']);
 
@@ -51,14 +52,24 @@ Route::get('/interpretaciones',[InterpretacionesController::class,'index($amils)
 
 Route::get('/sede/{id}',[UsuarioController::class,'sedeUsuario']);
 
-Route::get('/listamuestras', function () {
-    return view('listamuestras');
-})->name('listamuestras');
+Route::get('/listamuestras',[MuestraController::class,'show'])->name('listamuestras');
 
-Route::get('/muestrasadmin', function () {
-    return view('muestrasadmin');
-})->name('muestrasadmin');
+Route::post('/listamuestras/create',[MuestraController::class,'create'])->name('crear.muestra');
 
-Route::get('/formulariomuestra', function () {
-    return view('formulariomuestra');
-})->name('formulariomuestra');
+Route::put('/listamuestras/update/{id}', [MuestraController::class, 'update']);
+
+Route::get('/muestra/{id}',[MuestraController::class,'muestra']);
+
+Route::delete('/listamuestras/destroy/{id}',[MuestraController::class,'destroy']);
+
+
+
+Route::get('/listamuestras/tipo/{id}',[MuestraController::class,'tipo']);
+Route::get('/listamuestras/formato/{id}',[MuestraController::class,'formato']);
+Route::get('/listamuestras/calidad/{id}',[MuestraController::class,'calidad']);
+Route::get('/listamuestras/usuario/{id}',[MuestraController::class,'usuario']);
+Route::get('/listamuestras/sede/{id}',[MuestraController::class,'sede']);
+
+
+
+Route::get('/muestrasadmin',[MuestraController::class,'showAdmin'])->name('muestrasadmin');

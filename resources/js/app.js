@@ -105,7 +105,7 @@ desactivar.forEach(boton => {
         })
         .then(data => {
             console.log(data);
-            Swal.fire('Éxito', 'Usuario eliminado correctamente', 'success');
+            Swal.fire('Éxito', 'Usuario Desactivado correctamente', 'success');
             location.reload()
         })
         .catch(error => {
@@ -144,7 +144,7 @@ activar.forEach(boton => {
         })
         .then(data => {
             console.log(data);
-            Swal.fire('Éxito', 'Usuario eliminado correctamente', 'success');
+            Swal.fire('Éxito', 'Usuario Activado correctamente', 'success');
             location.reload()
         })
         .catch(error => {
