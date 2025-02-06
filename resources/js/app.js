@@ -272,8 +272,6 @@ function rendermodal_update(datos) {
         return;
     }
 
-    const modal_update = document.getElementById('modal_update');
-
     const email = modal_update.querySelector('#email2');
     const password = modal_update.querySelector('#password2');
     const rol = modal_update.querySelector('#rol2');

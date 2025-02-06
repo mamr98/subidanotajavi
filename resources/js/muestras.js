@@ -312,8 +312,6 @@ const modal_update = document.getElementById('modal_update');
         return;
     }
 
-    const modal_update = document.getElementById('modal_update');
-
     const fecha = modal_update.querySelector('#fecha2');
     const codigo = modal_update.querySelector('#codigo2');
     const organo = modal_update.querySelector('#organo2');
@@ -331,6 +329,7 @@ const modal_update = document.getElementById('modal_update');
 
     fecha.value = datos.fecha || "";
     codigo.value = datos.codigo || "";
+    organo.value = datos.organo || "";
     idTipo.value = datos.idTipo || "";
     idFormato.value = datos.idFormato || "";
     idCalidad.value = datos.idCalidad || "";
