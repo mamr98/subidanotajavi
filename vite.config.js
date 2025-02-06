@@ -13,5 +13,6 @@ export default defineConfig({
     build: {
         manifest: true, // Asegúrate de que el manifiesto se genere correctamente
         outDir: 'public/build', // Asegúrate de que los archivos se generen en esta carpeta
+        emptyOutDir: true, // Esto vacía la carpeta 'public/build' antes de generar nuevos archivos
       },
 });
