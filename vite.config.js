@@ -10,4 +10,8 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    build: {
+        manifest: true, // Asegúrate de que el manifiesto se genere correctamente
+        outDir: 'public/build', // Asegúrate de que los archivos se generen en esta carpeta
+      },
 });
