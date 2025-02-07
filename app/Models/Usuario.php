@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Muestra;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Usuario extends Model
 {
@@ -25,5 +26,6 @@ class Usuario extends Model
     public function muestras(){
         return $this->hasMany(Muestra::class,'idUsuario','id');
     }
-    use HasFactory;
+    use HasFactory, SoftDeletes; 
+    //use HasRoles;
 }
