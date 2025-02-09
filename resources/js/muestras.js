@@ -20,16 +20,29 @@ const modal_update = document.getElementById('modal_update');
          if (result.isConfirmed) {
             const fecha =  modal_add.querySelector('#fecha').value
             const codigo =  modal_add.querySelector('#codigo').value
-            const organo = modal_add.querySelector("#organo")
-            const selectedOption = organo.options[organo.selectedIndex];
-            const valueOrgano = selectedOption.value;
-            const idTipo =  modal_add.querySelector('#idTipo').value
-            const idFormato =  modal_add.querySelector('#idFormato').value
-            const idCalidad =  modal_add.querySelector('#idCalidad').value
-            const idUsuario =  modal_add.querySelector('#idUsuario').value
-            const idSede =  modal_add.querySelector('#idSede').value
+            const organo = modal_add.querySelector("#organo");
+            const selectedOrganoOption = organo.options[organo.selectedIndex];
+            const valueOrgano = selectedOrganoOption.value;
 
-            console.log(fecha+codigo+valueOrgano+idTipo+idFormato+idCalidad+idUsuario+idSede)
+            const idTipoElement = document.querySelector("#idTipo");
+            const selectedIdTipoOption = idTipoElement.options[idTipoElement.selectedIndex];
+            const idTipo = selectedIdTipoOption.getAttribute("id");
+
+            const idFormatoElement = document.querySelector("#idFormato");
+            const selectedIdFormatoOption = idFormatoElement.options[idFormatoElement.selectedIndex];
+            const idFormato = selectedIdFormatoOption.getAttribute("id");
+
+            const idCalidadElement = document.querySelector("#idCalidad");
+            const selectedIdCalidadOption = idCalidadElement.options[idCalidadElement.selectedIndex];
+            const idCalidad = selectedIdCalidadOption.getAttribute("id");
+
+            const idUsuarioElement = document.querySelector("#idUsuario");
+            const selectedIdUsuarioOption = idUsuarioElement.options[idUsuarioElement.selectedIndex];
+            const idUsuario = selectedIdUsuarioOption.getAttribute("id");
+
+            const idSedeElement = document.querySelector("#idSede");
+            const selectedIdSedeOption = idSedeElement.options[idSedeElement.selectedIndex];
+            const idSede = selectedIdSedeOption.getAttribute("id");
  
              const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
  
@@ -243,11 +256,25 @@ const modal_update = document.getElementById('modal_update');
                             const codigo = modal_update.querySelector('#codigo2').value;
                             const organoSelect = modal_update.querySelector("#organo2");
                             const valueOrgano = organoSelect.options[organoSelect.selectedIndex].value;
-                            const idTipo = modal_update.querySelector('#idTipo2').value;
-                            const idFormato = modal_update.querySelector('#idFormato2').value;
-                            const idCalidad = modal_update.querySelector('#idCalidad2').value;
-                            const idUsuario = modal_update.querySelector('#idUsuario2').value;
-                            const idSede = modal_update.querySelector('#idSede2').value;
+                            const idTipoElement = document.querySelector("#idTipo");
+                            const selectedIdTipoOption = idTipoElement.options[idTipoElement.selectedIndex];
+                            const idTipo = selectedIdTipoOption.getAttribute("id");
+
+                            const idFormatoElement = document.querySelector("#idFormato2");
+                            const selectedIdFormatoOption = idFormatoElement.options[idFormatoElement.selectedIndex];
+                            const idFormato = selectedIdFormatoOption.getAttribute("id");
+
+                            const idCalidadElement = document.querySelector("#idCalidad2");
+                            const selectedIdCalidadOption = idCalidadElement.options[idCalidadElement.selectedIndex];
+                            const idCalidad = selectedIdCalidadOption.getAttribute("id");
+
+                            const idUsuarioElement = document.querySelector("#idUsuario2");
+                            const selectedIdUsuarioOption = idUsuarioElement.options[idUsuarioElement.selectedIndex];
+                            const idUsuario = selectedIdUsuarioOption.getAttribute("id");
+
+                            const idSedeElement = document.querySelector("#idSede2");
+                            const selectedIdSedeOption = idSedeElement.options[idSedeElement.selectedIndex];
+                            const idSede = selectedIdSedeOption.getAttribute("id");
 
                             const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
@@ -312,8 +339,6 @@ const modal_update = document.getElementById('modal_update');
         return;
     }
 
-    const modal_update = document.getElementById('modal_update');
-
     const fecha = modal_update.querySelector('#fecha2');
     const codigo = modal_update.querySelector('#codigo2');
     const organo = modal_update.querySelector('#organo2');
@@ -331,11 +356,113 @@ const modal_update = document.getElementById('modal_update');
 
     fecha.value = datos.fecha || "";
     codigo.value = datos.codigo || "";
-    idTipo.value = datos.idTipo || "";
-    idFormato.value = datos.idFormato || "";
-    idCalidad.value = datos.idCalidad || "";
-    idUsuario.value = datos.idUsuario || "";
-    idSede.value = datos.idSede || "";
+    fetch(`listamuestras/tipo/${datos.idTipo}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al obtener la sede`);
+        }
+        return response.json();
+    })
+    .then(sedeData => {
+        idTipo.value = sedeData.nombre; 
+    })
+    .catch(error => {
+        console.error("Error al obtener la sede:", error);
+        alert("Error al cargar la información de la sede. Por favor, inténtelo de nuevo más tarde.")
+    });
+    fetch(`listamuestras/formato/${datos.idFormato}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al obtener la sede`);
+        }
+        return response.json();
+    })
+    .then(sedeData => {
+        idFormato.value = sedeData.nombre; 
+    })
+    .catch(error => {
+        console.error("Error al obtener la sede:", error);
+        alert("Error al cargar la información de la sede. Por favor, inténtelo de nuevo más tarde.")
+    });
+
+    fetch(`listamuestras/calidad/${datos.idCalidad}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al obtener la sede`);
+        }
+        return response.json();
+    })
+    .then(sedeData => {
+        idCalidad.value = sedeData.nombre; 
+    })
+    .catch(error => {
+        console.error("Error al obtener la sede:", error);
+        alert("Error al cargar la información de la sede. Por favor, inténtelo de nuevo más tarde.")
+    });
+
+
+
+    fetch(`listamuestras/usuario/${datos.idUsuario}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al obtener la sede`);
+        }
+        return response.json();
+    })
+    .then(sedeData => {
+        idUsuario.value = sedeData.email; 
+    })
+    .catch(error => {
+        console.error("Error al obtener la sede:", error);
+        alert("Error al cargar la información de la sede. Por favor, inténtelo de nuevo más tarde.")
+    });
+
+
+    fetch(`listamuestras/sede/${datos.idSede}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al obtener la sede`);
+        }
+        return response.json();
+    })
+    .then(sedeData => {
+        console.log("Datos de la sede recibidos:", sedeData);
+        idSede.value = sedeData.nombre; 
+    })
+    .catch(error => {
+        console.error("Error al obtener la sede:", error);
+        alert("Error al cargar la información de la sede. Por favor, inténtelo de nuevo más tarde.")
+    });
 
     return modal_update;
 }

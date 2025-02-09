@@ -1,4 +1,5 @@
 @extends('adminlte::page')
+@vite(['resources/js/muestras.js','resources/css/app.css'])
 <meta content="{{ csrf_token() }}" name="csrf-token" />
 
 @section('content')
@@ -127,84 +128,123 @@ class="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-whi
       </select>
   </div>
   <div class="grid grid-cols-2 gap-4">
-      <div>
-          <label for="idTipo" class="block text-gray-700 font-medium mb-1">idTipo:</label>
-          <input type="text" id="idTipo" name="idTipo" placeholder="idTipo" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+    <div>
+        <label for="idTipo">Tipo</label><br>
+        <select id="idTipo">
+            @foreach ($tipos as $ti)
+            <option id="{{$ti->id}}">{{$ti->nombre}}</option>
+            @endforeach
+        </select><br> 
       </div>
       <div>
-          <label for="idFormato" class="block text-gray-700 font-medium mb-1">idFormato:</label>
-          <input type="text" id="idFormato" name="idFormato" placeholder="idFormato" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        <label for="idFormato">Formato</label><br>
+        <select id="idFormato">
+            @foreach ($formatos as $fo)
+            <option id="{{$fo->id}}">{{$fo->nombre}}</option>
+            @endforeach
+        </select><br> 
       </div>
       <div>
-          <label for="idCalidad" class="block text-gray-700 font-medium mb-1">idCalidad:</label>
-          <input type="text" id="idCalidad" name="idCalidad" placeholder="idCalidad" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        <label for="idCalidad">Calidad</label><br>
+        <select id="idCalidad">
+            @foreach ($calidades as $ca)
+            <option id="{{$ca->id}}">{{$ca->nombre}}</option>
+            @endforeach
+        </select><br> 
       </div>
       <div>
-          <label for="idUsuario" class="block text-gray-700 font-medium mb-1">idUsuario:</label>
-          <input type="text" id="idUsuario" name="idUsuario" placeholder="idUsuario" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        <label for="idUsuario">Usuario</label><br>
+        <select id="idUsuario">
+            @foreach ($usuarios as $us)
+            <option id="{{$us->id}}">{{$us->email}}</option>
+            @endforeach
+        </select><br> 
       </div>
       <div>
-          <label for="idSede" class="block text-gray-700 font-medium mb-1">idSede:</label>
-          <input type="text" id="idSede" name="idSede" placeholder="idSede" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        <label for="idSede">Sede</label><br>
+        <select id="idSede">
+            @foreach ($sedes as $se)
+            <option id="{{$se->id}}">{{$se->nombre}}</option>
+            @endforeach
+        </select><br> 
       </div>
   </div>
 </form>
 
 <form id="modal_update" class="p-6 bg-gray-100 rounded-lg shadow-md">
-  @csrf
-  <div class="mb-4">
-      <label for="fecha" class="block text-gray-700 font-medium mb-1">Fecha de recolección:</label>
-      <input type="date" id="fecha2" name="fecha" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
-  </div>
-  <div class="mb-4">
-      <label for="codigo" class="block text-gray-700 font-medium mb-1">Código muestra:</label>
-      <input type="text" id="codigo2" name="codigo" placeholder="Código" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
-  </div>
-  <div class="mb-4">
-      <label for="organo" class="block text-gray-700 font-medium mb-1">Órgano:</label>
-      <select id="organo2" name="organo" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
-          <option value="BC">Corazón</option>
-          <option value="BB">Bazo</option>
-          <option value="BH">Hígado</option>
-          <option value="BF">Feto</option>
-          <option value="BES">Estómago</option>
-          <option value="BCB">Cerebro</option>
-          <option value="BR">Riñón</option>
-          <option value="BL">Lengua</option>
-          <option value="BU">Útero</option>
-          <option value="BO">Ovario</option>
-          <option value="BI">Intestino</option>
-          <option value="BTF">Trompa de Falopio</option>
-          <option value="BEF">Esófago</option>
-          <option value="BPA">Páncreas</option>
-          <option value="BT">Testículo</option>
-          <option value="BPI">Piel</option>
-          <option value="BP">Pulmón</option>
-      </select>
-  </div>
-  <div class="grid grid-cols-2 gap-4">
+    @csrf
+    <div class="mb-4">
+        <label for="fecha" class="block text-gray-700 font-medium mb-1">Fecha de recolección:</label>
+        <input type="date" id="fecha2" name="fecha" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+    </div>
+    <div class="mb-4">
+        <label for="codigo" class="block text-gray-700 font-medium mb-1">Código muestra:</label>
+        <input type="text" id="codigo2" name="codigo" placeholder="Código" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+    </div>
+    <div class="mb-4">
+        <label for="organo" class="block text-gray-700 font-medium mb-1">Órgano:</label>
+        <select id="organo2" name="organo" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            <option value="BC">Corazón</option>
+            <option value="BB">Bazo</option>
+            <option value="BH">Hígado</option>
+            <option value="BF">Feto</option>
+            <option value="BES">Estómago</option>
+            <option value="BCB">Cerebro</option>
+            <option value="BR">Riñón</option>
+            <option value="BL">Lengua</option>
+            <option value="BU">Útero</option>
+            <option value="BO">Ovario</option>
+            <option value="BI">Intestino</option>
+            <option value="BTF">Trompa de Falopio</option>
+            <option value="BEF">Esófago</option>
+            <option value="BPA">Páncreas</option>
+            <option value="BT">Testículo</option>
+            <option value="BPI">Piel</option>
+            <option value="BP">Pulmón</option>
+        </select>
+    </div>
+    <div class="grid grid-cols-2 gap-4">
       <div>
-          <label for="idTipo" class="block text-gray-700 font-medium mb-1">idTipo:</label>
-          <input type="text" id="idTipo2" name="idTipo" placeholder="idTipo" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
-      </div>
-      <div>
-          <label for="idFormato" class="block text-gray-700 font-medium mb-1">idFormato:</label>
-          <input type="text" id="idFormato2" name="idFormato" placeholder="idFormato" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
-      </div>
-      <div>
-          <label for="idCalidad" class="block text-gray-700 font-medium mb-1">idCalidad:</label>
-          <input type="text" id="idCalidad2" name="idCalidad" placeholder="idCalidad" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
-      </div>
-      <div>
-          <label for="idUsuario" class="block text-gray-700 font-medium mb-1">idUsuario:</label>
-          <input type="text" id="idUsuario2" name="idUsuario" placeholder="idUsuario" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
-      </div>
-      <div>
-          <label for="idSede" class="block text-gray-700 font-medium mb-1">idSede:</label>
-          <input type="text" id="idSede2" name="idSede" placeholder="idSede" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
-      </div>
-  </div>
-</form>
+          <label for="idTipo">Tipo</label><br>
+          <select id="idTipo2">
+              @foreach ($tipos as $ti)
+              <option id="{{$ti->id}}">{{$ti->nombre}}</option>
+              @endforeach
+          </select><br> 
+        </div>
+        <div>
+          <label for="idFormato">Formato</label><br>
+          <select id="idFormato2">
+              @foreach ($formatos as $fo)
+              <option id="{{$fo->id}}">{{$fo->nombre}}</option>
+              @endforeach
+          </select><br> 
+        </div>
+        <div>
+          <label for="idCalidad">Calidad</label><br>
+          <select id="idCalidad2">
+              @foreach ($calidades as $ca)
+              <option id="{{$ca->id}}">{{$ca->nombre}}</option>
+              @endforeach
+          </select><br> 
+        </div>
+        <div>
+          <label for="idUsuario">Usuario</label><br>
+          <select id="idUsuario2">
+              @foreach ($usuarios as $us)
+              <option id="{{$us->id}}">{{$us->email}}</option>
+              @endforeach
+          </select><br> 
+        </div>
+        <div>
+          <label for="idSede">Sede</label><br>
+          <select id="idSede2">
+              @foreach ($sedes as $se)
+              <option id="{{$se->id}}">{{$se->nombre}}</option>
+              @endforeach
+          </select><br> 
+        </div>
+    </div>
+  </form>
 </div>
 @endsection
-@vite(['resources/js/muestras.js'])
