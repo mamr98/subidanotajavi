@@ -1,31 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta content="{{ csrf_token() }}" name="csrf-token" />
-    <link rel="shortcut icon" href="{{asset('logoMedac.ico')}}" type="image/x-icon">
-    <title>Muestras</title>
-</head>
-<body class="bg-slate-200">
-<nav class="bg-white border-gray-200 dark:bg-gray-900">
-    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <img class="w-22 h-12" src="{{asset('LogoMedac.png')}}" alt="Logo medac">
-    <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-        <a href="{{ route('logout') }}"><button type="button" class="text-white font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cerrar Sesion</button>
-      </button></a>
-    </div>
-      <div class="flex-1 flex justify-center md:order-1">
-            @isset($email)
-            <span class="text-lg hover:text-blue-500 font-semibold whitespace-nowrap dark:text-white">Has iniciado sesion con {{$email}}</span>
-            @endisset
-        </div>
-    </div>
-  </nav>
-
-  
-  <h1 class="flex items-center text-sky-950 text-5xl mt-28 -mb-44 justify-center font-bold">Lista muestras</h1>
+@extends('adminlte::page')
+<meta content="{{ csrf_token() }}" name="csrf-token" />
+@section('content')
+<h1 class="flex items-center text-sky-950 text-5xl -mb-44 justify-center font-bold">Muestras</h1>
   <div class="min-h-screen flex flex-col items-center justify-center">
     <div class="bg-white p-6 rounded-lg shadow-lg mb-10 inline-block max-w-fit">
         <table class="w-full text-left table-auto min-w-max">
@@ -265,6 +241,5 @@
       </div>
     </form>
 
-</body>
 @vite(['resources/css/app.css', 'resources/js/muestras.js'])
-</html>
+@endsection

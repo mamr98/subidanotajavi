@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@vite(['resources/js/muestras.js','resources/css/app.css'])
+@vite(['resources/js/muestras.js'])
 <meta content="{{ csrf_token() }}" name="csrf-token" />
 
 @section('content')

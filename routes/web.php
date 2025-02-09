@@ -13,6 +13,10 @@ Route::get('/', function () {
     return view('login');
 })->name('login');
 
+Route::get('/inicio', function () {
+    return view('inicio');
+})->name('inicio');
+
 Route::get('/usuarios', [UserController::class,'all']);
 
 /* Route::get('/', [TipoController::class, 'mostrar']); */
