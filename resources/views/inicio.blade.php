@@ -7,15 +7,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="shortcut icon" href="{{ asset('logoMedac.ico') }}" type="image/x-icon">
     <title>Inicio</title>
+    @vite(['resources/css/app.css'])
 </head>
 
 <body class="bg-slate-200">
-    <nav class="bg-white border-gray-200 dark:bg-gray-900">
+    <nav class="bg-[#111828] border-gray-200 dark:bg-gray-900">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <img class="w-22 h-12" src="{{ asset('LogoMedac.png') }}" alt="Logo medac">
             <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                 <a href="{{ route('logout') }}"><button type="button"
-                        class="text-white font-medium rounded-lg text-sm px-4 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Iniciar Sesión</button>
+                        class="px-4 py-2 bg-blue-600 font-semibold text-white rounded-md shadow hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Iniciar Sesión</button>
                     </button></a>
             </div>
             <div class="flex-1 flex justify-center md:order-1">
@@ -32,11 +33,11 @@
             <div class="mt-4">
                 <a href="{{ route('logout') }}">
                     <button type="button"
-                        class="text-white  font-medium rounded-lg text-xl px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        class="text-white bg-blue-600 font-medium rounded-lg text-xl px-4 py-2 text-center hover:bg-blue-700 focus:ring-2 focus:ring-blue-500">
                         Crear Muestra
                     </button>
                     <button type="button"
-                        class="text-white font-medium rounded-lg text-xl px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        class="text-white bg-blue-600 font-medium rounded-lg text-xl px-4 py-2 text-center hover:bg-blue-700 focus:ring-2 focus:ring-blue-500">
                          Ver Muestras
                     </button>
                 </a>
@@ -64,6 +65,6 @@
     </footer>    
 
 </body>
-@vite(['resources/css/app.css'])
+
 
 </html>
