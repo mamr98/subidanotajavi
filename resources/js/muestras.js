@@ -5,11 +5,11 @@ const modificar = document.querySelectorAll('.modificar');
 const eliminar = document.querySelectorAll('.eliminar');
 const modal_add = document.querySelector('#modal_add')
 const modal_update = document.getElementById('modal_update');
- modal_add.style.visibility="hidden"
- modal_update.style.visibility="hidden"
+ modal_add.style.display = "none";
+ modal_update.style.display = "none";
 
  crearMuestra.addEventListener('click', () => {
-     modal_add.style.visibility = "";
+     modal_add.style.display = "block";
  
      Swal.fire({
          title: 'Introduce los datos de la muestra',
@@ -215,7 +215,7 @@ const modal_update = document.getElementById('modal_update');
 
   modificar.forEach(boton => {
     boton.addEventListener('click', () => {
-        modal_update.style.visibility = ""; // O modal_update.style.display = "block";
+        modal_update.style.display = "block"; // O modal_update.style.display = "block";
 
         const id = boton.id;
         console.log("ID a enviar al fetch:", id);

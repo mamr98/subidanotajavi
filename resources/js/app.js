@@ -6,13 +6,13 @@ import Swal from 'sweetalert2';
 const crearUsuario = document.querySelector('#crear_usuario');
 const modal = document.querySelector('#modal')
 const modal_update = document.getElementById('modal_update');
- modal.style.visibility="hidden"
- modal_update.style.visibility="hidden"
+ modal.style.display = "none";
+ modal_update.style.display = "none";
 
 
 
 crearUsuario.addEventListener('click', () => {
-    modal.style.visibility = "";
+    modal.style.display = "block";
 
     Swal.fire({
         title: 'Introduce los datos del usuario',
@@ -159,7 +159,7 @@ const modificar = document.querySelectorAll('.modificar'); // Obtén todos los b
 
 modificar.forEach(boton => { // Itera sobre cada botón
     boton.addEventListener('click', () => { // Añade el listener a *cada* botón
-        modal_update.style.visibility = "";// o modal.style.display = "block"; si usas display
+        modal_update.style.display = "block";// o modal.style.display = "block"; si usas display
 
         const id = boton.id; // Usa boton.id, no modificar.id
         console.log("ID a enviar al fetch:", id);
