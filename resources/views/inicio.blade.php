@@ -78,6 +78,29 @@
         </div>
     </section>
     
+    <section class=" mx-auto px-4 py-12">
+        <div class="max-w-screen-xl mx-auto grid md:grid-cols-4 gap-6">
+            <div class="relative h-64 bg-cover bg-center flex flex-col justify-end items-center text-black p-6 rounded-lg shadow-lg" style="background-image: url('david.png');">
+                <h2 class="relative text-2xl font-bold">David Peláez</h2>
+                <p class="relative mt-2 text-center">Desarrollador Frontend</p>
+            </div>
+    
+            <div class="relative h-64 bg-cover bg-center flex flex-col justify-end items-center text-black p-6 rounded-lg shadow-lg" style="background-image: url('marcos.png');">
+                <h2 class="relative text-2xl font-bold">Marcos García</h2>
+                <p class="relative mt-2 text-center">Desarrollador lógica de negocio</p>
+            </div>
+    
+            <div class="relative h-64 bg-cover bg-center flex flex-col justify-end items-center text-black p-6 rounded-lg shadow-lg" style="background-image: url('pablo.png');">
+                <h2 class="relative text-2xl font-bold">Pablo Gallego</h2>
+                <p class="relative mt-2 text-center">Diseñador</p>
+            </div>
+
+            <div class="relative h-64 bg-cover bg-center flex flex-col justify-end items-center text-black p-6 rounded-lg shadow-lg" style="background-image: url('miguel.png');">
+                <h2 class="relative text-2xl font-bold">Miguel Ángel Milena</h2>
+                <p class="relative mt-2 text-center">Gestor base de datos</p>
+            </div>
+        </div>
+    </section>
 
 
 
