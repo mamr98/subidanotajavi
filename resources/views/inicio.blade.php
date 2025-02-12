@@ -44,14 +44,14 @@
         <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center">
             <h1 class="text-white text-5xl font-bold">Bienvenido a Laboratorio Medac</h1>
             <div class="mt-4">
-                <p class="text-lg text-center font-bold text-white">
+                <p class="text-lg text-center font-bold text-white max-w-4xl">
                     Gestión avanzada y segura de muestras para investigaciones científicas de laboratorio. Precisión, trazabilidad y tecnología al servicio de la ciencia.
                 </p>
             </div>
         </div>
     </header>
     
-    <section class="container mx-auto p-8 text-center">
+    <section class="container mx-auto p-8 text-center max-w-6xl">
         <h2 class="text-3xl font-semibold mb-4">Web de gestión de muestras Medac</h2>
         <p class="text-gray-700">Bienvenido a la plataforma de gestión de muestras Medac, diseñada para facilitar el proceso de creación, administración y visualización de muestras de manera eficiente y organizada. Nuestra web ofrece herramientas intuitivas y funcionalidades avanzadas para que puedas optimizar tu trabajo y mejorar la experiencia de gestión. ¡Explora todo lo que tenemos para ofrecerte y comienza a gestionar tus muestras de forma sencilla y segura!</p>
     </section>
