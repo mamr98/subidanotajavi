@@ -77,3 +77,7 @@ Route::get('/listamuestras/sede/{id}',[MuestraController::class,'sede']);
 
 
 Route::get('/muestrasadmin',[MuestraController::class,'showAdmin'])->name('muestrasadmin');
+
+Route::get('/miperfil', function () {
+    return view('perfil');
+})->name('perfil');
