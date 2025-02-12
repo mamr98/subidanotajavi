@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>Inicio</b>',
+    'logo' => '<b>Admin</b>',
     'logo_img' => 'LogoMedac.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -315,7 +315,7 @@ return [
         [
             'text' => 'Sesion on',
             'url' => 'modificarUsuario',
-            'icon' => 'far fa-fw fa-file',
+            'icon' => 'far fa fa-user',
             'label_color' => 'success',
         ],
         [
@@ -329,18 +329,24 @@ return [
         [
             'text' => 'Muestras',
             'url' => 'muestrasadmin',
-            'icon' => 'far fa-fw fa-file',
+            'icon' => 'far fa fa-book',
             'label' => 4,
             'label_color' => 'success',
         ],
         [
             'text' => 'Usuarios',
             'url' => 'admin',
-            'icon' => 'far fa-fw fa-file',
+            'icon' => 'far fa fa-users',
             'label' => 4,
             'label_color' => 'success',
         ],
-        
+        [
+            'text' => 'Listamuestras',
+            'url' => 'listamuestras',
+            'icon' => 'far fa fa-flask',
+            'label' => 0,
+            'label_color' => 'success',
+        ],        
     ],
 
     /*

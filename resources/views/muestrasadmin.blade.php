@@ -77,8 +77,8 @@
                             <td class="p-4 border-b border-blue-gray-50 align-middle">
                                 <p id="{{ $m->idSede }}" class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 sede"></p>
                             </td>
-                            <td class="p-4 border-b border-blue-gray-50 align-middle">
-                                <div class="flex justify-center items-center gap-2">
+                            <td class="p-4 border-b border-blue-gray-50">
+                                <div class="d-flex justify-content-center align-items-center gap-2">
                                     <button style="padding: 10px 20px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$m->id}}" class="modificar">Modificar</button>
                                     <button style="padding: 10px 20px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$m->id}}" class="eliminar">Eliminar</button>
                                 </div>
