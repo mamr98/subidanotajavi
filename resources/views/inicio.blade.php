@@ -50,10 +50,6 @@
         </div>
     </header>
     
-    <section class="container mx-auto p-14 text-center max-w-6xl">
-        <h2 class="text-3xl font-semibold mb-4">Web de gestión de muestras Medac</h2>
-        <p class="text-gray-700">Bienvenido a la plataforma de gestión de muestras Medac, diseñada para facilitar el proceso de creación, administración y visualización de muestras de manera eficiente y organizada. Nuestra web ofrece herramientas intuitivas y funcionalidades avanzadas para que puedas optimizar tu trabajo y mejorar la experiencia de gestión. ¡Explora todo lo que tenemos para ofrecerte y comienza a gestionar tus muestras de forma sencilla y segura!</p>
-    </section>
 
     <section class="bg-sky-700 mx-auto px-4 py-12">
         <div class="max-w-screen-xl mx-auto grid md:grid-cols-3 gap-6">
@@ -75,6 +71,11 @@
                 <p class="relative mt-2 text-center">Mantén la seguridad de tus muestras con nuestros controles avanzados.</p>
             </div>
         </div>
+    </section>
+
+    <section class="container mx-auto p-14 text-center max-w-6xl">
+        <h2 class="text-3xl font-semibold mb-4">Web de gestión de muestras Medac</h2>
+        <p class="text-gray-700">Bienvenido a la plataforma de gestión de muestras Medac, diseñada para facilitar el proceso de creación, administración y visualización de muestras de manera eficiente y organizada. Nuestra web ofrece herramientas intuitivas y funcionalidades avanzadas para que puedas optimizar tu trabajo y mejorar la experiencia de gestión. ¡Explora todo lo que tenemos para ofrecerte y comienza a gestionar tus muestras de forma sencilla y segura!</p>
     </section>
     
     <section class="bg-gray-100 p-8">

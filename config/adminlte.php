@@ -198,7 +198,7 @@ return [
     'classes_content' => '',
     'classes_sidebar' => 'sidebar-dark-info bg-primary elevation-4',
     'classes_sidebar_nav' => '',
-    'classes_topnav' => 'navbar-primary navbar-light',
+    'classes_topnav' => 'navbar-primary navbar-light ',
     'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container',
 
@@ -327,13 +327,6 @@ return [
 
         ['header' => 'Páginas'],
         [
-            'text' => 'Muestras',
-            'url' => 'muestrasadmin',
-            'icon' => 'far fa fa-book',
-            'label' => 4,
-            'label_color' => 'success',
-        ],
-        [
             'text' => 'Usuarios',
             'url' => 'admin',
             'icon' => 'far fa fa-users',
@@ -341,7 +334,14 @@ return [
             'label_color' => 'success',
         ],
         [
-            'text' => 'Listamuestras',
+            'text' => 'Muestras',
+            'url' => 'muestrasadmin',
+            'icon' => 'far fa fa-book',
+            'label' => 4,
+            'label_color' => 'success',
+        ],
+        [
+            'text' => 'Listar muestras',
             'url' => 'listamuestras',
             'icon' => 'far fa fa-flask',
             'label' => 0,
