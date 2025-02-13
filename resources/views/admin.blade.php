@@ -1,12 +1,24 @@
 @extends('adminlte::page')
 <meta content="{{ csrf_token() }}" name="csrf-token" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12 d-flex justify-content-between align-items-center mt-5 mb-4">
             <h1 class="text-sky-950 text-5xl font-bold">Usuarios</h1>
-            <input type="text" id="searchInput" class="" placeholder="Busqueda por mail..." autocomplete="off">
+            <div class="position-relative flex-grow-1" style="max-width: 500px;">
+                <div class="input-group input-group-lg rounded-pill shadow-sm">
+                    <span class="input-group-text bg-transparent border-0 pe-0">
+                        <i class="bi bi-search text-secondary"></i>
+                    </span>
+                    <input 
+                        type="search"
+                        class="form-control border-0 rounded-pill" 
+                        placeholder="Buscar por email..."
+                    >
+                </div>    
+            </div>
             <button style="padding: 10px 18px; background-color: black; color: white; border: none; border-radius: 5px; cursor: pointer;" id="crear_usuario">Crear usuario</button>
         </div>
 
