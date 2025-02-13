@@ -10,7 +10,7 @@
 
             <div class="card shadow-lg">
                 <div class="card-body">
-                    <div class="space-y-4">
+                    <div class="space-y-4 pb-4">
                         <div class="form-group">
                             <label class="font-weight-bold text-gray-700">Email:</label>
                             <p class="form-control bg-light">{{-- {{ Auth::user()->email }} --}}</p>
@@ -18,7 +18,7 @@
 
                         <div class="form-group">
                             <label class="font-weight-bold text-gray-700">Contraseña:</label>
-                            <p class="form-control bg-light"></p>
+                            <p class="form-control bg-light">{{-- {{ Auth::user()->password }} --}}</p>
                         </div>
 
                         <div class="form-group">
@@ -40,9 +40,16 @@
                             <label class="font-weight-bold text-gray-700">Fecha de Registro:</label>
                             <p class="form-control bg-light">{{-- {{ Auth::user()->created_at->format('d/m/Y H:i') }} --}}</p>
                         </div>
+
+                        <div class="form-group">
+                            <label class="font-weight-bold text-gray-700">Cambiar imagen de perfil:</label>
+                            <div class="d-flex justify-content-center mb-3 mt-2"><img class="img-fluid" width="100" height="100" src="" alt=""></div>
+                            <p class="d-flex justify-content-center"><input type="file" name="Añadir imagen" id="imagen"></p>
+                            
+                        </div>
                     </div>
 
-                    <div class="text-center mt-6">
+                    <div class="text-center">
                         <a href="{{-- {{ route('perfil.edit') }} --}}" class="btn btn-primary btn-lg">
                             <i class="fas fa-edit mr-2"></i> Editar Perfil
                         </a>

@@ -154,8 +154,8 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
-    'layout_fixed_navbar' => null,
+    'layout_fixed_sidebar' => true,
+    'layout_fixed_navbar' => true,
     'layout_fixed_footer' => null,
     'layout_dark_mode' => null,
 
@@ -196,9 +196,9 @@ return [
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-dark-info bg-primary elevation-4',
+    'classes_sidebar' => 'sidebar-dark-green bg-gray elevation-4',
     'classes_sidebar_nav' => '',
-    'classes_topnav' => 'navbar-primary navbar-light ',
+    'classes_topnav' => 'navbar-dark navbar-gray',
     'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container',
 
@@ -309,21 +309,7 @@ return [
             'type' => 'fullscreen-widget',
             'topnav_right' => true,
         ],
-
-        // Sidebar items:
-        ['header' => 'Sesión'],
-        [
-            'text' => 'Sesion on',
-            'url' => 'modificarUsuario',
-            'icon' => 'far fa fa-user',
-            'label_color' => 'success',
-        ],
-        [
-            'text' => 'Cerrar Sesión',
-            'url' => 'logout',
-            'icon' => '',
-            'label_color' => 'success',
-        ],
+        // Sidebar items:       
 
         ['header' => 'Páginas'],
         [
@@ -341,12 +327,27 @@ return [
             'label_color' => 'success',
         ],
         [
-            'text' => 'Listar muestras',
+            'text' => 'Listado de muestras',
             'url' => 'listamuestras',
             'icon' => 'far fa fa-flask',
             'label' => 0,
             'label_color' => 'success',
-        ],        
+        ], 
+        
+        ['header' => 'Sesión'],
+        [
+            'text' => 'Mi perfil',
+            'url' => 'miperfil',
+            'icon' => 'far fa fa-user',
+            'label_color' => 'success',
+            'class' => 'text-white !important',
+        ],
+        [
+            'text' => 'Cerrar Sesión',
+            'url' => 'logout',
+            'icon' => '',
+            'label_color' => 'success',
+        ],
     ],
 
     /*
