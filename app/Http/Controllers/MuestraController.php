@@ -37,7 +37,7 @@ class MuestraController extends Controller
 
 public function show()
 {
-    $muestras = Muestra::all();
+    $muestras = Muestra::paginate(10);
     $tipos = Tipo::all();
     $formatos = Formato::all();
     $calidades = Calidad::all();
@@ -56,7 +56,7 @@ public function show()
 
     public function showAdmin()
     {
-        $muestras = Muestra::all();
+        $muestras = Muestra::paginate(10);
     $tipos = Tipo::all();
     $formatos = Formato::all();
     $calidades = Calidad::all();

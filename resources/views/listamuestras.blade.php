@@ -81,6 +81,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="mt-4">
+                    {{ $muestras->links() }}
+                </div>
             </div>
         </div>
 
