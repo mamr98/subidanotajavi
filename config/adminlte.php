@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'Inicio',
+    'title' => 'Laboratorio',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -63,8 +63,8 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>',
-    'logo_img' => 'LogoMedac.png',
+    'logo' => '<b>Laboratorio</b>',
+    'logo_img' => 'miguel.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -191,12 +191,12 @@ return [
     */
 
     'classes_body' => '',
-    'classes_brand' => '',
+    'classes_brand' => 'bg-gray',
     'classes_brand_text' => '',
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
-    'classes_content' => '',
-    'classes_sidebar' => 'sidebar-dark-green bg-gray elevation-4',
+    'classes_content' => 'bg-light',
+    'classes_sidebar' => 'sidebar-dark-green bg-gray elevation-4 ',
     'classes_sidebar_nav' => '',
     'classes_topnav' => 'navbar-dark navbar-gray',
     'classes_topnav_nav' => 'navbar-expand',
