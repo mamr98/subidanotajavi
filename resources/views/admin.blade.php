@@ -6,6 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-12 d-flex justify-content-between align-items-center mt-5 mb-4">
             <h1 class="text-sky-950 text-5xl font-bold">Usuarios</h1>
+            <input type="text" id="searchInput" class="" placeholder="Busqueda por mail..." autocomplete="off">
             <button style="padding: 10px 18px; background-color: black; color: white; border: none; border-radius: 5px; cursor: pointer;" id="crear_usuario">Crear usuario</button>
         </div>
 
@@ -69,7 +70,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                <div class="mt-4">
+                <div class="mt-4 d-flex justify-content-end mx-5">
                     {{ $usuarios->links() }}
                 </div>
             </div>

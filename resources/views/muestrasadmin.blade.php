@@ -87,7 +87,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                <div class="mt-4">
+                <div class="mt-4 d-flex justify-content-end mx-5">
                     {{ $muestras->links() }}
                 </div>
             </div>
