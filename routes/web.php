@@ -52,7 +52,7 @@ Route::get('/logout', [UsuarioController::class, 'logout'])->name('logout');
 
 Route::get('/laboratorio',[MuestraController::class,'index']);
 
-Route::get('/interpretaciones',[InterpretacionesController::class,'index($amils)'])->name('interpretaciones');
+Route::get('/interpretaciones',[InterpretacionesController::class,'index'])->name('interpretaciones');/* junto al index ($amils) */
 
 Route::get('/sede/{id}',[UsuarioController::class,'sedeUsuario']);
 
