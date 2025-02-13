@@ -4,10 +4,15 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-12 d-flex justify-content-between align-items-center mt-5 mb-4">
-            <h1 class="text-sky-950 text-5xl font-bold">Usuarios</h1>
-            <div class="position-relative flex-grow-1" style="max-width: 500px;">
+    <div class="row justify-content-between align-items-center mt-5 pt-5 mb-4 g-3">
+        <!-- Título - Ocupa espacio izquierdo -->
+        <div class="col-md-3 col-6 order-1">
+            <h1 class="text-sky-950 text-5xl font-bold mb-0">Usuarios</h1>
+        </div>
+        
+        <!-- Buscador - Centro en desktop, debajo en móvil -->
+        <div class="col-md-6 col-12 order-3 order-md-2 mt-3 mt-md-0">
+            <div class="mx-auto" style="max-width: 500px;">
                 <div class="input-group input-group-lg rounded-pill shadow-sm">
                     <span class="input-group-text bg-transparent border-0 pe-0">
                         <i class="bi bi-search text-secondary"></i>
@@ -19,8 +24,18 @@
                     >
                 </div>    
             </div>
-            <button style="padding: 10px 18px; background-color: black; color: white; border: none; border-radius: 5px; cursor: pointer;" id="crear_usuario">Crear usuario</button>
         </div>
+        
+        <!-- Botón - Derecha en ambas vistas -->
+        <div class="col-md-3 col-6 order-2 order-md-3 text-end">
+            <button 
+                style="padding: 10px 18px; background-color: black; color: white; border: none; border-radius: 5px; cursor: pointer;" 
+                id="crear_usuario"
+            >
+                Crear usuario
+            </button>
+        </div>
+    </div>
 
         <div class="col-12">
             <div class="table-responsive bg-white rounded-xl">
