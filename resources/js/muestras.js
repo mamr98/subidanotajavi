@@ -504,3 +504,53 @@ eliminar.forEach(boton => {
         });
 });
 });
+
+const buscador = document.querySelector("#buscador");
+const mostrar_muestras = document.querySelector("#mostrar_muestras");
+
+buscador.addEventListener("input", function () {
+    let codigo = buscador.value;
+
+    if (codigo.length > 0) {
+        fetch(`muestras/${codigo}`)
+            .then(response => {
+                if (!response.ok) {
+                    mostrar_muestras.innerHTML = `<tr><td colspan="7">No se encontraron usuarios</td></tr>`;
+                    throw new Error("Error en la consulta");
+                }
+                return response.json();
+            })
+            .then(data => {
+                mostrar_muestras.innerHTML = "";
+
+                if (data.length > 0) {
+                    data.forEach(muestra => {
+                        mostrar_muestras.innerHTML += `
+                            <tr>
+                                <td>${muestra.id}</td>
+                                <td>${muestra.fecha}</td>
+                                <td>${muestra.codigo}</td>
+                                <td>${muestra.organo}</td>
+                                <td id='${muestra.idTipo}' class='block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 tipo'></td>
+                                <td id='${muestra.idFormato}' class='block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 formato'></td>
+                                <td id='${muestra.idCalidad}' class='block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 calidad'></td>
+                                <td id='${muestra.idUsuario}' class='block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 usuario'></td>
+                                <td id='${muestra.idSede}' class='block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 sede'></td>
+                                <td>
+                                <div class="d-flex justify-content-center align-items-center gap-2">
+                                    <button class="modificar" id="${muestra.id}" style="padding: 10px 20px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer;">Modificar</button>
+                                    <button class="eliminar" id="${muestra.id}" style="padding: 10px 20px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer;">Eliminar</button>
+                                   </div>
+                                </td>
+                            </tr>`;
+                            cargarDatos()
+                    });
+                } else {
+                    mostrar_muestras.innerHTML = `<tr><td colspan="7">No se encontraron usuarios</td></tr>`;
+                }
+            })
+            .catch(error => console.error("Error:", error));
+    } else {
+        location.reload();
+    }
+});

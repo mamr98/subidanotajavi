@@ -57,11 +57,11 @@ public function show()
     public function showAdmin()
     {
         $muestras = Muestra::paginate(10);
-    $tipos = Tipo::all();
-    $formatos = Formato::all();
-    $calidades = Calidad::all();
-    $usuarios = Usuario::all();
-    $sedes = Sede::all();
+        $tipos = Tipo::all();
+        $formatos = Formato::all();
+        $calidades = Calidad::all();
+        $usuarios = Usuario::all();
+        $sedes = Sede::all();
     return view('muestrasadmin')->with([
         'muestras' => $muestras,
         'tipos' => $tipos,
@@ -132,5 +132,12 @@ public function show()
         $muestra = Muestra::where('id', $id)->first();
         return response()->json($muestra,200);
     }
+
+    public function buscarMuestra($codigo)
+{
+    $muestras = Muestra::where('codigo', 'LIKE', "%{$codigo}%")->get();
+
+    return response()->json($muestras, 200);
+}
 }
 
