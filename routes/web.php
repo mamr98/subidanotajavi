@@ -81,3 +81,7 @@ Route::get('/muestrasadmin',[MuestraController::class,'showAdmin'])->name('muest
 Route::get('/miperfil', function () {
     return view('perfil');
 })->name('perfil');
+
+
+Route::get('/usuarios/{email}', [UsuarioController::class, 'buscarUsuario'])->name('usuarios.buscar');
+
