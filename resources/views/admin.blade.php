@@ -17,7 +17,7 @@
                     <span class="input-group-text bg-transparent border-0 pe-0">
                         <i class="bi bi-search text-secondary"></i>
                     </span>
-                    <input 
+                    <input id="buscador" 
                         type="search"
                         class="form-control border-0 rounded-pill" 
                         placeholder="Buscar por email..."

@@ -52,7 +52,7 @@ Route::get('/logout', [UsuarioController::class, 'logout'])->name('logout');
 
 Route::get('/laboratorio',[MuestraController::class,'index']);
 
-Route::get('/interpretaciones',[InterpretacionesController::class,'index($amils)'])->name('interpretaciones');
+Route::get('/interpretaciones',[InterpretacionesController::class,'index'])->name('interpretaciones');/* junto al index ($amils) */
 
 Route::get('/sede/{id}',[UsuarioController::class,'sedeUsuario']);
 
@@ -81,3 +81,9 @@ Route::get('/muestrasadmin',[MuestraController::class,'showAdmin'])->name('muest
 Route::get('/miperfil', function () {
     return view('perfil');
 })->name('perfil');
+
+
+Route::get('/usuarios/{email}', [UsuarioController::class, 'buscarUsuario'])->name('usuarios.buscar');
+
+Route::get('/muestras/{codigo}', [MuestraController::class, 'buscarMuestra'])->name('muestras.buscar');
+

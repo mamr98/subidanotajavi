@@ -163,4 +163,12 @@ class UsuarioController extends Controller
 
         return redirect()->route('login'); 
 }
+
+public function buscarUsuario($email)
+{
+    $usuarios = Usuario::where('email', 'LIKE', "%{$email}%")->get();
+
+    return response()->json($usuarios, 200);
+}
+
 }

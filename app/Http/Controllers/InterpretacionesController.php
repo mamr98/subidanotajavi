@@ -10,4 +10,33 @@ class InterpretacionesController extends Controller
 
         return view('interpretaciones'); 
 }
+
+
+
+    function create(){
+        
+    }
+
+    function show(){
+        
+    }
+
+    function update(){
+        
+    }
+
+    function delete(){
+        
+    }
+
+    
+
+
+
+
+
+
+
+
+
 }
