@@ -5,12 +5,10 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-between align-items-center mt-5 pt-5 mb-4 g-3">
-        <!-- Título - Ocupa espacio izquierdo -->
         <div class="col-md-3 col-6 order-1">
             <h1 class="text-sky-950 text-5xl font-bold mb-0">Usuarios</h1>
         </div>
         
-        <!-- Buscador - Centro en desktop, debajo en móvil -->
         <div class="col-md-6 col-12 order-3 order-md-2 mt-3 mt-md-0">
             <div class="mx-auto" style="max-width: 500px;">
                 <div class="input-group input-group-lg rounded-pill shadow-sm">
@@ -26,7 +24,6 @@
             </div>
         </div>
         
-        <!-- Botón - Derecha en ambas vistas -->
         <div class="col-md-3 col-6 order-2 order-md-3 text-end">
             <button 
                 style="padding: 10px 18px; background-color: black; color: white; border: none; border-radius: 5px; cursor: pointer;" 
@@ -48,9 +45,9 @@
                             <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50 align-middle">
                                 <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">Email</p>
                             </th>
-                            <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50 align-middle">
+                            {{-- <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50 align-middle">
                                 <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">Contraseña</p>
-                            </th>
+                            </th> --}}
                             <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50 align-middle">
                                 <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">Rol</p>
                             </th>
@@ -74,9 +71,9 @@
                             <td class="p-4 border-b border-blue-gray-50 align-middle">
                                 <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $u->email }}</p>
                             </td>
-                            <td class="p-4 border-b border-blue-gray-50 align-middle">
+                            {{-- <td class="p-4 border-b border-blue-gray-50 align-middle">
                                 <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $u->password }}</p>
-                            </td>
+                            </td> --}}
                             <td class="p-4 border-b border-blue-gray-50 align-middle">
                                 <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $u->rol }}</p>
                             </td>
