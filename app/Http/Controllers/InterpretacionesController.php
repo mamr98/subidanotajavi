@@ -39,19 +39,31 @@ class InterpretacionesController extends Controller
         $usuarios = Usuario::all();
         $sedes = Sede::all();
 
-        /* return view('interpretaciones')-with([
+        return view('muestrasadmin')-with([
             'interpretacion' => $interpretacion,
             'calidad' => $calidad,
-        ]); */
+        ]);
 
     }
 
-    function update(){
-        
+    public function update(Request $request, $id)
+    {
+        $interpretacion = new Interpretacion();
+    
+        $interpretacion->calidad = $request->input('calidad');
+        $interpretacion->descripcionCalidad = $request->input('descripcionCalidad');
+        $interpretacion->interpretacionMuestra = $request->input('interpretacionMuestra');
+        $interpretacion->descripcionInterpretacion = $request->input('descripcionInterpretacion');
+
+        $interpretacion->save();
+    
+        return response()->json(['mensaje' => 'interpretacion actualizado correctamente'], 200);
     }
 
-    function delete(){
-        
+    function delete($id){
+        $interpretacion = Interpretacion::where('id', $id)->first();
+        $interpretacion->delete();
+        return response()->json(['mensaje' => 'Interpretacion eliminada correctamente'], 201);
     }
 
     
