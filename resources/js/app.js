@@ -23,7 +23,6 @@ crearUsuario.addEventListener('click', () => {
         if (result.isConfirmed) {
             const email = document.querySelector("#email").value;
             const password = document.querySelector("#password").value;
-            const rol = document.querySelector("#rol").value;
             const estado = document.querySelector("#estado").value;
             const Sede = document.querySelector("#idSede"); 
             const selectedOption = Sede.options[Sede.selectedIndex]; 
@@ -40,7 +39,6 @@ crearUsuario.addEventListener('click', () => {
                 body: JSON.stringify({
                     email: email,
                     password: password,
-                    rol: rol,
                     estado: estado,
                     idSede: idSede,
                 })
@@ -193,7 +191,6 @@ modificar.forEach(boton => { // Itera sobre cada botón
                 if (result.isConfirmed) {
             const email = document.querySelector("#email2").value;
             const password = document.querySelector("#password2").value;
-            const rol = document.querySelector("#rol2").value;
             const estado = document.querySelector("#estado2").value;
             const Sede = document.querySelector("#idSede2"); 
             const selectedOption = Sede.options[Sede.selectedIndex]; 
@@ -212,7 +209,6 @@ modificar.forEach(boton => { // Itera sobre cada botón
                         body: JSON.stringify({
                             email: email,
                             password: password,
-                            rol: rol,
                             estado: estado,
                             idSede: idSede,
                         }),
@@ -274,18 +270,16 @@ function rendermodal_update(datos) {
 
     const email = modal_update.querySelector('#email2');
     const password = modal_update.querySelector('#password2');
-    const rol = modal_update.querySelector('#rol2');
     const sede = modal_update.querySelector('#idSede2');
     const estado = modal_update.querySelector('#estado2');
 
-    if (!email || !password || !rol || !sede || !estado) {
+    if (!email || !password || !sede || !estado) {
         console.error("Elementos del modal no encontrados o incorrectos");
         return;
     }
 
     email.value = datos.email || "";
     password.value = datos.password || "";
-    rol.value = datos.rol || "";
     estado.value = datos.estado ? 1 : 0;
     fetch(`sede/${datos.idSede}`, {
         method: 'GET',
@@ -337,7 +331,6 @@ buscador.addEventListener("input", function () {
                                 <td>${usuario.id}</td>
                                 <td>${usuario.email}</td>
                                 <td>${usuario.password}</td>
-                                <td>${usuario.rol}</td>
                                 <td>${usuario.estado ? "Activo" : "Pausado"}</td>
                                 <td>${usuario.idSede}</td>
                                 <td>
