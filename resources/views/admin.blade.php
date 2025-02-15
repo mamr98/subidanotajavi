@@ -72,10 +72,15 @@
                                 <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $u->password }}</p>
                             </td> --}}
                             <td class="p-4 border-b border-blue-gray-50 align-middle">
-                                <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $u->estado }}</p>
+                                @if ($u->estado)
+                                <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">Activado</p>                                    
+                                @else
+                                <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">Desactivado</p>
+                                @endif
+                               
                             </td>
                             <td class="p-4 border-b border-blue-gray-50 align-middle">
-                                <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $u->idSede }}</p>
+                                <p id="{{ $u->idSede }}" class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 sede"></p>
                             </td>
                             <td class="p-4 border-b border-blue-gray-50 align-middle">
                                 <div class="flex justify-center items-center gap-2">

@@ -252,9 +252,7 @@ modificar.forEach(boton => { // Itera sobre cada botón
 function rendermodal_add(){
    const email =  modal.querySelector('email')
    const password =  modal.querySelector('password')
-   const rol =  modal.querySelector('rol')
    const sede =  modal.querySelector('sede')
-
    return modal
 }
 
@@ -330,7 +328,7 @@ buscador.addEventListener("input", function () {
                             <tr>
                                 <td>${usuario.id}</td>
                                 <td>${usuario.email}</td>
-                                <td>${usuario.password}</td>
+                                
                                 <td>${usuario.estado ? "Activo" : "Pausado"}</td>
                                 <td>${usuario.idSede}</td>
                                 <td>
@@ -349,5 +347,33 @@ buscador.addEventListener("input", function () {
         location.reload();
     }
 });
+
+function sedeUsuario() {
+    const sedes = document.querySelectorAll('.sede'); // Seleccionar todas las sedes
+
+    sedes.forEach(sede => {
+        const idSede = sede.id; // Cada sede tiene su propio ID
+
+        fetch(`sede/${idSede}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Datos de muestras:', data);
+                sede.textContent = data.nombre; // Asigna el nombre correctamente
+            })
+            .catch(error => {
+                console.error('Error al obtener las muestras:', error);
+            });
+    });
+}
+
+window.addEventListener('DOMContentLoaded', sedeUsuario);
+
+
+window.addEventListener('DOMContentLoaded', sedeUsuario);
 
 

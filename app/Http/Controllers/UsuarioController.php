@@ -114,7 +114,7 @@ class UsuarioController extends Controller
                     $email = $request->email;
         
         
-                    return redirect()->route('muestrasadmin')->with(['email' => $email]); 
+                    return redirect()->route('muestras')->with(['email' => $email]); 
                 }
             
     
