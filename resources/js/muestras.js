@@ -3,9 +3,10 @@ import Swal from 'sweetalert2';
 const crearMuestra = document.querySelector('#crear_muestra');
 const modificar = document.querySelectorAll('.modificar');
 const eliminar = document.querySelectorAll('.eliminar');
+const contenido = document.querySelectorAll('.contenido');
 const modal_add = document.querySelector('#modal_add')
 const modal_update = document.getElementById('modal_update');
-const modal_mostar = document.getElementById('modal_mostrar');
+const modal_mostar = document.querySelector('#modal_mostrar');
  modal_add.style.display = "none";
  modal_update.style.display = "none";
  modal_mostar.style.display = "none";
@@ -561,137 +562,104 @@ buscador.addEventListener("input", function () {
 });
 
 function rendermodal_mostrar(datos) {
-    console.log("Datos recibidos por rendermodal_update:", datos);
+    console.log("Datos recibidos por rendermodal_mostrar:", datos);
 
     if (!datos) {
         console.error("No se recibieron datos para el modal");
         return;
     }
 
-    const fecha = modal_mostar.querySelector('#fecha3');
-    const codigo = modal_mostar.querySelector('#codigo3');
-    const organo = modal_mostar.querySelector('#organo3');
-    const idTipo = modal_mostar.querySelector('#idTipo3');
-    const idFormato = modal_mostar.querySelector('#idFormato3');
-    const idCalidad = modal_mostar.querySelector('#idCalidad3');
-    const idUsuario = modal_mostar.querySelector('#idUsuario3');
-    const idSede = modal_mostar.querySelector('#idSede3');
+    // Initialize an object to store the fetched data
+    const relatedData = {};
 
-
-    if (!fecha || !codigo || !organo || !idTipo || !idFormato || !idCalidad || !idUsuario || !idSede) {
-        console.error("Elementos del modal no encontrados o incorrectos");
-        return;
+    // Helper function to fetch data and store it in relatedData
+    function fetchData(url, key) {
+        return fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                relatedData[key] = data;
+            })
+            .catch(error => {
+                console.error(`Error fetching ${key}:`, error);
+                relatedData[key] = { nombre: "Error al cargar" }; // Placeholder in case of error
+            });
     }
 
-    fecha.value = datos.fecha || "";
-    codigo.value = datos.codigo || "";
-    fetch(`listamuestras/tipo/${datos.idTipo}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Error ${response.status} al obtener la sede`);
-        }
-        return response.json();
-    })
-    .then(sedeData => {
-        idTipo.value = sedeData.nombre; 
-    })
-    .catch(error => {
-        console.error("Error al obtener la sede:", error);
-        alert("Error al cargar la información de la sede. Por favor, inténtelo de nuevo más tarde.")
-    });
-    fetch(`listamuestras/formato/${datos.idFormato}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Error ${response.status} al obtener la sede`);
-        }
-        return response.json();
-    })
-    .then(sedeData => {
-        idFormato.value = sedeData.nombre; 
-    })
-    .catch(error => {
-        console.error("Error al obtener la sede:", error);
-        alert("Error al cargar la información de la sede. Por favor, inténtelo de nuevo más tarde.")
-    });
+    // Array of promises for all fetch requests
+    const promises = [
+        fetchData(`listamuestras/tipo/${datos.idTipo}`, 'tipo'),
+        fetchData(`listamuestras/formato/${datos.idFormato}`, 'formato'),
+        fetchData(`listamuestras/calidad/${datos.idCalidad}`, 'calidad'),
+        fetchData(`listamuestras/usuario/${datos.idUsuario}`, 'usuario'),
+        fetchData(`listamuestras/sede/${datos.idSede}`, 'sede')
+    ];
 
-    fetch(`listamuestras/calidad/${datos.idCalidad}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Error ${response.status} al obtener la sede`);
-        }
-        return response.json();
-    })
-    .then(sedeData => {
-        idCalidad.value = sedeData.nombre; 
-    })
-    .catch(error => {
-        console.error("Error al obtener la sede:", error);
-        alert("Error al cargar la información de la sede. Por favor, inténtelo de nuevo más tarde.")
-    });
+    // Wait for all promises to resolve
+    Promise.all(promises)
+        .then(() => {
+            const modalContent = `
+                <div>
+                    <label for="fecha3">Fecha:</label>
+                    <input type="text" id="fecha3" value="${datos.fecha || ''}" readonly><br>
+                    <label for="codigo3">Código:</label>
+                    <input type="text" id="codigo3" value="${datos.codigo || ''}" readonly><br>
+                    <label for="organo3">Organo:</label>
+                    <input type="text" id="organo3" value="${datos.organo || ''}" readonly><br>
+                    <label for="idTipo3">Tipo:</label>
+                    <input type="text" id="idTipo3" value="${relatedData.tipo.nombre || ''}" readonly><br>
+                    <label for="idFormato3">Formato:</label>
+                    <input type="text" id="idFormato3" value="${relatedData.formato.nombre || ''}" readonly><br>
+                    <label for="idCalidad3">Calidad:</label>
+                    <input type="text" id="idCalidad3" value="${relatedData.calidad.nombre || ''}" readonly><br>
+                    <label for="idUsuario3">Usuario:</label>
+                    <input type="text" id="idUsuario3" value="${relatedData.usuario.email || ''}" readonly><br>
+                    <label for="idSede3">Sede:</label>
+                    <input type="text" id="idSede3" value="${relatedData.sede.nombre || ''}" readonly><br>
+                </div>
+            `;
 
+            Swal.fire({
+                title: 'MUESTRA',
+                html: modalContent,
+                confirmButtonText: "Imprimir",
+                showCancelButton: true,
+            });
 
-
-    fetch(`listamuestras/usuario/${datos.idUsuario}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Error ${response.status} al obtener la sede`);
-        }
-        return response.json();
-    })
-    .then(sedeData => {
-        idUsuario.value = sedeData.email; 
-    })
-    .catch(error => {
-        console.error("Error al obtener la sede:", error);
-        alert("Error al cargar la información de la sede. Por favor, inténtelo de nuevo más tarde.")
-    });
-
-
-    fetch(`listamuestras/sede/${datos.idSede}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Error ${response.status} al obtener la sede`);
-        }
-        return response.json();
-    })
-    .then(sedeData => {
-        console.log("Datos de la sede recibidos:", sedeData);
-        idSede.value = sedeData.nombre; 
-    })
-    .catch(error => {
-        console.error("Error al obtener la sede:", error);
-        alert("Error al cargar la información de la sede. Por favor, inténtelo de nuevo más tarde.")
-    });
-
-    return modal_mostar;
+        })
+        .catch(error => {
+            console.error("Error fetching related data:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "Error al cargar los datos. Por favor, inténtelo de nuevo más tarde."
+            });
+        });
 }
+
+
+contenido.forEach(boton => {
+    boton.addEventListener('click', () => {
+        const id = boton.id;
+        fetch(`muestra/${id}`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+        })
+            .then(res => res.json())
+            .then(data => {
+                rendermodal_mostrar(data); // Call rendermodal_mostrar here
+            })
+            .catch(error => {
+                console.error("Error en la solicitud:", error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: error.message
+                });
+            });
+    });
+});
+
+

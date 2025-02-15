@@ -289,7 +289,8 @@
                 </div>
                 <div class="mb-4">
                     <label for="organo3" class="block text-gray-700 font-medium mb-1">Órgano:</label>
-Organo                </div>
+                    <input type="text" id="organo3" name="organo3" placeholder="organo" class="w-full p-2 border rounded">
+                </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label for="idTipo3">Tipo</label><br>
