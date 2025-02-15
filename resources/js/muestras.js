@@ -616,6 +616,22 @@ function rendermodal_mostrar(datos) {
                     <label for="idSede3">Sede:</label>
                     <input type="text" id="idSede3" value="${relatedData.sede.nombre || ''}" readonly><br>
                 </div>
+
+                <div>
+                <h2> Interpretaciones </h2>
+                
+                <label for="calidad">Calidad</label><br>
+                <input type="text" id="calidad" name="calidad" placeholder="Caliadd" class="w-full p-2 border rounded"><br>
+
+                <label for="descrpcionCalidad">Descripción Calidad</label><br>
+                <input type="text" id="descrpcionCalidad" name="descrpcionCalidad" placeholder="Descripción Calidad" class="w-full p-2 border rounded"><br>
+
+                <label for="interpretacion">Interpretación de la Muestra</label><br>
+                <input type="text" id="interpretacion" name="interpretacion" placeholder="Interpretación de la Muestra" class="w-full p-2 border rounded"><br>
+
+                <label for="descripcionMuestra">Descripción de la Muestra</label><br>
+                <input type="text" id="descripcionMuestra" name="descripcionMuestra" placeholder="Descripción de la Muestra" class="w-full p-2 border rounded"><br>
+                </div>
             `;
 
             Swal.fire({
