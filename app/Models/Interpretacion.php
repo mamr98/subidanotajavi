@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Models\TipoEstudio;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Interpretacion;
+use App\Models\MuestrasInterpretacion;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Interpretacion extends Model
 {
@@ -16,7 +18,7 @@ class Interpretacion extends Model
     ];
 
     public function muestra_interpretacion(){
-        return $this->belongsTo(Muestras_Interpretacion::class,'idInterpretacion','id');
+        return $this->belongsTo(MuestrasInterpretacion::class,'idInterpretacion','id');
     }
 
     public function tipo_estudio(){

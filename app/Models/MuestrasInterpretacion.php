@@ -5,9 +5,12 @@ namespace App\Models;
 use App\Models\Muestra;
 use App\Models\Interpretacion;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Muestras_Interpretacion extends Model
+class MuestrasInterpretacion extends Model
 {
+    use HasFactory;
+
     protected $table = "muestras_interpretacion";
 
     protected $fillable = [

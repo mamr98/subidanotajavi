@@ -46,6 +46,14 @@ const modal_mostar = document.querySelector('#modal_mostrar');
             const idSedeElement = document.querySelector("#idSede");
             const selectedIdSedeOption = idSedeElement.options[idSedeElement.selectedIndex];
             const idSede = selectedIdSedeOption.getAttribute("id");
+            
+
+            //Interpretaciones
+            const idTipoEstudioElement = document.querySelector("#idTipoEstudio");
+            const selectedIdTipoEstudioOption = idTipoEstudioElement.options[idTipoEstudioElement.selectedIndex];
+            const idTipoEstudio = selectedIdTipoEstudioOption.getAttribute("id");
+
+            const descripcion = document.querySelector('#descripcion').value;
  
              const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
  
@@ -64,6 +72,8 @@ const modal_mostar = document.querySelector('#modal_mostrar');
                      idCalidad: idCalidad,
                      idUsuario: idUsuario,
                      idSede: idSede,
+                     idTipoEstudio: idTipoEstudio,
+                     descripcion: descripcion,
                  })
              })
              .then(respuesta => {
@@ -587,11 +597,11 @@ function rendermodal_mostrar(datos) {
 
     // Array of promises for all fetch requests
     const promises = [
-        fetchData(`listamuestras/tipo/${datos.idTipo}`, 'tipo'),
-        fetchData(`listamuestras/formato/${datos.idFormato}`, 'formato'),
-        fetchData(`listamuestras/calidad/${datos.idCalidad}`, 'calidad'),
-        fetchData(`listamuestras/usuario/${datos.idUsuario}`, 'usuario'),
-        fetchData(`listamuestras/sede/${datos.idSede}`, 'sede')
+        fetchData(`listamuestras/tipo/${datos.muestra.idTipo}`, 'tipo'),
+        fetchData(`listamuestras/formato/${datos.muestra.idFormato}`, 'formato'),
+        fetchData(`listamuestras/calidad/${datos.muestra.idCalidad}`, 'calidad'),
+        fetchData(`listamuestras/usuario/${datos.muestra.idUsuario}`, 'usuario'),
+        fetchData(`listamuestras/sede/${datos.muestra.idSede}`, 'sede')
     ];
 
     // Wait for all promises to resolve
@@ -600,11 +610,11 @@ function rendermodal_mostrar(datos) {
             const modalContent = `
                 <div>
                     <label for="fecha3">Fecha:</label>
-                    <input type="text" id="fecha3" value="${datos.fecha || ''}" readonly><br>
+                    <input type="text" id="fecha3" value="${datos.muestra.fecha || ''}" readonly><br>
                     <label for="codigo3">Código:</label>
-                    <input type="text" id="codigo3" value="${datos.codigo || ''}" readonly><br>
+                    <input type="text" id="codigo3" value="${datos.muestra.codigo || ''}" readonly><br>
                     <label for="organo3">Organo:</label>
-                    <input type="text" id="organo3" value="${datos.organo || ''}" readonly><br>
+                    <input type="text" id="organo3" value="${datos.muestra.organo || ''}" readonly><br>
                     <label for="idTipo3">Tipo:</label>
                     <input type="text" id="idTipo3" value="${relatedData.tipo.nombre || ''}" readonly><br>
                     <label for="idFormato3">Formato:</label>
@@ -616,21 +626,22 @@ function rendermodal_mostrar(datos) {
                     <label for="idSede3">Sede:</label>
                     <input type="text" id="idSede3" value="${relatedData.sede.nombre || ''}" readonly><br>
                 </div>
+<br>
+                 <div class="bg-gray p-4 rounded shadow">
+                    <h3>Interpretación</h3>
 
-                <div>
-                <h2> Interpretaciones </h2>
-                
-                <label for="calidad">Calidad</label><br>
-                <input type="text" id="calidad" name="calidad" placeholder="Caliadd" class="w-full p-2 border rounded"><br>
+                    <div>
+                        <label for="tipoEstudio">TipoEstudio</label><br>
+                        <input type="text" id="idTipo3" value="${datos.interpretacion.idTipoEstudio || ''}" readonly><br>
+                    </div>
+                    <br>
+                    <div>
+                        <label for="descripcion">Descripción</label><br>
+                        <textarea id="idTipo3" readonly>${datos.interpretacion.texto || ''}</textarea><br>
 
-                <label for="descrpcionCalidad">Descripción Calidad</label><br>
-                <input type="text" id="descrpcionCalidad" name="descrpcionCalidad" placeholder="Descripción Calidad" class="w-full p-2 border rounded"><br>
+                    </div>
 
-                <label for="interpretacion">Interpretación de la Muestra</label><br>
-                <input type="text" id="interpretacion" name="interpretacion" placeholder="Interpretación de la Muestra" class="w-full p-2 border rounded"><br>
-
-                <label for="descripcionMuestra">Descripción de la Muestra</label><br>
-                <input type="text" id="descripcionMuestra" name="descripcionMuestra" placeholder="Descripción de la Muestra" class="w-full p-2 border rounded"><br>
+                    
                 </div>
             `;
 
@@ -677,5 +688,3 @@ contenido.forEach(boton => {
             });
     });
 });
-
-

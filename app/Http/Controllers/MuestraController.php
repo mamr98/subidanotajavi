@@ -8,7 +8,10 @@ use App\Models\Calidad;
 use App\Models\Formato;
 use App\Models\Muestra;
 use App\Models\Usuario;
+use App\Models\TipoEstudio;
 use Illuminate\Http\Request;
+use App\Models\Interpretacion;
+use App\Models\MuestrasInterpretacion;
 
 class MuestraController extends Controller
 {
@@ -19,6 +22,7 @@ class MuestraController extends Controller
 
     public function create(Request $request)
 {
+    // Crear y guardar la muestra
     $muestra = new Muestra();
     $muestra->fecha = $request->input('fecha');
     $muestra->codigo = $request->input('codigo');
@@ -28,11 +32,24 @@ class MuestraController extends Controller
     $muestra->idCalidad = $request->input('idCalidad');
     $muestra->idUsuario = $request->input('idUsuario');
     $muestra->idSede = $request->input('idSede');
+    $muestra->save();  // Guardamos la muestra antes de usar su ID
 
-    $muestra->save();
+    // Crear y guardar la interpretación
+    $interpretacion = new Interpretacion();
+    $interpretacion->texto = $request->input('descripcion');
+    $interpretacion->idTipoEstudio = $request->input('idTipoEstudio');
+    $interpretacion->save();  // Guardamos antes de usar su ID
+
+    // Crear y guardar la relación en la tabla pivot
+    $muestra_interpretacion = new MuestrasInterpretacion();
+    $muestra_interpretacion->calidad = 'hola';
+    $muestra_interpretacion->idMuestras = $muestra->id;  // Ahora sí tiene un ID
+    $muestra_interpretacion->idInterpretacion = $interpretacion->id;  // Error corregido
+    $muestra_interpretacion->save();
 
     return response()->json(['mensaje' => 'Muestra creada correctamente'], 201);
 }
+
 
 
 public function show()
@@ -43,6 +60,7 @@ public function show()
     $calidades = Calidad::all();
     $usuarios = Usuario::all();
     $sedes = Sede::all();
+    $interpretacion = Interpretacion::all();
     return view('listamuestras')->with([
         'muestras' => $muestras,
         'tipos' => $tipos,
@@ -50,6 +68,7 @@ public function show()
         'calidades' => $calidades,
         'usuarios' => $usuarios,
         'sedes' => $sedes,
+        'interpretacion' => $interpretacion,
     ]);
 }
 
@@ -62,6 +81,7 @@ public function show()
         $calidades = Calidad::all();
         $usuarios = Usuario::all();
         $sedes = Sede::all();
+        $tipoEstudio = TipoEstudio::all();
     return view('muestrasadmin')->with([
         'muestras' => $muestras,
         'tipos' => $tipos,
@@ -69,6 +89,7 @@ public function show()
         'calidades' => $calidades,
         'usuarios' => $usuarios,
         'sedes' => $sedes,
+        'tipoEstudio' => $tipoEstudio,
     ]);
     }
 
@@ -130,7 +151,12 @@ public function show()
 
     public function muestra($id){
         $muestra = Muestra::where('id', $id)->first();
-        return response()->json($muestra,200);
+        $interpretacion = Interpretacion::where('id', $id)->first();
+        return response()->json([
+            'muestra' => $muestra,
+            'interpretacion' => $interpretacion
+        ], 200);
+        
     }
 
     public function buscarMuestra($codigo)

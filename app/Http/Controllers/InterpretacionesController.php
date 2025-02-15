@@ -21,10 +21,8 @@ class InterpretacionesController extends Controller
 
         $interpretacion = new Interpretacion();
 
-        $interpretacion->calidad = $request->input('calidad');
-        $interpretacion->descripcionCalidad = $request->input('descripcionCalidad');
-        $interpretacion->interpretacionMuestra = $request->input('interpretacionMuestra');
-        $interpretacion->descripcionInterpretacion = $request->input('descripcionInterpretacion');
+        $interpretacion->texto = $request->input('descripcion');
+        $interpretacion->idTipoEstudio = $request->input('idTipoEstudio');
 
         $interpretacion->save();
 
