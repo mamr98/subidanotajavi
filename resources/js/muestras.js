@@ -5,8 +5,10 @@ const modificar = document.querySelectorAll('.modificar');
 const eliminar = document.querySelectorAll('.eliminar');
 const modal_add = document.querySelector('#modal_add')
 const modal_update = document.getElementById('modal_update');
+const modal_mostar = document.getElementById('modal_update');
  modal_add.style.display = "none";
  modal_update.style.display = "none";
+ modal_mostar.style.display = "none";
 
  crearMuestra.addEventListener('click', () => {
      modal_add.style.display = "block";
@@ -530,6 +532,12 @@ buscador.addEventListener("input", function () {
                                 <td>${muestra.id}</td>
                                 <td>${muestra.fecha}</td>
                                 <td>${muestra.codigo}</td>
+                                <td style="display: none">${muestra.organo}</td>
+                                <td id='${muestra.idTipo}' class='block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 tipo' style="display: none"></td>
+                                <td id='${muestra.idFormato}' class='block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 formato' style="display: none"></td>
+                                <td id='${muestra.idCalidad}' class='block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 calidad' style="display: none"></td>
+                                <td id='${muestra.idUsuario}' class='block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 usuario' style="display: none"></td>
+                                <td id='${muestra.idSede}' class='block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 sede' style="display: none"></td>
                                 <td>
                                 <div class="d-flex justify-content-center align-items-center gap-2">
 
@@ -551,3 +559,139 @@ buscador.addEventListener("input", function () {
         location.reload();
     }
 });
+
+function rendermodal_mostrar(datos) {
+    console.log("Datos recibidos por rendermodal_update:", datos);
+
+    if (!datos) {
+        console.error("No se recibieron datos para el modal");
+        return;
+    }
+
+    const fecha = modal_mostar.querySelector('#fecha3');
+    const codigo = modal_mostar.querySelector('#codigo3');
+    const organo = modal_mostar.querySelector('#organo3');
+    const idTipo = modal_mostar.querySelector('#idTipo3');
+    const idFormato = modal_mostar.querySelector('#idFormato3');
+    const idCalidad = modal_mostar.querySelector('#idCalidad3');
+    const idUsuario = modal_mostar.querySelector('#idUsuario3');
+    const idSede = modal_mostar.querySelector('#idSede3');
+
+
+    if (!fecha || !codigo || !organo || !idTipo || !idFormato || !idCalidad || !idUsuario || !idSede) {
+        console.error("Elementos del modal no encontrados o incorrectos");
+        return;
+    }
+
+    fecha.value = datos.fecha || "";
+    codigo.value = datos.codigo || "";
+    fetch(`listamuestras/tipo/${datos.idTipo}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al obtener la sede`);
+        }
+        return response.json();
+    })
+    .then(sedeData => {
+        idTipo.value = sedeData.nombre; 
+    })
+    .catch(error => {
+        console.error("Error al obtener la sede:", error);
+        alert("Error al cargar la información de la sede. Por favor, inténtelo de nuevo más tarde.")
+    });
+    fetch(`listamuestras/formato/${datos.idFormato}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al obtener la sede`);
+        }
+        return response.json();
+    })
+    .then(sedeData => {
+        idFormato.value = sedeData.nombre; 
+    })
+    .catch(error => {
+        console.error("Error al obtener la sede:", error);
+        alert("Error al cargar la información de la sede. Por favor, inténtelo de nuevo más tarde.")
+    });
+
+    fetch(`listamuestras/calidad/${datos.idCalidad}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al obtener la sede`);
+        }
+        return response.json();
+    })
+    .then(sedeData => {
+        idCalidad.value = sedeData.nombre; 
+    })
+    .catch(error => {
+        console.error("Error al obtener la sede:", error);
+        alert("Error al cargar la información de la sede. Por favor, inténtelo de nuevo más tarde.")
+    });
+
+
+
+    fetch(`listamuestras/usuario/${datos.idUsuario}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al obtener la sede`);
+        }
+        return response.json();
+    })
+    .then(sedeData => {
+        idUsuario.value = sedeData.email; 
+    })
+    .catch(error => {
+        console.error("Error al obtener la sede:", error);
+        alert("Error al cargar la información de la sede. Por favor, inténtelo de nuevo más tarde.")
+    });
+
+
+    fetch(`listamuestras/sede/${datos.idSede}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al obtener la sede`);
+        }
+        return response.json();
+    })
+    .then(sedeData => {
+        console.log("Datos de la sede recibidos:", sedeData);
+        idSede.value = sedeData.nombre; 
+    })
+    .catch(error => {
+        console.error("Error al obtener la sede:", error);
+        alert("Error al cargar la información de la sede. Por favor, inténtelo de nuevo más tarde.")
+    });
+
+    return modal_mostar;
+}

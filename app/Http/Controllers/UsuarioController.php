@@ -110,16 +110,11 @@ class UsuarioController extends Controller
         if($usuario){
             if( $usuario->estado == true){
 
-                if ($usuario->rol === "usuario") {
+               
                     $email = $request->email;
-                    return redirect()->route('listamuestras')->with(['email' => $email]);
         
-                } 
         
-                if ($usuario->rol === "administrador") {
-                    return redirect()->route('administrador'); 
-        
-                } 
+                    return redirect()->route('muestrasadmin')->with(['email' => $email]); 
                 }
             
     
