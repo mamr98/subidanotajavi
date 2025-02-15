@@ -26,7 +26,6 @@ class UsuarioController extends Controller
         $usuario= new Usuario();
         $usuario->email = $request->input('email');
         $usuario->password = $request->input('password');
-        $usuario->rol = $request->input('rol');
         $usuario->estado = $request->input('estado');
         $usuario->idSede = $request->input('idSede');
         $usuario->save();
@@ -70,7 +69,6 @@ class UsuarioController extends Controller
     
         $usuario->email = $request->input('email');
         $usuario->password = $request->input('password');
-        $usuario->rol = $request->input('rol');
         $usuario->estado = $request->input('estado');
         $usuario->idSede = $request->input('idSede');
         $usuario->save();

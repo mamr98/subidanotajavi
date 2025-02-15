@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('email')->unique();
             $table->string('password');
-            $table->enum('rol', ['usuario','administrador']);  
-            //usamos enum para tener solo los valores que nosotros queramos
             $table->boolean('estado');
             $table->unsignedBigInteger('idSede');
             $table->timestamps();

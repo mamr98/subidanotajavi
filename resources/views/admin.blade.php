@@ -49,9 +49,6 @@
                                 <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">Contraseña</p>
                             </th> --}}
                             <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50 align-middle">
-                                <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">Rol</p>
-                            </th>
-                            <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50 align-middle">
                                 <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">Estado</p>
                             </th>
                             <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50 align-middle">
@@ -74,9 +71,6 @@
                             {{-- <td class="p-4 border-b border-blue-gray-50 align-middle">
                                 <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $u->password }}</p>
                             </td> --}}
-                            <td class="p-4 border-b border-blue-gray-50 align-middle">
-                                <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $u->rol }}</p>
-                            </td>
                             <td class="p-4 border-b border-blue-gray-50 align-middle">
                                 <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">{{ $u->estado }}</p>
                             </td>
@@ -114,14 +108,6 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="rol" class="block text-gray-700 font-medium mb-2">Rol</label>
-                    <select id="rol" class="w-full p-2 border rounded">
-                        <option value="usuario">Usuario</option>
-                        <option value="administrador">Administrador</option>
-                    </select>
-                </div>
-
-                <div class="mb-3">
                     <label for="estado" class="block text-gray-700 font-medium mb-2">Estado</label>
                     <select id="estado" class="w-full p-2 border rounded">
                         <option value="1">Activo</option>
@@ -151,14 +137,6 @@
                 <div class="mb-3">
                     <label for="password2" class="block text-gray-700 font-medium mb-2">Contraseña</label>
                     <input type="text" id="password2" class="w-full p-2 border rounded">
-                </div>
-
-                <div class="mb-3">
-                    <label for="rol2" class="block text-gray-700 font-medium mb-2">Rol</label>
-                    <select id="rol2" class="w-full p-2 border rounded">
-                        <option value="usuario">Usuario</option>
-                        <option value="administrador">Administrador</option>
-                    </select>
                 </div>
 
                 <div class="mb-3">
