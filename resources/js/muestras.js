@@ -530,17 +530,14 @@ buscador.addEventListener("input", function () {
                                 <td>${muestra.id}</td>
                                 <td>${muestra.fecha}</td>
                                 <td>${muestra.codigo}</td>
-                                <td>${muestra.organo}</td>
-                                <td id='${muestra.idTipo}' class='block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 tipo'></td>
-                                <td id='${muestra.idFormato}' class='block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 formato'></td>
-                                <td id='${muestra.idCalidad}' class='block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 calidad'></td>
-                                <td id='${muestra.idUsuario}' class='block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 usuario'></td>
-                                <td id='${muestra.idSede}' class='block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 sede'></td>
                                 <td>
                                 <div class="d-flex justify-content-center align-items-center gap-2">
-                                    <button class="modificar" id="${muestra.id}" style="padding: 10px 20px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer;">Modificar</button>
-                                    <button class="eliminar" id="${muestra.id}" style="padding: 10px 20px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer;">Eliminar</button>
-                                   </div>
+
+                                    <button class="contenido" id="${muestra.id}" style="padding: 10px 20px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer;">Ver más</button>
+                                    <button class="interpretacion" id="${muestra.id}" style="padding: 10px 20px; margin-left:4px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Interpretación</button>
+                                    <button class="modificar" id="${muestra.id}" style="padding: 10px 20px; margin-left:4px; background-color: purple; color: white; border: none; border-radius: 5px; cursor: pointer;">Modificar</button>
+                                    <button class="eliminar" id="${muestra.id}" style="padding: 10px 20px; margin-left:4px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer;">Eliminar</button>
+                                    </div>
                                 </td>
                             </tr>`;
                             cargarDatos()

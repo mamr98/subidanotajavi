@@ -105,9 +105,9 @@
                             <td class="p-4 border-b border-blue-gray-50">
                                 <div class="d-flex justify-content-center align-items-center gap-2">
                                     <button style="padding: 10px 18px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$m->id}}" class="contenido">Ver más</button>
+                                    <button style="padding: 10px 18px; margin-left:4px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$m->id}}" class="interpretacion">Interpretación</button>
                                     <button style="padding: 10px 18px; margin-left:4px; background-color: purple; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$m->id}}" class="modificar">Modificar</button>
                                     <button style="padding: 10px 18px; margin-left:4px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$m->id}}" class="eliminar">Eliminar</button>
-                                    <button style="padding: 10px 18px; margin-left:4px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$m->id}}" class="interpretacion">Interpretación</button>
                                 </div>
                             </td>
                         </tr>
