@@ -49,13 +49,26 @@ const modal_mostar = document.querySelector('#modal_mostrar');
             
 
             //Interpretaciones
-            const idTipoEstudioElement = document.querySelector("#idTipoEstudio");
-            const selectedIdTipoEstudioOption = idTipoEstudioElement.options[idTipoEstudioElement.selectedIndex];
-            const idTipoEstudio = selectedIdTipoEstudioOption.getAttribute("id");
+            const idTipoEstudioElements = document.querySelectorAll("#idTipoEstudio");
+        const descripcionElements = document.querySelectorAll("#descripcion");
+        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        const interpretaciones = [];
 
-            const descripcion = document.querySelector('#descripcion').value;
- 
-             const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        for (let i = 0; i < idTipoEstudioElements.length; i++) {
+            // Obtener el elemento select actual
+            const selectElement = idTipoEstudioElements[i];
+        
+            // Obtener el valor (id) de la opción seleccionada
+            const idTipoEstudio = selectElement.value;  // <-- Esta es la línea corregida
+        
+            console.log(idTipoEstudio);
+            const descripcion = descripcionElements[i].value;
+        
+            interpretaciones.push({
+                idTipoEstudio: idTipoEstudio,
+                descripcion: descripcion
+            });
+        }
  
              fetch('listamuestras/create', {
                  method: "POST",
@@ -72,8 +85,7 @@ const modal_mostar = document.querySelector('#modal_mostrar');
                      idCalidad: idCalidad,
                      idUsuario: idUsuario,
                      idSede: idSede,
-                     idTipoEstudio: idTipoEstudio,
-                     descripcion: descripcion,
+                     interpretaciones: interpretaciones
                  })
              })
              .then(respuesta => {
