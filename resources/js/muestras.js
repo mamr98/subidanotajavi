@@ -565,7 +565,6 @@ buscador.addEventListener("input", function () {
                                 <div class="d-flex justify-content-center align-items-center gap-2">
 
                                     <button class="contenido" id="${muestra.id}" style="padding: 10px 20px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer;">Ver más</button>
-                                    <button class="interpretacion" id="${muestra.id}" style="padding: 10px 20px; margin-left:4px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Interpretación</button>
                                     <button class="modificar" id="${muestra.id}" style="padding: 10px 20px; margin-left:4px; background-color: purple; color: white; border: none; border-radius: 5px; cursor: pointer;">Modificar</button>
                                     <button class="eliminar" id="${muestra.id}" style="padding: 10px 20px; margin-left:4px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer;">Eliminar</button>
                                     </div>
@@ -708,9 +707,10 @@ contenido.forEach(boton => {
         // Crear un nuevo contenedor para los nuevos campos de interpretación
         const newInterpretacion = document.createElement('div');
         newInterpretacion.classList.add('interpretacion-fields');
-        
+    
         newInterpretacion.innerHTML = `
             <div>
+            <br>
                 <label for="tipoEstudio">TipoEstudio</label><br>
                 <select id="idTipoEstudio" class="w-full p-2 border rounded">
                     @foreach ($tipoEstudio as $ti)
@@ -724,8 +724,18 @@ contenido.forEach(boton => {
                 <textarea name="descripcion" id="descripcion" cols="40" rows="8" class="w-full p-2 border rounded"></textarea>
             </div>
             <br>
-        `;
+            <button type="button" class="btn btn-danger btn-sm eliminar-interpretacion" data-toggle="tooltip" data-placement="top" title="Eliminar interpretación">
+            <i class="fas fa-trash-alt"></i> Eliminar
+            </button>
 
+        `;
+    
         // Añadir el nuevo campo al contenedor de interpretaciones
         interpretacionesContainer.appendChild(newInterpretacion);
+    
+        // Obtener el botón de eliminar y añadir el evento click
+        const botonEliminar = newInterpretacion.querySelector('.eliminar-interpretacion');
+        botonEliminar.addEventListener('click', function() {
+            interpretacionesContainer.removeChild(newInterpretacion);
+        });
     });
