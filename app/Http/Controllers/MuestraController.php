@@ -122,11 +122,33 @@ public function show()
     }
 
     public function destroy($id)
-    {
-        $muestra = Muestra::where('id', $id)->first();
-        $muestra->delete(); 
-        return response()->json(['mensaje' => 'Muestra eliminada correctamente'], 201);
+{
+    // Buscar la muestra
+    $muestra = Muestra::find($id);
+
+    if (!$muestra) {
+        return response()->json(['mensaje' => 'Muestra no encontrada'], 404);
     }
+
+    // Obtener las IDs de las interpretaciones asociadas a la muestra
+    $interpretacionesIds = MuestrasInterpretacion::where('idMuestras', $id)->pluck('idInterpretacion');
+
+    // Eliminar las relaciones en la tabla MuestrasInterpretacion
+    MuestrasInterpretacion::where('idMuestras', $id)->delete();
+
+    // Ahora que las relaciones han sido eliminadas, podemos eliminar las interpretaciones
+    Interpretacion::whereIn('id', $interpretacionesIds)->delete();
+
+    // Finalmente, eliminar la muestra
+    $muestra->delete();
+
+    return response()->json(['mensaje' => 'Muestra e interpretaciones eliminadas correctamente'], 200);
+}
+
+    
+
+    
+
 
     public function tipo($id)
     {
