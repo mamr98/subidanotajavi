@@ -119,8 +119,8 @@
             </div>
         </div>
 
-        <div class="col-12 col-md-6 mt-4">
-            <form id="modal_add" class="bg-white p-4 rounded shadow">
+        <div class="container mx-auto mt-4 max-w-screen-lg"> <!-- Hace que sea más ancho -->
+            <form id="modal_add" class="bg-white p-6 rounded shadow w-full">
                 @csrf
                 <div class="mb-4">
                     <label for="fecha" class="block text-gray-700 font-medium mb-1">Fecha de recolección:</label>
@@ -152,14 +152,14 @@
                         <option value="BP">Pulmón</option>
                     </select>
                 </div>
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-3 gap-4">
                     <div>
                         <label for="idTipo">Tipo</label><br>
                         <select id="idTipo" class="w-full p-2 border rounded">
                             @foreach ($tipos as $ti)
                             <option id="{{$ti->id}}">{{$ti->nombre}}</option>
                             @endforeach
-                        </select><br> 
+                        </select><br>
                     </div>
                     <div>
                         <label for="idFormato">Formato</label><br>
@@ -167,15 +167,15 @@
                             @foreach ($formatos as $fo)
                             <option id="{{$fo->id}}">{{$fo->nombre}}</option>
                             @endforeach
-                        </select><br> 
+                        </select><br>
                     </div>
                     <div>
                         <label for="idCalidad">Calidad</label><br>
                         <select id="idCalidad" class="w-full p-2 border rounded">
                             @foreach ($calidades as $ca)
-                            <option id="{{$ca->id}}">{{$ca->nombre}}</option>
+                            <option id="{{$ca->id}}">{{$ca->nombre}} - {{$ca->descripcion}}</option>
                             @endforeach
-                        </select><br> 
+                        </select><br>
                     </div>
                     <div>
                         <label for="idUsuario">Usuario</label><br>
@@ -183,7 +183,7 @@
                             @foreach ($usuarios as $us)
                             <option id="{{$us->id}}">{{$us->email}}</option>
                             @endforeach
-                        </select><br> 
+                        </select><br>
                     </div>
                     <div>
                         <label for="idSede">Sede</label><br>
@@ -191,28 +191,25 @@
                             @foreach ($sedes as $se)
                             <option id="{{$se->id}}">{{$se->nombre}}</option>
                             @endforeach
-                        </select><br> <br>
+                        </select><br>
                     </div>
                 </div>
-                <div class="bg-gray p-4 rounded shadow">
+                <div class="bg-gray-100 p-4 rounded shadow mt-4">
                     <h3>Interpretación</h3>
-                
                     <div id="interpretaciones-container">
                         <div class="interpretacion-fields">
                             <div>
-                                <label for="tipoEstudio">TipoEstudio</label><br>
+                                <label for="tipoEstudio">Tipo de Estudio</label><br>
                                 <select id="idTipoEstudio" class="w-full p-2 border rounded">
                                     @foreach ($tipoEstudio as $ti)
-                                    <option value="{{$ti->id}}">{{$ti->nombre}}</option>
+                                    <option value="{{ $ti->id }}">{{ $ti->nombre }}</option>
                                     @endforeach
                                 </select><br>
                             </div>
-                            <br>
                             <div>
                                 <label for="descripcion">Descripción</label><br>
-                                <textarea name="descripcion" id="descripcion" cols="40" rows="8" class="w-full p-2 border rounded"></textarea>
+                                <textarea name="descripcion" id="descripcion" cols="40" rows="5" class="w-full p-2 border rounded"></textarea>
                             </div>
-                            <br>
                         </div>
                     </div>
                     <br>
@@ -220,11 +217,9 @@
                         <i class="fas fa-plus"></i> Agregar más interpretaciones
                     </button>
                 </div>
-                
-                    
-                
             </form>
         </div>
+        
 
         <div class="col-12 col-md-6 mt-4">
             <form id="modal_update" class="bg-white p-4 rounded shadow">
