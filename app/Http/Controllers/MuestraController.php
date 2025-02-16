@@ -32,22 +32,27 @@ class MuestraController extends Controller
     $muestra->idCalidad = $request->input('idCalidad');
     $muestra->idUsuario = $request->input('idUsuario');
     $muestra->idSede = $request->input('idSede');
-    $muestra->save();  // Guardamos la muestra antes de usar su ID
+    $muestra->save(); // Guardamos la muestra para obtener su ID
 
-    // Crear y guardar la interpretación
-    $interpretacion = new Interpretacion();
-    $interpretacion->texto = $request->input('descripcion');
-    $interpretacion->idTipoEstudio = $request->input('idTipoEstudio');
-    $interpretacion->save();  // Guardamos antes de usar su ID
+    // Obtener las interpretaciones del request
+    $interpretaciones = $request->input('interpretaciones');
 
-    // Crear y guardar la relación en la tabla pivot
-    $muestra_interpretacion = new MuestrasInterpretacion();
-    $muestra_interpretacion->calidad = 'hola';
-    $muestra_interpretacion->idMuestras = $muestra->id;  // Ahora sí tiene un ID
-    $muestra_interpretacion->idInterpretacion = $interpretacion->id;  // Error corregido
-    $muestra_interpretacion->save();
+    // Iterar sobre las interpretaciones y guardarlas
+    foreach ($interpretaciones as $interpretacionData) {
+        $interpretacion = new Interpretacion();
+        $interpretacion->texto = $interpretacionData['descripcion'];
+        $interpretacion->idTipoEstudio = $interpretacionData['idTipoEstudio'];
+        $interpretacion->save(); // Guardamos la interpretación para obtener su ID
 
+        // Crear y guardar la relación en la tabla pivote
+        $muestra_interpretacion = new MuestrasInterpretacion();
+        $muestra_interpretacion->calidad = 'hola'; // Puedes obtener este valor de otro input si lo necesitas
+        $muestra_interpretacion->idMuestras = $muestra->id; // Usamos el ID de la muestra guardada
+        $muestra_interpretacion->idInterpretacion = $interpretacion->id; // Usamos el ID de la interpretación guardada
+        $muestra_interpretacion->save();
+    }
     return response()->json(['mensaje' => 'Muestra creada correctamente'], 201);
+
 }
 
 

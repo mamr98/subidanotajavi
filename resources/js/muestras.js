@@ -688,3 +688,32 @@ contenido.forEach(boton => {
             });
     });
 });
+
+    const addInterpretacionButton = document.getElementById('add-interpretacion');
+    const interpretacionesContainer = document.getElementById('interpretaciones-container');
+
+    addInterpretacionButton.addEventListener('click', function() {
+        // Crear un nuevo contenedor para los nuevos campos de interpretación
+        const newInterpretacion = document.createElement('div');
+        newInterpretacion.classList.add('interpretacion-fields');
+        
+        newInterpretacion.innerHTML = `
+            <div>
+                <label for="tipoEstudio">TipoEstudio</label><br>
+                <select id="idTipoEstudio" class="w-full p-2 border rounded">
+                    @foreach ($tipoEstudio as $ti)
+                    ${document.getElementById("idTipoEstudio").innerHTML}
+                    @endforeach
+                </select><br>
+            </div>
+            <br>
+            <div>
+                <label for="descripcion">Descripción</label><br>
+                <textarea name="descripcion" id="descripcion" cols="40" rows="8" class="w-full p-2 border rounded"></textarea>
+            </div>
+            <br>
+        `;
+
+        // Añadir el nuevo campo al contenedor de interpretaciones
+        interpretacionesContainer.appendChild(newInterpretacion);
+    });

@@ -197,27 +197,31 @@
                 </div>
                 <div class="bg-gray p-4 rounded shadow">
                     <h3>Interpretación</h3>
-
-                    <div>
-                        <label for="tipoEstudio">TipoEstudio</label><br>
-                        <select id="idTipoEstudio" class="w-full p-2 border rounded">
-                            @foreach ($tipoEstudio as $ti)
-                            <option id="{{$ti->id}}">{{$ti->nombre}}</option>
-                            @endforeach
-                        </select><br>
+                
+                    <div id="interpretaciones-container">
+                        <div class="interpretacion-fields">
+                            <div>
+                                <label for="tipoEstudio">TipoEstudio</label><br>
+                                <select id="idTipoEstudio" class="w-full p-2 border rounded">
+                                    @foreach ($tipoEstudio as $ti)
+                                    <option id="{{$ti->id}}">{{$ti->nombre}}</option>
+                                    @endforeach
+                                </select><br>
+                            </div>
+                            <br>
+                            <div>
+                                <label for="descripcion">Descripción</label><br>
+                                <textarea name="descripcion" id="descripcion" cols="40" rows="8" class="w-full p-2 border rounded"></textarea>
+                            </div>
+                            <br>
+                        </div>
                     </div>
-                    <br>
-                    <div>
-                        <label for="descripcion">Descripción</label><br>
-                        <textarea name="descripcion" id="descripcion" cols="40" rows="8" class="w-full p-2 border rounded"></textarea>
-                    </div>
-                    <br>
-
-                    <button class="btn btn-primary btn-mas">
-                        <i class="fas fa-plus"></i> Agregar
+                
+                    <button type="button" class="btn btn-primary btn-mas" id="add-interpretacion">
+                        <i class="fas fa-plus"></i> Agregar más interpretaciones
                     </button>
-                    
                 </div>
+                
                     
                 
             </form>
