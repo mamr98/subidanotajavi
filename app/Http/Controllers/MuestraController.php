@@ -163,14 +163,30 @@ public function show()
         $muestra = Muestra::where('id', $id)->first();
         
         // Obtener todas las interpretaciones asociadas a esa muestra con todos sus campos
-        $muestra_interpretaciones = MuestraInterpretacion::where('idMuestras', $id)->get();
+        $muestra_interpretaciones = MuestrasInterpretacion::where('idMuestras', $id)->get();
     
-        // Retornar la muestra y las interpretaciones en formato JSON
+        // Inicializar un arreglo para almacenar las interpretaciones detalladas
+        $interpretaciones_detalladas = [];
+    
+        // Iterar sobre las interpretaciones obtenidas
+        foreach ($muestra_interpretaciones as $interpretacion) {
+            // Obtener detalles de la tabla Interpretacione para cada id
+            $detalle_interpretacion = Interpretacion::where('id', $interpretacion->id)->first();
+            
+            // Agregar el detalle de la interpretación al arreglo
+            if ($detalle_interpretacion) {
+                $interpretaciones_detalladas[] = $detalle_interpretacion;
+            }
+        }
+    
+        // Retornar la muestra y las interpretaciones detalladas en formato JSON
         return response()->json([
             'muestra' => $muestra,
-            'interpretaciones' => $muestra_interpretaciones,
+            'interpretaciones' => $interpretaciones_detalladas,
         ], 200);
     }
+    
+    
     
 
     public function buscarMuestra($codigo)

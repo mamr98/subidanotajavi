@@ -585,15 +585,15 @@ buscador.addEventListener("input", function () {
 function rendermodal_mostrar(datos) {
     console.log("Datos recibidos por rendermodal_mostrar:", datos);
 
-    if (!datos) {
-        console.error("No se recibieron datos para el modal");
+    if (!datos || !datos.muestra) {
+        console.error("No se recibieron datos válidos para el modal");
         return;
     }
 
-    // Initialize an object to store the fetched data
+    // Objeto para almacenar los datos relacionados
     const relatedData = {};
 
-    // Helper function to fetch data and store it in relatedData
+    // Función auxiliar para hacer fetch y almacenar los datos
     function fetchData(url, key) {
         return fetch(url)
             .then(res => res.json())
@@ -602,11 +602,11 @@ function rendermodal_mostrar(datos) {
             })
             .catch(error => {
                 console.error(`Error fetching ${key}:`, error);
-                relatedData[key] = { nombre: "Error al cargar" }; // Placeholder in case of error
+                relatedData[key] = { nombre: "Error al cargar" };
             });
     }
 
-    // Array of promises for all fetch requests
+    // Array de promesas para todas las solicitudes fetch
     const promises = [
         fetchData(`listamuestras/tipo/${datos.muestra.idTipo}`, 'tipo'),
         fetchData(`listamuestras/formato/${datos.muestra.idFormato}`, 'formato'),
@@ -615,63 +615,77 @@ function rendermodal_mostrar(datos) {
         fetchData(`listamuestras/sede/${datos.muestra.idSede}`, 'sede')
     ];
 
-    // Wait for all promises to resolve
+    // Esperar a que todas las promesas se resuelvan
     Promise.all(promises)
-        .then(() => {
-            const modalContent = `
-                <div>
-                    <label for="fecha3">Fecha:</label>
-                    <input type="text" id="fecha3" value="${datos.muestra.fecha || ''}" readonly><br>
-                    <label for="codigo3">Código:</label>
-                    <input type="text" id="codigo3" value="${datos.muestra.codigo || ''}" readonly><br>
-                    <label for="organo3">Organo:</label>
-                    <input type="text" id="organo3" value="${datos.muestra.organo || ''}" readonly><br>
-                    <label for="idTipo3">Tipo:</label>
-                    <input type="text" id="idTipo3" value="${relatedData.tipo.nombre || ''}" readonly><br>
-                    <label for="idFormato3">Formato:</label>
-                    <input type="text" id="idFormato3" value="${relatedData.formato.nombre || ''}" readonly><br>
-                    <label for="idCalidad3">Calidad:</label>
-                    <input type="text" id="idCalidad3" value="${relatedData.calidad.nombre || ''}" readonly><br>
-                    <label for="idUsuario3">Usuario:</label>
-                    <input type="text" id="idUsuario3" value="${relatedData.usuario.email || ''}" readonly><br>
-                    <label for="idSede3">Sede:</label>
-                    <input type="text" id="idSede3" value="${relatedData.sede.nombre || ''}" readonly><br>
-                </div>
-<br>
-                 <div class="bg-gray p-4 rounded shadow">
-                    <h3>Interpretación</h3>
-
-                    <div>
-                        <label for="tipoEstudio">TipoEstudio</label><br>
-                        <input type="text" id="idTipo3" value="${datos.interpretacion.idTipoEstudio || ''}" readonly><br>
+    .then(() => {
+        // Función para generar el HTML de las interpretaciones
+        function generarInterpretacionesHTML(interpretaciones) {
+            if (Array.isArray(interpretaciones) && interpretaciones.length > 0) {
+                return interpretaciones.map((inter, index) => `
+                    <div class="interpretacion-box p-3 mb-3 border rounded shadow-sm">
+                        <h4>Interpretación ${index + 1}</h4>
+                        <label for="tipoEstudio">Tipo de Estudio:</label>
+                        <input type="text" value="${inter.idTipoEstudio || 'N/A'}" readonly class="form-control mb-2">
+                        <label for="descripcion">Descripción:</label>
+                        <textarea readonly class="form-control">${inter.texto || 'Sin descripción'}</textarea>
                     </div>
-                    <br>
-                    <div>
-                        <label for="descripcion">Descripción</label><br>
-                        <textarea id="idTipo3" readonly>${datos.interpretacion.texto || ''}</textarea><br>
+                `).join('');
+            } else {
+                return '<p class="text-muted">No hay interpretaciones disponibles</p>';
+            }
+        }
 
+        // Contenido del modal
+        const clavesAMostrar = ["fecha", "codigo", "organo", "tipo", "formato", "calidad", "usuario", "sede"];
+
+        // Contenido del modal - FILTRADO DE CLAVES
+        const modalContent = `
+            <div class="container">
+                <div class="info-box mb-4">
+                    <div class="row">
+                        ${clavesAMostrar.map(key => {
+                            // Verificar si la clave existe en datos.muestra
+                            if (datos.muestra.hasOwnProperty(key)) {
+                                return `
+                                    <div class="col-md-6 mb-2">
+                                        <label for="${key}3" class="modal-label">${key.charAt(0).toUpperCase() + key.slice(1)}:</label>
+                                        <input type="text" id="${key}3" value="${datos.muestra[key] || ''}" readonly class="form-control modal-input">
+                                    </div>
+                                `;
+                            } else if (relatedData.hasOwnProperty(key)) {
+                                return `
+                                    <div class="col-md-6 mb-2">
+                                        <label for="${key}3" class="modal-label">${key.charAt(0).toUpperCase() + key.slice(1)}:</label>
+                                        <input type="text" id="${key}3" value="${relatedData[key].nombre || relatedData[key].email || ''}" readonly class="form-control modal-input">
+                                    </div>
+                                `;
+                            }
+                        }).join('')}
                     </div>
-
-                    
                 </div>
-            `;
+                <div class="bg-light p-4 rounded shadow">
+                    <h3>Interpretaciones</h3>
+                    ${generarInterpretacionesHTML(datos.interpretaciones)}
+                </div>
+            </div>
+        `;
 
-            Swal.fire({
-                title: 'MUESTRA',
-                html: modalContent,
-                confirmButtonText: "Imprimir",
-                showCancelButton: true,
-            });
-
-        })
-        .catch(error => {
-            console.error("Error fetching related data:", error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: "Error al cargar los datos. Por favor, inténtelo de nuevo más tarde."
-            });
+        Swal.fire({
+            title: 'MUESTRA',
+            html: modalContent,
+            confirmButtonText: "Cerrar",
+            showCancelButton: false,
+            width: '800px'
         });
+    })
+    .catch(error => {
+        console.error("Error fetching related data:", error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: "Error al cargar los datos. Por favor, inténtelo de nuevo más tarde."
+        });
+    });
 }
 
 
