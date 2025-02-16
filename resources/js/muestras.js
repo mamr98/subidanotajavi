@@ -240,8 +240,7 @@ const modal_mostar = document.querySelector('#modal_mostrar');
 
   modificar.forEach(boton => {
     boton.addEventListener('click', () => {
-        modal_update.style.display = "block"; // O modal_update.style.display = "block";
-
+        modal_update.style.display = "block";
         const id = boton.id;
         console.log("ID a enviar al fetch:", id);
 
@@ -252,128 +251,94 @@ const modal_mostar = document.querySelector('#modal_mostrar');
                 'Accept': 'application/json',
             },
         })
-        .then(respuesta => {
-            if (!respuesta.ok) {
-                return respuesta.json().then(err => {
-                    throw new Error(err.message || `Error ${respuesta.status} en la solicitud`);
-                }).catch(() => {
-                    throw new Error(`Error ${respuesta.status} en la solicitud`);
-                });
-            }
-            return respuesta.json();
-        })
+        .then(respuesta => respuesta.ok ? respuesta.json() : Promise.reject(`Error ${respuesta.status} en la solicitud`))
         .then(data => {
             console.log("Datos recibidos:", data);
-
             Swal.fire({
-                title: 'Introduce Los datos que quieres modificar',
+                title: 'Introduce los datos que quieres modificar',
                 html: rendermodal_update(data),
                 confirmButtonText: "Actualizar",
                 showCancelButton: true,
-                didOpen: () => { // Asegúrate de que los campos estén disponibles después de que se abre el modal
-                    const btnActualizar = document.querySelector('.swal2-confirm'); // Obtén el botón "Actualizar" de SweetAlert
+                didOpen: () => {
+                    document.querySelector('.swal2-confirm')?.addEventListener('click', (event) => {
+                        event.preventDefault();
 
-                    if (btnActualizar) {
-                        btnActualizar.addEventListener('click', (event) => {
-                            event.preventDefault(); // Previene la recarga de la página
+                        const fecha = modal_update.querySelector('#fecha2').value;
+                        const codigo = modal_update.querySelector('#codigo2').value;
+                        const organo = modal_update.querySelector("#organo2");
+            const selectedOrganoOption = organo.options[organo.selectedIndex];
+            const valueOrgano = selectedOrganoOption.value;
 
-                            const fecha = modal_update.querySelector('#fecha2').value; // Usa modal_update y los IDs correctos
-                            const codigo = modal_update.querySelector('#codigo2').value;
-                            const organoSelect = modal_update.querySelector("#organo2");
-                            const valueOrgano = organoSelect.options[organoSelect.selectedIndex].value;
-                            const idTipoElement = document.querySelector("#idTipo");
-                            const selectedIdTipoOption = idTipoElement.options[idTipoElement.selectedIndex];
-                            const idTipo = selectedIdTipoOption.getAttribute("id");
+            const idTipoElement = document.querySelector("#idTipo2");
+            const selectedIdTipoOption = idTipoElement.options[idTipoElement.selectedIndex];
+            const idTipo = selectedIdTipoOption.getAttribute("id");
 
-                            const idFormatoElement = document.querySelector("#idFormato2");
-                            const selectedIdFormatoOption = idFormatoElement.options[idFormatoElement.selectedIndex];
-                            const idFormato = selectedIdFormatoOption.getAttribute("id");
+            const idFormatoElement = document.querySelector("#idFormato2");
+            const selectedIdFormatoOption = idFormatoElement.options[idFormatoElement.selectedIndex];
+            const idFormato = selectedIdFormatoOption.getAttribute("id");
 
-                            const idCalidadElement = document.querySelector("#idCalidad2");
-                            const selectedIdCalidadOption = idCalidadElement.options[idCalidadElement.selectedIndex];
-                            const idCalidad = selectedIdCalidadOption.getAttribute("id");
+            const idCalidadElement = document.querySelector("#idCalidad2");
+            const selectedIdCalidadOption = idCalidadElement.options[idCalidadElement.selectedIndex];
+            const idCalidad = selectedIdCalidadOption.getAttribute("id");
 
-                            const idUsuarioElement = document.querySelector("#idUsuario2");
-                            const selectedIdUsuarioOption = idUsuarioElement.options[idUsuarioElement.selectedIndex];
-                            const idUsuario = selectedIdUsuarioOption.getAttribute("id");
+            const idUsuarioElement = document.querySelector("#idUsuario2");
+            const selectedIdUsuarioOption = idUsuarioElement.options[idUsuarioElement.selectedIndex];
+            const idUsuario = selectedIdUsuarioOption.getAttribute("id");
 
-                            const idSedeElement = document.querySelector("#idSede2");
-                            const selectedIdSedeOption = idSedeElement.options[idSedeElement.selectedIndex];
-                            const idSede = selectedIdSedeOption.getAttribute("id");
+            const idSedeElement = document.querySelector("#idSede2");
+            const selectedIdSedeOption = idSedeElement.options[idSedeElement.selectedIndex];
+            const idSede = selectedIdSedeOption.getAttribute("id");
 
-                            const idTipoEstudioElements = document.querySelectorAll("#idTipoEstudio2");
-                            const descripcionElements = document.querySelectorAll("#descripcion2");
-                            const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                            const interpretaciones = [];
-                    
-                            for (let i = 0; i < idTipoEstudioElements.length; i++) {
-                                // Obtener el elemento select actual
-                                const selectElement = idTipoEstudioElements[i];
-                            
-                                // Obtener el valor (id) de la opción seleccionada
-                                const idTipoEstudio = selectElement.value;  // <-- Esta es la línea corregida
-                            
-                                console.log(idTipoEstudio);
-                                const descripcion = descripcionElements[i].value;
-                            
-                                interpretaciones.push({
-                                    idTipoEstudio: idTipoEstudio,
-                                    descripcion: descripcion
-                                });
+                        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-                                console.log(fecha+codigo+valueOrgano+idTipo+idFormato+idCalidad+idUsuario+idUsuario+idSede)
+                        const interpretaciones = [...document.querySelectorAll(".interpretacion")].map((element, index) => ({
+                            id: data.interpretaciones[index]?.id || null,
+                           /*  idTipoEstudio: element.querySelector(`#idTipoEstudio2-${index}`).value, */
+                            descripcion: element.querySelector(`#descripcion2-${index}`).value
+                        }));
 
-                                console.table(interpretaciones)
-                            }
+                        console.table(interpretaciones);
 
-                            fetch(`listamuestras/update/${id}`, {
-                                method: "PUT",
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': token
-                                },
-                                body: JSON.stringify({
-                                    fecha: fecha,
-                                    codigo: codigo,
-                                    organo: valueOrgano,
-                                    idTipo: idTipo,
-                                    idFormato: idFormato,
-                                    idCalidad: idCalidad,
-                                    idUsuario: idUsuario,
-                                    idSede: idSede,
-                                    interpretaciones: interpretaciones
-                                }),
-                            })
-                            .then(respuesta => {
-                                if (!respuesta.ok) {
-                                    return respuesta.text().then(err => {
-                                        try {
-                                            const jsonError = JSON.parse(err);
-                                            throw new Error(jsonError.message || 'Error en la solicitud');
-                                        } catch (e) {
-                                            throw new Error(err || 'Error en la solicitud');
-                                        }
-                                    });
-                                }
-                                return respuesta.json();
-                            })
-                            .then(data => {
-                                Swal.fire('Éxito', 'Muestra actualizada correctamente', 'success');
-                                location.reload();
-                            })
-                            .catch(error => {
-                                console.error("Error en la petición:", error);
-                                Swal.fire('Error', error.message, 'error');
-                            });
+                        console.log("Datos a enviar:", {
+                            fecha, codigo, valueOrgano, idTipo, idFormato, idCalidad, idUsuario, idSede, interpretaciones
                         });
-                    }
+                        
+
+                        fetch(`/listamuestras/update/${id}`, {
+                            method: "POST",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': token
+                            },
+                            body: JSON.stringify({
+                                fecha: fecha || "",  // Asegurar que no sea undefined
+                                codigo: codigo || "",
+                                organo: organo || "",
+                                idTipo: idTipo || "",
+                                idFormato: idFormato || "",
+                                idCalidad: idCalidad || "",
+                                idUsuario: idUsuario || "",
+                                idSede: idSede || "",
+                                interpretaciones: interpretaciones,
+                                 _method: 'PUT'
+                            }),
+                        })
+                        .then(res => res.ok ? res.json() : Promise.reject("Error en la solicitud"))
+                        .then(() => {
+                            Swal.fire('Éxito', 'Muestra actualizada correctamente', 'success');
+                            location.reload();
+                        })
+                        .catch(error => {
+                            console.error("Error en la petición:", error);
+                            Swal.fire('Error', error, 'error');
+                        });
+                    });
                 }
             });
-
         })
         .catch(error => {
             console.error("Error en la petición:", error);
-            alert("Ocurrió un error: " + error.message);
+            Swal.fire('Error', error, 'error');
         });
     });
 });
@@ -570,18 +535,6 @@ Swal.fire({
 
     return modal_update;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 eliminar.forEach(boton => {
     boton.addEventListener('click', () => {

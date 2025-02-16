@@ -104,55 +104,32 @@ public function show()
 
     public function update(Request $request, $id)
 {
-    // Obtener la muestra existente
-    $muestra = Muestra::find($id);
+    // Buscar la muestra por ID
+    $muestra = Muestra::findOrFail($id);
 
-    if (!$muestra) {
-        return response()->json(['error' => 'Muestra no encontrada'], 404);
-    }
+    // Actualizar los campos de la muestra
+    $muestra->update($request->only([
+        'fecha', 'codigo', 'organo', 'idTipo', 'idFormato', 'idCalidad', 'idUsuario', 'idSede'
+    ]));
 
-    // Actualizar los atributos de la muestra
-    $muestra->fecha = $request->input('fecha');
-    $muestra->codigo = $request->input('codigo');
-    $muestra->organo = $request->input('organo');
-    $muestra->idTipo = $request->input('idTipo');
-    $muestra->idFormato = $request->input('idFormato');
-    $muestra->idCalidad = $request->input('idCalidad');
-    $muestra->idUsuario = $request->input('idUsuario');
-    $muestra->idSede = $request->input('idSede');
-    $muestra->save(); // Guardar la muestra actualizada
-
-
-    // Obtener las interpretaciones del request
-$interpretaciones = $request->input('interpretaciones', []); // 👈 Asegura que sea un array vacío si es null
-
-// Verificar si hay interpretaciones antes de iterar
-if (!empty($interpretaciones)) {
-    foreach ($interpretaciones as $interpretacionData) {
-        // Ahora podemos usar $interpretacionData sin error
-        if (isset($interpretacionData['id']) && $interpretacionData['id']) {
-            $interpretacion = Interpretacion::find($interpretacionData['id']);
-            if ($interpretacion) {
-                $interpretacion->texto = $interpretacionData['descripcion'] ?? '';
-                $interpretacion->idTipoEstudio = $interpretacionData['idTipoEstudio'] ?? null;
-                $interpretacion->save();
+    // Actualizar interpretaciones si existen en la solicitud
+    if ($request->has('interpretaciones')) {
+        foreach ($request->input('interpretaciones') as $interpretacionData) {
+            if (!empty($interpretacionData['id'])) {
+                Interpretacion::where('id', $interpretacionData['id'])
+                    ->update([
+                        'texto' => $interpretacionData['descripcion'] ?? '',
+                        /* 'idTipoEstudio' => $interpretacionData['idTipoEstudio'] ?? null */
+                    ]);
             }
         }
     }
-} else {
-    \Log::warning("No se enviaron interpretaciones en la solicitud.");
+
+    return response()->json([
+        'message' => 'Muestra actualizada correctamente',
+        'muestra' => $muestra
+    ]);
 }
-
-    
-    return response()->json(['message' => 'Muestra actualizada correctamente', 'muestra' => $muestra]);
-}
-
-
-
-
-
-
-    
 
 
     public function destroy($id)
