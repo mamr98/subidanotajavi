@@ -159,14 +159,19 @@ public function show()
     }
 
     public function muestra($id){
+        // Obtener la muestra con el ID proporcionado
         $muestra = Muestra::where('id', $id)->first();
-        $interpretacion = Interpretacion::where('id', $id)->first();
+        
+        // Obtener todas las interpretaciones asociadas a esa muestra con todos sus campos
+        $muestra_interpretaciones = MuestraInterpretacion::where('idMuestras', $id)->get();
+    
+        // Retornar la muestra y las interpretaciones en formato JSON
         return response()->json([
             'muestra' => $muestra,
-            'interpretacion' => $interpretacion
+            'interpretaciones' => $muestra_interpretaciones,
         ], 200);
-        
     }
+    
 
     public function buscarMuestra($codigo)
 {
