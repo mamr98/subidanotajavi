@@ -103,23 +103,57 @@ public function show()
     }
 
     public function update(Request $request, $id)
-    {
-        $muestra = Muestra::find($id);
-    
-        $muestra->fecha = $request->input('fecha');
-        $muestra->codigo = $request->input('codigo');
-        $muestra->organo = $request->input('organo');
-        $muestra->idTipo = $request->input('idTipo');
-        $muestra->idFormato = $request->input('idFormato');
-        $muestra->idCalidad = $request->input('idCalidad');
-        $muestra->idUsuario = $request->input('idUsuario');
-        $muestra->idSede = $request->input('idSede');
+{
+    // Obtener la muestra existente
+    $muestra = Muestra::find($id);
 
-        
-        $muestra->save();
-    
-        return response()->json(['mensaje' => 'Muestra actualizado correctamente'], 200);
+    if (!$muestra) {
+        return response()->json(['error' => 'Muestra no encontrada'], 404);
     }
+
+    // Actualizar los atributos de la muestra
+    $muestra->fecha = $request->input('fecha');
+    $muestra->codigo = $request->input('codigo');
+    $muestra->organo = $request->input('organo');
+    $muestra->idTipo = $request->input('idTipo');
+    $muestra->idFormato = $request->input('idFormato');
+    $muestra->idCalidad = $request->input('idCalidad');
+    $muestra->idUsuario = $request->input('idUsuario');
+    $muestra->idSede = $request->input('idSede');
+    $muestra->save(); // Guardar la muestra actualizada
+
+
+    // Obtener las interpretaciones del request
+$interpretaciones = $request->input('interpretaciones', []); // 👈 Asegura que sea un array vacío si es null
+
+// Verificar si hay interpretaciones antes de iterar
+if (!empty($interpretaciones)) {
+    foreach ($interpretaciones as $interpretacionData) {
+        // Ahora podemos usar $interpretacionData sin error
+        if (isset($interpretacionData['id']) && $interpretacionData['id']) {
+            $interpretacion = Interpretacion::find($interpretacionData['id']);
+            if ($interpretacion) {
+                $interpretacion->texto = $interpretacionData['descripcion'] ?? '';
+                $interpretacion->idTipoEstudio = $interpretacionData['idTipoEstudio'] ?? null;
+                $interpretacion->save();
+            }
+        }
+    }
+} else {
+    \Log::warning("No se enviaron interpretaciones en la solicitud.");
+}
+
+    
+    return response()->json(['message' => 'Muestra actualizada correctamente', 'muestra' => $muestra]);
+}
+
+
+
+
+
+
+    
+
 
     public function destroy($id)
 {
@@ -178,6 +212,12 @@ public function show()
     {
         $sede = Sede::where('id', $id)->first();
         return $sede;
+    }
+
+    public function tipoEstudio($id)
+    {
+        $tipoEstudio = TipoEstudio::where('id', $id)->first();
+        return $tipoEstudio;
     }
 
     public function muestra($id){

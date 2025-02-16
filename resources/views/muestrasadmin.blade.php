@@ -234,7 +234,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="organo2" class="block text-gray-700 font-medium mb-1">Órgano:</label>
-                    <select id="organo2" name="organo" class="w-full p-2 border rounded">
+                    <select id="organo2" name="organo2" class="w-full p-2 border rounded">
                         <option value="BC">Corazón</option>
                         <option value="BB">Bazo</option>
                         <option value="BH">Hígado</option>
@@ -296,6 +296,30 @@
                         </select><br> 
                     </div>
                 </div>
+
+                 <div class="bg-gray-100 p-4 rounded shadow mt-4">
+                    <h3>Interpretación</h3>
+                    <div id="interpretaciones-container">
+                        <div class="interpretacion-fields">
+                            <div>
+                                <label for="tipoEstudio2">Tipo de Estudio</label><br>
+                                <select id="idTipoEstudio2" class="w-full p-2 border rounded">
+                                    @foreach ($tipoEstudio as $ti)
+                                    <option value="{{ $ti->id }}">{{ $ti->nombre }}</option>
+                                    @endforeach
+                                </select><br>
+                            </div>
+                            <div>
+                                <label for="descripcion2">Descripción</label><br>
+                                <textarea name="descripcion2" id="descripcion2" cols="40" rows="5" class="w-full p-2 border rounded"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                    <button type="button" class="btn btn-primary btn-mas" id="agregar-interpretacion">
+                        <i class="fas fa-plus"></i> Agregar más interpretaciones
+                    </button>
             </form>
         </div>
 
