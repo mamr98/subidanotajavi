@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Usuario;
 use Cloudinary\Asset\Image;
 use Illuminate\Http\Request;
 use Cloudinary\Transformation\Format;
@@ -29,6 +30,9 @@ class ImagenController extends Controller
             ->delivery(Delivery::quality(35))
             ->delivery(Delivery::format(Format::auto()));
 
+            $usuario = Usuario::find($url_image);    
+            $usuario->image = $request->input('image');
+
         return response()->json([
             'success' => true,
             'url' => $url_image
@@ -45,7 +49,5 @@ class ImagenController extends Controller
             'message' => 'Error al subir la imagen: ' . $e->getMessage()
         ], 500);
     }
-}
-
-    
+}    
 }
