@@ -30,8 +30,16 @@ class ImagenController extends Controller
             ->delivery(Delivery::quality(35))
             ->delivery(Delivery::format(Format::auto()));
 
-            $usuario = Usuario::find($url_image);    
-            $usuario->image = $request->input('image');
+            $usuario = Usuario::find(1); // Obtener el usuario con ID (Hay que cambiarlo segun el usuario)
+            if ($usuario) {
+                $usuario->imagen = $url_image;
+                $usuario->save(); // Guardar los cambios en la base de datos
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Usuario no encontrado'
+                ], 404);
+            }
 
         return response()->json([
             'success' => true,
@@ -49,5 +57,7 @@ class ImagenController extends Controller
             'message' => 'Error al subir la imagen: ' . $e->getMessage()
         ], 500);
     }
-}    
+}
+
+    
 }
