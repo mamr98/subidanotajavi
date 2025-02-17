@@ -119,7 +119,7 @@ public function show()
                 Interpretacion::where('id', $interpretacionData['id'])
                     ->update([
                         'texto' => $interpretacionData['descripcion'] ?? '',
-                        'idTipoEstudio' => $interpretacionData['tipoEstudio'] ?? null
+                        'idTipoEstudio' => $interpretacionData['idTipoEstudio'] ?? null
                     ]);
             }
         }
@@ -211,8 +211,6 @@ public function show()
         foreach ($muestra_interpretaciones as $interpretacion) {
             // Obtener detalles de la tabla Interpretacione para cada id
             $detalle_interpretacion = Interpretacion::where('id', $interpretacion->id)->first();
-
-            $tipoEstudio = TipoEstudio::where('id', $detalle_interpretacion->idTipoEstudio)->first();
             
             // Agregar el detalle de la interpretación al arreglo
             if ($detalle_interpretacion) {
@@ -224,7 +222,6 @@ public function show()
         return response()->json([
             'muestra' => $muestra,
             'interpretaciones' => $interpretaciones_detalladas,
-            'tipoEstudio' => $tipoEstudio,
         ], 200);
     }
     
