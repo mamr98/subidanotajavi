@@ -587,7 +587,7 @@ function rendermodal_mostrar(datos) {
                     <div class="interpretacion-box p-3 mb-3 border rounded shadow-sm">
                         <h4>Interpretación ${index + 1}</h4>
                         <label for="tipoEstudio">Tipo de Estudio:</label>
-                        <input type="text" value="${inter.idTipoEstudio || 'N/A'}" readonly class="form-control mb-2">
+                        <input type="text" value="${datos.tipoEstudio.nombre || 'N/A'}" readonly class="form-control mb-2">
                         <label for="descripcion">Descripción:</label>
                         <textarea readonly class="form-control">${inter.texto || 'Sin descripción'}</textarea>
                     </div>
