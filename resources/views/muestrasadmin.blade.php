@@ -320,7 +320,7 @@
                                 <label for="TipoEstudio2">Tipo de Estudio</label><br>
                                 <select id="TipoEstudio2" class="w-full p-2 border rounded">
                                     @foreach ($tipoEstudio as $ti)
-                                    <option id="{{ $ti->id }}">{{ $ti->nombre }}</option>
+                                    <option value="{{ $ti->id }}">{{ $ti->nombre }}</option>
                                     @endforeach
                                 </select><br>
                             </div>
