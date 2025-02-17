@@ -73,6 +73,7 @@ Route::get('/listamuestras/formato/{id}',[MuestraController::class,'formato']);
 Route::get('/listamuestras/calidad/{id}',[MuestraController::class,'calidad']);
 Route::get('/listamuestras/usuario/{id}',[MuestraController::class,'usuario']);
 Route::get('/listamuestras/sede/{id}',[MuestraController::class,'sede']);
+Route::get('/listamuestras/tipoEstudio/{id}',[MuestraController::class,'tipoEstudio']);
 
 
 

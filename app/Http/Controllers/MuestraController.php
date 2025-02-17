@@ -103,23 +103,34 @@ public function show()
     }
 
     public function update(Request $request, $id)
-    {
-        $muestra = Muestra::find($id);
-    
-        $muestra->fecha = $request->input('fecha');
-        $muestra->codigo = $request->input('codigo');
-        $muestra->organo = $request->input('organo');
-        $muestra->idTipo = $request->input('idTipo');
-        $muestra->idFormato = $request->input('idFormato');
-        $muestra->idCalidad = $request->input('idCalidad');
-        $muestra->idUsuario = $request->input('idUsuario');
-        $muestra->idSede = $request->input('idSede');
+{
+    // Buscar la muestra por ID
+    $muestra = Muestra::findOrFail($id);
 
-        
-        $muestra->save();
-    
-        return response()->json(['mensaje' => 'Muestra actualizado correctamente'], 200);
+    // Actualizar los campos de la muestra
+    $muestra->update($request->only([
+        'fecha', 'codigo', 'organo', 'idTipo', 'idFormato', 'idCalidad', 'idUsuario', 'idSede'
+    ]));
+
+    // Actualizar interpretaciones si existen en la solicitud
+    if ($request->has('interpretaciones')) {
+        foreach ($request->input('interpretaciones') as $interpretacionData) {
+            if (!empty($interpretacionData['id'])) {
+                Interpretacion::where('id', $interpretacionData['id'])
+                    ->update([
+                        'texto' => $interpretacionData['descripcion'] ?? '',
+                        /* 'idTipoEstudio' => $interpretacionData['idTipoEstudio'] ?? null */
+                    ]);
+            }
+        }
     }
+
+    return response()->json([
+        'message' => 'Muestra actualizada correctamente',
+        'muestra' => $muestra
+    ]);
+}
+
 
     public function destroy($id)
 {
@@ -178,6 +189,12 @@ public function show()
     {
         $sede = Sede::where('id', $id)->first();
         return $sede;
+    }
+
+    public function tipoEstudio($id)
+    {
+        $tipoEstudio = TipoEstudio::where('id', $id)->first();
+        return $tipoEstudio;
     }
 
     public function muestra($id){
