@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\SedeController;
 use App\Http\Controllers\TipoController;
 use App\Http\Controllers\UserController;
@@ -89,3 +90,4 @@ Route::get('/usuarios/{email}', [UsuarioController::class, 'buscarUsuario'])->na
 
 Route::get('/muestras/{codigo}', [MuestraController::class, 'buscarMuestra'])->name('muestras.buscar');
 
+Route::post('/pdf/{id}', [PdfController::class, 'generarPDF'])->name('generarPDF');

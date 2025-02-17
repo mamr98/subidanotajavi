@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\TipoEstudio;
-use App\Models\Interpretacion;
 use App\Models\MuestrasInterpretacion;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
