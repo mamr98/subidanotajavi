@@ -13,6 +13,7 @@ class Calidad extends Model
 
     protected $fillable = [
         'nombre',
+        'descripcion',
         'idTipoEstudio',
     ];
 

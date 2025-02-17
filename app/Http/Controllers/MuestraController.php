@@ -8,7 +8,10 @@ use App\Models\Calidad;
 use App\Models\Formato;
 use App\Models\Muestra;
 use App\Models\Usuario;
+use App\Models\TipoEstudio;
 use Illuminate\Http\Request;
+use App\Models\Interpretacion;
+use App\Models\MuestrasInterpretacion;
 
 class MuestraController extends Controller
 {
@@ -19,20 +22,43 @@ class MuestraController extends Controller
 
     public function create(Request $request)
 {
-    $muestra = new Muestra();
-    $muestra->fecha = $request->input('fecha');
-    $muestra->codigo = $request->input('codigo');
-    $muestra->organo = $request->input('organo');
-    $muestra->idTipo = $request->input('idTipo');
-    $muestra->idFormato = $request->input('idFormato');
-    $muestra->idCalidad = $request->input('idCalidad');
-    $muestra->idUsuario = $request->input('idUsuario');
-    $muestra->idSede = $request->input('idSede');
+   // Crear y guardar la muestra
+   $muestra = new Muestra();
+   $muestra->fecha = $request->input('fecha');
+   $muestra->codigo = $request->input('codigo');
+   $muestra->organo = $request->input('organo');
+   $muestra->idTipo = $request->input('idTipo');
+   $muestra->idFormato = $request->input('idFormato');
+   $muestra->idCalidad = $request->input('idCalidad');
+   $muestra->idUsuario = $request->input('idUsuario');
+   $muestra->idSede = $request->input('idSede');
+   $muestra->save(); // Guardamos la muestra para obtener su ID
 
-    $muestra->save();
+   // Obtener las interpretaciones del request
+   $interpretaciones = $request->input('interpretaciones');
 
-    return response()->json(['mensaje' => 'Muestra creada correctamente'], 201);
+   // Verificar si hay interpretaciones antes de iterar
+   if ($interpretaciones) {
+       foreach ($interpretaciones as $interpretacionData) {
+           // Crear y guardar la interpretación
+           $interpretacion = new Interpretacion();
+           $interpretacion->texto = $interpretacionData['descripcion'];
+           $interpretacion->idTipoEstudio = $interpretacionData['idTipoEstudio'];
+           $interpretacion->save(); // Guardamos la interpretación para obtener su ID
+
+           // Crear y guardar la relación en la tabla pivote
+           $muestra_interpretacion = new MuestrasInterpretacion();
+           $muestra_interpretacion->calidad = 'hola'; // Puedes obtener este valor de otro input si lo necesitas
+           $muestra_interpretacion->idMuestras = $muestra->id; // Usamos el ID de la muestra guardada
+           $muestra_interpretacion->idInterpretacion = $interpretacion->id; // Usamos el ID de la interpretación guardada
+           $muestra_interpretacion->save();
+       }
+   }
+
+   return response()->json(['mensaje' => 'Muestra creada correctamente'], 201);
+
 }
+
 
 
 public function show()
@@ -43,6 +69,7 @@ public function show()
     $calidades = Calidad::all();
     $usuarios = Usuario::all();
     $sedes = Sede::all();
+    $interpretacion = Interpretacion::all();
     return view('listamuestras')->with([
         'muestras' => $muestras,
         'tipos' => $tipos,
@@ -50,6 +77,7 @@ public function show()
         'calidades' => $calidades,
         'usuarios' => $usuarios,
         'sedes' => $sedes,
+        'interpretacion' => $interpretacion,
     ]);
 }
 
@@ -62,6 +90,7 @@ public function show()
         $calidades = Calidad::all();
         $usuarios = Usuario::all();
         $sedes = Sede::all();
+        $tipoEstudio = TipoEstudio::all();
     return view('muestrasadmin')->with([
         'muestras' => $muestras,
         'tipos' => $tipos,
@@ -69,34 +98,68 @@ public function show()
         'calidades' => $calidades,
         'usuarios' => $usuarios,
         'sedes' => $sedes,
+        'tipoEstudio' => $tipoEstudio,
     ]);
     }
 
     public function update(Request $request, $id)
-    {
-        $muestra = Muestra::find($id);
-    
-        $muestra->fecha = $request->input('fecha');
-        $muestra->codigo = $request->input('codigo');
-        $muestra->organo = $request->input('organo');
-        $muestra->idTipo = $request->input('idTipo');
-        $muestra->idFormato = $request->input('idFormato');
-        $muestra->idCalidad = $request->input('idCalidad');
-        $muestra->idUsuario = $request->input('idUsuario');
-        $muestra->idSede = $request->input('idSede');
+{
+    // Buscar la muestra por ID
+    $muestra = Muestra::findOrFail($id);
 
-        
-        $muestra->save();
-    
-        return response()->json(['mensaje' => 'Muestra actualizado correctamente'], 200);
+    // Actualizar los campos de la muestra
+    $muestra->update($request->only([
+        'fecha', 'codigo', 'organo', 'idTipo', 'idFormato', 'idCalidad', 'idUsuario', 'idSede'
+    ]));
+
+    // Actualizar interpretaciones si existen en la solicitud
+    if ($request->has('interpretaciones')) {
+        foreach ($request->input('interpretaciones') as $interpretacionData) {
+            if (!empty($interpretacionData['id'])) {
+                Interpretacion::where('id', $interpretacionData['id'])
+                    ->update([
+                        'texto' => $interpretacionData['descripcion'] ?? '',
+                        'idTipoEstudio' => $interpretacionData['idTipoEstudio'] ?? null
+                    ]);
+            }
+        }
     }
+
+    return response()->json([
+        'message' => 'Muestra actualizada correctamente',
+        'muestra' => $muestra
+    ]);
+}
+
 
     public function destroy($id)
-    {
-        $muestra = Muestra::where('id', $id)->first();
-        $muestra->delete(); 
-        return response()->json(['mensaje' => 'Muestra eliminada correctamente'], 201);
+{
+    // Buscar la muestra
+    $muestra = Muestra::find($id);
+
+    if (!$muestra) {
+        return response()->json(['mensaje' => 'Muestra no encontrada'], 404);
     }
+
+    // Obtener las IDs de las interpretaciones asociadas a la muestra
+    $interpretacionesIds = MuestrasInterpretacion::where('idMuestras', $id)->pluck('idInterpretacion');
+
+    // Eliminar las relaciones en la tabla MuestrasInterpretacion
+    MuestrasInterpretacion::where('idMuestras', $id)->delete();
+
+    // Ahora que las relaciones han sido eliminadas, podemos eliminar las interpretaciones
+    Interpretacion::whereIn('id', $interpretacionesIds)->delete();
+
+    // Finalmente, eliminar la muestra
+    $muestra->delete();
+
+    return response()->json(['mensaje' => 'Muestra e interpretaciones eliminadas correctamente'], 200);
+}
+
+    
+
+    
+
 
     public function tipo($id)
     {
@@ -128,16 +191,55 @@ public function show()
         return $sede;
     }
 
-    public function muestra($id){
-        $muestra = Muestra::where('id', $id)->first();
-        return response()->json($muestra,200);
+    public function tipoEstudio($id)
+    {
+        $tipoEstudio = TipoEstudio::where('id', $id)->first();
+        return $tipoEstudio;
     }
+
+    public function muestra($id){
+        // Obtener la muestra con el ID proporcionado
+        $muestra = Muestra::where('id', $id)->first();
+        
+        // Obtener todas las interpretaciones asociadas a esa muestra con todos sus campos
+        $muestra_interpretaciones = MuestrasInterpretacion::where('idMuestras', $id)->get();
+    
+        // Inicializar un arreglo para almacenar las interpretaciones detalladas
+        $interpretaciones_detalladas = [];
+    
+        // Iterar sobre las interpretaciones obtenidas
+        foreach ($muestra_interpretaciones as $interpretacion) {
+            // Obtener detalles de la tabla Interpretacione para cada id
+            $detalle_interpretacion = Interpretacion::where('id', $interpretacion->id)->first();
+            
+            // Agregar el detalle de la interpretación al arreglo
+            if ($detalle_interpretacion) {
+                $interpretaciones_detalladas[] = $detalle_interpretacion;
+            }
+        }
+    
+        // Retornar la muestra y las interpretaciones detalladas en formato JSON
+        return response()->json([
+            'muestra' => $muestra,
+            'interpretaciones' => $interpretaciones_detalladas,
+        ], 200);
+    }
+    
+    
+    
 
     public function buscarMuestra($codigo)
 {
     $muestras = Muestra::where('codigo', 'LIKE', "%{$codigo}%")->get();
 
     return response()->json($muestras, 200);
+}
+
+public function tiposEstudios(){
+    $tipoEstudio = TipoEstudio::all();
+
+    return $tipoEstudio;
+
 }
 }
 

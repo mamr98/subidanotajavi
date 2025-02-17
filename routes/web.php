@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\SedeController;
 use App\Http\Controllers\TipoController;
 use App\Http\Controllers\UserController;
@@ -75,6 +76,8 @@ Route::get('/listamuestras/formato/{id}',[MuestraController::class,'formato']);
 Route::get('/listamuestras/calidad/{id}',[MuestraController::class,'calidad']);
 Route::get('/listamuestras/usuario/{id}',[MuestraController::class,'usuario']);
 Route::get('/listamuestras/sede/{id}',[MuestraController::class,'sede']);
+Route::get('/listamuestras/tipoEstudio/{id}',[MuestraController::class,'tipoEstudio']);
+Route::get('/listamuestras/tiposEstudio',[MuestraController::class,'tiposEstudios']);
 
 
 
@@ -89,6 +92,5 @@ Route::get('/usuarios/{email}', [UsuarioController::class, 'buscarUsuario'])->na
 
 Route::get('/muestras/{codigo}', [MuestraController::class, 'buscarMuestra'])->name('muestras.buscar');
 
+Route::post('/pdf/{id}', [PdfController::class, 'generarPDF'])->name('generarPDF');
 Route::post('/subir-imagen', [ImagenController::class, 'subirImagen'])->name('upload');
-//Route::post('/imagen-usuario', [SubidaImagenesController::class, 'imagenUsuario'])->name('imagenUsuario');
-Route::post('/perfil/guardar', [ImagenController::class, 'guardarPerfil'])->name('guardarPerfil');
