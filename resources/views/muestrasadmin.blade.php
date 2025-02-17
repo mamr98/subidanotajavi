@@ -174,7 +174,7 @@
                         <label for="idCalidad">Calidad</label><br>
                         <select id="idCalidad" class="w-full p-2 border rounded">
                             @foreach ($calidades as $ca)
-                            <option id="{{$ca->id}}">{{$ca->nombre}} - {{$ca->descripcion}}</option>
+                            <option id="{{$ca->id}}">{{$ca->nombre}}</option>
                             @endforeach
                         </select><br>
                     </div>
@@ -303,10 +303,10 @@
                     <div id="interpretaciones-container">
                         <div class="interpretacion-fields">
                             <div>
-                                <label for="tipoEstudio2">Tipo de Estudio</label><br>
-                                <select id="idTipoEstudio2" class="w-full p-2 border rounded">
+                                <label for="TipoEstudio2">Tipo de Estudio</label><br>
+                                <select id="TipoEstudio2" class="w-full p-2 border rounded">
                                     @foreach ($tipoEstudio as $ti)
-                                    <option value="{{ $ti->id }}">{{ $ti->nombre }}</option>
+                                    <option id="{{ $ti->id }}">{{ $ti->nombre }}</option>
                                     @endforeach
                                 </select><br>
                             </div>

@@ -4,25 +4,26 @@ const crearMuestra = document.querySelector('#crear_muestra');
 const modificar = document.querySelectorAll('.modificar');
 const eliminar = document.querySelectorAll('.eliminar');
 const contenido = document.querySelectorAll('.contenido');
-const modal_add = document.querySelector('#modal_add')
+const modal_add = document.querySelector('#modal_add');
 const modal_update = document.getElementById('modal_update');
 const modal_mostar = document.querySelector('#modal_mostrar');
- modal_add.style.display = "none";
- modal_update.style.display = "none";
- modal_mostar.style.display = "none";
 
- crearMuestra.addEventListener('click', () => {
-     modal_add.style.display = "block";
- 
-     Swal.fire({
-         title: 'Introduce los datos de la muestra',
-         html: rendermodal_add(),
-         confirmButtonText: "Guardar",
-         showCancelButton: true,
-     }).then((result) => {
-         if (result.isConfirmed) {
-            const fecha =  modal_add.querySelector('#fecha').value
-            const codigo =  modal_add.querySelector('#codigo').value
+modal_add.style.display = "none";
+modal_update.style.display = "none";
+modal_mostar.style.display = "none";
+
+crearMuestra.addEventListener('click', () => {
+    modal_add.style.display = "block";
+
+    Swal.fire({
+        title: 'Introduce los datos de la muestra',
+        html: rendermodal_add(),
+        confirmButtonText: "Guardar",
+        showCancelButton: true,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const fecha = modal_add.querySelector('#fecha').value;
+            const codigo = modal_add.querySelector('#codigo').value;
             const organo = modal_add.querySelector("#organo");
             const selectedOrganoOption = organo.options[organo.selectedIndex];
             const valueOrgano = selectedOrganoOption.value;
@@ -46,93 +47,82 @@ const modal_mostar = document.querySelector('#modal_mostrar');
             const idSedeElement = document.querySelector("#idSede");
             const selectedIdSedeOption = idSedeElement.options[idSedeElement.selectedIndex];
             const idSede = selectedIdSedeOption.getAttribute("id");
-            
 
-            //Interpretaciones
+            // Interpretaciones
             const idTipoEstudioElements = document.querySelectorAll("#idTipoEstudio");
-        const descripcionElements = document.querySelectorAll("#descripcion");
-        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        const interpretaciones = [];
+            const descripcionElements = document.querySelectorAll("#descripcion");
+            const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            const interpretaciones = [];
 
-        for (let i = 0; i < idTipoEstudioElements.length; i++) {
-            // Obtener el elemento select actual
-            const selectElement = idTipoEstudioElements[i];
-        
-            // Obtener el valor (id) de la opción seleccionada
-            const idTipoEstudio = selectElement.value;  // <-- Esta es la línea corregida
-        
-            console.log(idTipoEstudio);
-            const descripcion = descripcionElements[i].value;
-        
-            interpretaciones.push({
-                idTipoEstudio: idTipoEstudio,
-                descripcion: descripcion
+            for (let i = 0; i < idTipoEstudioElements.length; i++) {
+                const selectElement = idTipoEstudioElements[i];
+                const idTipoEstudio = selectElement.value;
+                console.log(idTipoEstudio);
+                const descripcion = descripcionElements[i].value;
+
+                interpretaciones.push({
+                    idTipoEstudio: idTipoEstudio,
+                    descripcion: descripcion
+                });
+            }
+
+            fetch('listamuestras/create', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': token
+                },
+                body: JSON.stringify({
+                    fecha: fecha,
+                    codigo: codigo,
+                    organo: valueOrgano,
+                    idTipo: idTipo,
+                    idFormato: idFormato,
+                    idCalidad: idCalidad,
+                    idUsuario: idUsuario,
+                    idSede: idSede,
+                    interpretaciones: interpretaciones
+                })
+            })
+            .then(respuesta => {
+                if (!respuesta.ok) {
+                    return respuesta.text().then(err => {
+                        try {
+                            const jsonError = JSON.parse(err);
+                            throw new Error(jsonError.message || 'Error en la solicitud');
+                        } catch (e) {
+                            throw new Error(err || 'Error en la solicitud');
+                        }
+                    });
+                }
+                return respuesta.json();
+            })
+            .then(data => {
+                console.log(data);
+                Swal.fire('Éxito', 'Muestra creada correctamente', 'success');
+                location.reload();
+            })
+            .catch(error => {
+                console.error("Error en la petición:", error);
+                Swal.fire('Error', error.message, 'error');
             });
         }
- 
-             fetch('listamuestras/create', {
-                 method: "POST",
-                 headers: {
-                     'Content-Type': 'application/json',
-                     'X-CSRF-TOKEN': token
-                 },
-                 body: JSON.stringify({
-                     fecha: fecha,
-                     codigo: codigo,
-                     organo: valueOrgano,
-                     idTipo: idTipo,
-                     idFormato: idFormato,
-                     idCalidad: idCalidad,
-                     idUsuario: idUsuario,
-                     idSede: idSede,
-                     interpretaciones: interpretaciones
-                 })
-             })
-             .then(respuesta => {
-                 if (!respuesta.ok) {
-                     return respuesta.text().then(err => {
-                         try {
-                             const jsonError = JSON.parse(err);
-                             throw new Error(jsonError.message || 'Error en la solicitud');
-                         } catch (e) {
-                             throw new Error(err || 'Error en la solicitud');
-                         }
-                     });
-                 }
-                 return respuesta.json();
-             })
-             .then(data => {
-                 console.log(data);
- 
-                 // Mostrar mensaje de éxito
-                 Swal.fire('Éxito', 'Muestra creada correctamente', 'success');
- 
+    });
+});
 
-                 location.reload();
-             })
-             .catch(error => {
-                 console.error("Error en la petición:", error);
-                 Swal.fire('Error', error.message, 'error');
-             });
-         }
-     });
- });
+function rendermodal_add() {
+    const fecha = modal_add.querySelector('#fecha');
+    const codigo = modal_add.querySelector('#codigo');
+    const organo = modal_add.querySelector('#organo');
+    const idTipo = modal_add.querySelector('#idTipo');
+    const idFormato = modal_add.querySelector('#idFormato');
+    const idCalidad = modal_add.querySelector('#idCalidad');
+    const idUsuario = modal_add.querySelector('#idUsuario');
+    const idSede = modal_add.querySelector('#idSede');
 
- function rendermodal_add(){
-    const fecha =  modal_add.querySelector('#fecha')
-    const codigo =  modal_add.querySelector('#codigo')
-    const organo =  modal_add.querySelector('#organo')
-    const idTipo =  modal_add.querySelector('#idTipo')
-    const idFormato =  modal_add.querySelector('#idFormato')
-    const idCalidad =  modal_add.querySelector('#idCalidad')
-    const idUsuario =  modal_add.querySelector('#idUsuario')
-    const idSede =  modal_add.querySelector('#idSede')
- 
-    return modal_add
- }
+    return modal_add;
+}
 
- 
- 
 
  function cargarDatos() {
 
@@ -291,8 +281,10 @@ const modal_mostar = document.querySelector('#modal_mostrar');
 
                     const interpretaciones = [...document.querySelectorAll(".interpretacion")].map((element, index) => ({
                         id: data.interpretaciones[index]?.id || null,
-                        descripcion: element.querySelector(`#descripcion2-${index}`).value
+                        descripcion: element.querySelector(`#descripcion2-${index}`)?.value || "",
+                        tipoEstudio: element.querySelector(`#idTipoEstudio2-${index}`)?.value || null
                     }));
+                    
 
                     console.table(interpretaciones);
 
@@ -347,6 +339,7 @@ function rendermodal_update(datos) {
         return;
     }
 
+    const modal_update = document.getElementById("modal_update");
     const fecha = modal_update.querySelector('#fecha2');
     const codigo = modal_update.querySelector('#codigo2');
     const organo = modal_update.querySelector('#organo2');
@@ -355,9 +348,9 @@ function rendermodal_update(datos) {
     const calidad = modal_update.querySelector('#idCalidad2');
     const usuario = modal_update.querySelector('#idUsuario2');
     const sede = modal_update.querySelector('#idSede2');
-    const interpretacionesContainer = modal_update.querySelector('#interpretaciones-container');
+    const interpretacionesContainers = modal_update.querySelector('#interpretaciones-container');
 
-    if (!fecha || !codigo || !organo || !tipo || !formato || !calidad || !usuario || !sede || !interpretacionesContainer) {
+    if (!fecha || !codigo || !organo || !tipo || !formato || !calidad || !usuario || !sede || !interpretacionesContainers) {
         console.error("Elementos del modal no encontrados o incorrectos");
         return;
     }
@@ -366,221 +359,100 @@ function rendermodal_update(datos) {
     fecha.value = datos.muestra.fecha || "";
     codigo.value = datos.muestra.codigo || "";
 
-    //Tipo de Naturaleza
-    fetch(`listamuestras/tipo/${datos.muestra.idTipo}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Error ${response.status} al obtener la sede`);
-        }
-        return response.json();
-    })
-    .then(sedeData => {
-        console.log("Datos del tipo recibidos:", sedeData);
-        tipo.value = sedeData.nombre; 
-    })
-    .catch(error => {
-        console.error("Error al obtener la sede:", error);
-        alert("Error al cargar la información del tipo. Por favor, inténtelo de nuevo más tarde.")
-    });
-
-    //Formato
-    fetch(`listamuestras/formato/${datos.muestra.idFormato}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Error ${response.status} al obtener la sede`);
-        }
-        return response.json();
-    })
-    .then(sedeData => {
-        console.log("Datos de la sede recibidos:", sedeData);
-        formato.value = sedeData.nombre; 
-    })
-    .catch(error => {
-        console.error("Error al obtener la sede:", error);
-        alert("Error al cargar la información del formato. Por favor, inténtelo de nuevo más tarde.")
-    });
-
-    //calidad
-    fetch(`listamuestras/calidad/${datos.muestra.idcalidad}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Error ${response.status} al obtener la sede`);
-        }
-        return response.json();
-    })
-    .then(sedeData => {
-        console.log("Datos de la calidad recibidos:", sedeData);
-        calidad.value = sedeData.nombre; 
-    })
-    .catch(error => {
-        console.error("Error al obtener la sede:", error);
-        alert("Error al cargar la información de la calidad. Por favor, inténtelo de nuevo más tarde.")
-    });
-
-
-    //Usuario
-    fetch(`listamuestras/usuario/${datos.muestra.idUsuario}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Error ${response.status} al obtener la sede`);
-        }
-        return response.json();
-    })
-    .then(sedeData => {
-        console.log("Datos del usuario recibidos:", sedeData);
-        usuario.value = sedeData.email; 
-    })
-    .catch(error => {
-        console.error("Error al obtener el usuario:", error);
-        alert("Error al cargar la información del usuario. Por favor, inténtelo de nuevo más tarde.")
-    });
-
-
-
-    //Sede de Usuario
-    fetch(`listamuestras/sede/${datos.muestra.idSede}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Error ${response.status} al obtener la sede`);
-        }
-        return response.json();
-    })
-    .then(sedeData => {
-        console.log("Datos de la sede recibidos:", sedeData);
-        sede.value = sedeData.nombre; 
-    })
-    .catch(error => {
-        console.error("Error al obtener la sede:", error);
-        alert("Error al cargar la información de la sede. Por favor, inténtelo de nuevo más tarde.")
-    });
+    // Obtener y llenar los datos de la muestra
+    fetch(`listamuestras/tipo/${datos.muestra.idTipo}`).then(response => response.json()).then(data => tipo.value = data.nombre);
+    fetch(`listamuestras/formato/${datos.muestra.idFormato}`).then(response => response.json()).then(data => formato.value = data.nombre);
+    fetch(`listamuestras/calidad/${datos.muestra.idCalidad}`).then(response => response.json()).then(data => calidad.value = data.nombre);
+    fetch(`listamuestras/usuario/${datos.muestra.idUsuario}`).then(response => response.json()).then(data => usuario.value = data.email);
+    fetch(`listamuestras/sede/${datos.muestra.idSede}`).then(response => response.json()).then(data => sede.value = data.nombre);
 
     // Limpiamos el contenedor de interpretaciones
-   /*  interpretacionesContainer.innerHTML = "";
+    interpretacionesContainers.innerHTML = "";
 
-    // Validación de tiposEstudio
-    const tiposEstudio = datos.interpretaciones.tiposEstudio || [];  // Si no existe, asignamos un array vacío
+    // 🔹 Obtener **todos los tipos de estudio** para usar en los selects
+    fetch(`listamuestras/tiposEstudio`)
+        .then(response => response.json())
+        .then(tiposEstudio => {
+            console.log("Todos los tipos de estudio:", tiposEstudio);
 
-    // Crear un campo para cada interpretación
-    datos.interpretaciones.forEach((interpretacion, index) => {
-        const div = document.createElement('div');
-        div.classList.add('interpretacion');
+            datos.interpretaciones.forEach((interpretacion, index) => {
+                const div = document.createElement('div');
+                div.classList.add('interpretacion');
 
-        // Crear un campo de texto para la descripción
-        const inputDescripcion = document.createElement('textarea');
-        inputDescripcion.id = `descripcion2-${index}`; // Asignar id único para cada textarea
-        inputDescripcion.value = interpretacion.texto || ""; // Inicializa con el valor actual
-        inputDescripcion.placeholder = `Descripción de la interpretación ${index + 1}`;
-        div.appendChild(inputDescripcion);
+                const inputDescripcion = document.createElement('textarea');
+                inputDescripcion.id = `descripcion2-${index}`;
+                inputDescripcion.value = interpretacion.texto || "";
+                inputDescripcion.placeholder = `Descripción de la interpretación ${index + 1}`;
+                div.appendChild(inputDescripcion);
 
-        // Crear un selector para TipoEstudio (si es necesario)
-        const selectTipoEstudio = document.createElement('select');
-        selectTipoEstudio.id = `idTipoEstudio2-${index}`;
+                // Crear el `<select>` de tipo de estudio
+                const selectTipoEstudio = document.createElement('select');
+                selectTipoEstudio.id = `idTipoEstudio2-${index}`;
 
-        // Verificar si hay tipos de estudio y agregar las opciones
-        if (tiposEstudio.length > 0) {
-            tiposEstudio.forEach(tipoEstudio => {
-                const option = document.createElement('option');
-                option.value = interpretacion.tipoEstudio.id; // El valor del tipo de estudio
-                option.textContent = interpretacion.tipoEstudio.nombre; // El nombre del tipo de estudio
-                selectTipoEstudio.appendChild(option);
+                // Agregar todas las opciones al select
+                tiposEstudio.forEach(tipo => {
+                    const option = document.createElement('option');
+                    option.value = tipo.id;
+                    option.textContent = tipo.nombre;
+                    if (tipo.id == interpretacion.idTipoEstudio) {
+                        option.selected = true; // Seleccionar el tipo de estudio correcto
+                    }
+                    selectTipoEstudio.appendChild(option);
+                });
+
+                div.appendChild(selectTipoEstudio);
+
+                // Botón para eliminar la interpretación
+                const buttonEliminar = document.createElement('button');
+                buttonEliminar.textContent = "Eliminar";
+                buttonEliminar.addEventListener('click', () => {
+                    interpretacionesContainers.removeChild(div);
+                });
+                div.appendChild(buttonEliminar);
+
+                interpretacionesContainers.appendChild(div);
             });
-        } else {
-            const option = document.createElement('option');
-            option.value = "";
-            option.textContent = "No hay tipos de estudio disponibles";
-            selectTipoEstudio.appendChild(option);
-        }
 
-        // Establecer el valor seleccionado para el tipo de estudio
-        selectTipoEstudio.value = interpretacion.idTipoEstudio || ""; // Establecer el tipo de estudio actual
+            // Agregar botón para nuevas interpretaciones
+            const agregarBtn = modal_update.querySelector('#agregar-interpretacion');
+            agregarBtn.addEventListener('click', () => {
+                const div = document.createElement('div');
+                div.classList.add('interpretacion');
 
-        div.appendChild(selectTipoEstudio);
+                const inputDescripcion = document.createElement('textarea');
+                inputDescripcion.placeholder = "Nueva descripción de la interpretación";
+                div.appendChild(inputDescripcion);
 
-        // Agregar un botón para eliminar la interpretación
-        const buttonEliminar = document.createElement('button');
-        buttonEliminar.textContent = "Eliminar";
-        buttonEliminar.addEventListener('click', () => {
-            interpretacionesContainer.removeChild(div); // Eliminar la interpretación
-        });
-        div.appendChild(buttonEliminar);
+                // Crear el `<select>` con **todas** las opciones de tipo de estudio
+                const selectTipoEstudio = document.createElement('select');
 
-        interpretacionesContainer.appendChild(div);
-    });
+                tiposEstudio.forEach(tipo => {
+                    const option = document.createElement('option');
+                    option.value = tipo.id;
+                    option.textContent = tipo.nombre;
+                    selectTipoEstudio.appendChild(option);
+                });
 
-    // Agregar un nuevo campo de interpretación
-    const agregarBtn = modal_update.querySelector('#agregar-interpretacion');
-    agregarBtn.addEventListener('click', () => {
-        const div = document.createElement('div');
-        div.classList.add('interpretacion');
+                div.appendChild(selectTipoEstudio);
 
-        const inputDescripcion = document.createElement('textarea');
-        inputDescripcion.id = `descripcion2-${datos.interpretaciones.length}`; // Asignar id único para cada nuevo textarea
-        inputDescripcion.placeholder = "Nueva descripción de la interpretación";
-        div.appendChild(inputDescripcion);
+                const buttonEliminar = document.createElement('button');
+                buttonEliminar.textContent = "Eliminar";
+                buttonEliminar.addEventListener('click', () => {
+                    interpretacionesContainers.removeChild(div);
+                });
+                div.appendChild(buttonEliminar);
 
-        const selectTipoEstudio = document.createElement('select');
-        selectTipoEstudio.id = `idTipoEstudio2-${datos.interpretaciones.length}`;
-        
-        // Verificar si hay tipos de estudio y agregar las opciones
-        if (tiposEstudio.length > 0) {
-            tiposEstudio.forEach(tipoEstudio => {
-                const option = document.createElement('option');
-                option.value = tipoEstudio.id;
-                option.textContent = tipoEstudio.nombre;
-                selectTipoEstudio.appendChild(option);
+                interpretacionesContainers.appendChild(div);
             });
-        } else {
-            const option = document.createElement('option');
-            option.value = "";
-            option.textContent = "No hay tipos de estudio disponibles";
-            selectTipoEstudio.appendChild(option);
-        }
-
-        div.appendChild(selectTipoEstudio);
-
-        const buttonEliminar = document.createElement('button');
-        buttonEliminar.textContent = "Eliminar";
-        buttonEliminar.addEventListener('click', () => {
-            interpretacionesContainer.removeChild(div);
+        })
+        .catch(error => {
+            console.error("Error al obtener los tipos de estudio:", error);
         });
-        div.appendChild(buttonEliminar);
-
-        interpretacionesContainer.appendChild(div);
-    }); */
-
 
     return modal_update;
 }
+
+
 
 eliminar.forEach(boton => {
     boton.addEventListener('click', () => {
@@ -842,4 +714,4 @@ contenido.forEach(boton => {
         botonEliminar.addEventListener('click', function() {
             interpretacionesContainer.removeChild(newInterpretacion);
         });
-    });
+    })

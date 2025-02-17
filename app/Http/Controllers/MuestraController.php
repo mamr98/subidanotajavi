@@ -119,7 +119,7 @@ public function show()
                 Interpretacion::where('id', $interpretacionData['id'])
                     ->update([
                         'texto' => $interpretacionData['descripcion'] ?? '',
-                        /* 'idTipoEstudio' => $interpretacionData['idTipoEstudio'] ?? null */
+                        'idTipoEstudio' => $interpretacionData['idTipoEstudio'] ?? null
                     ]);
             }
         }
@@ -233,6 +233,13 @@ public function show()
     $muestras = Muestra::where('codigo', 'LIKE', "%{$codigo}%")->get();
 
     return response()->json($muestras, 200);
+}
+
+public function tiposEstudios(){
+    $tipoEstudio = TipoEstudio::all();
+
+    return $tipoEstudio;
+
 }
 }
 
