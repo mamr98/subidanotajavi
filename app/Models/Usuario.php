@@ -15,7 +15,6 @@ class Usuario extends Model
         'email',
         'password',
         'estado',
-        'image',
         'idSede',
     ];
 
