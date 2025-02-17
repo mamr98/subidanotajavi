@@ -60,7 +60,7 @@ Route::get('/listamuestras',[MuestraController::class,'show'])->name('listamuest
 
 Route::post('/listamuestras/create',[MuestraController::class,'create'])->name('crear.muestra');
 
-Route::post('/listamuestras/update/{id}', [MuestraController::class, 'update']);
+Route::put('/listamuestras/update/{id}', [MuestraController::class, 'update']);
 
 Route::get('/muestra/{id}',[MuestraController::class,'muestra']);
 

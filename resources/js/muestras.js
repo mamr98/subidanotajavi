@@ -259,79 +259,73 @@ const modal_mostar = document.querySelector('#modal_mostrar');
                 html: rendermodal_update(data),
                 confirmButtonText: "Actualizar",
                 showCancelButton: true,
-                didOpen: () => {
-                    document.querySelector('.swal2-confirm')?.addEventListener('click', (event) => {
-                        event.preventDefault();
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const fecha = modal_update.querySelector('#fecha2').value;
+                    const codigo = modal_update.querySelector('#codigo2').value;
+                    const organo = modal_update.querySelector("#organo2");
+                    const selectedOrganoOption = organo.options[organo.selectedIndex];
+                    const valueOrgano = selectedOrganoOption.value;
 
-                        const fecha = modal_update.querySelector('#fecha2').value;
-                        const codigo = modal_update.querySelector('#codigo2').value;
-                        const organo = modal_update.querySelector("#organo2");
-            const selectedOrganoOption = organo.options[organo.selectedIndex];
-            const valueOrgano = selectedOrganoOption.value;
+                    const idTipoElement = document.querySelector("#idTipo2");
+                    const selectedIdTipoOption = idTipoElement.options[idTipoElement.selectedIndex];
+                    const idTipo = selectedIdTipoOption.getAttribute("id");
 
-            const idTipoElement = document.querySelector("#idTipo2");
-            const selectedIdTipoOption = idTipoElement.options[idTipoElement.selectedIndex];
-            const idTipo = selectedIdTipoOption.getAttribute("id");
+                    const idFormatoElement = document.querySelector("#idFormato2");
+                    const selectedIdFormatoOption = idFormatoElement.options[idFormatoElement.selectedIndex];
+                    const idFormato = selectedIdFormatoOption.getAttribute("id");
 
-            const idFormatoElement = document.querySelector("#idFormato2");
-            const selectedIdFormatoOption = idFormatoElement.options[idFormatoElement.selectedIndex];
-            const idFormato = selectedIdFormatoOption.getAttribute("id");
+                    const idCalidadElement = document.querySelector("#idCalidad2");
+                    const selectedIdCalidadOption = idCalidadElement.options[idCalidadElement.selectedIndex];
+                    const idCalidad = selectedIdCalidadOption.getAttribute("id");
 
-            const idCalidadElement = document.querySelector("#idCalidad2");
-            const selectedIdCalidadOption = idCalidadElement.options[idCalidadElement.selectedIndex];
-            const idCalidad = selectedIdCalidadOption.getAttribute("id");
+                    const idUsuarioElement = document.querySelector("#idUsuario2");
+                    const selectedIdUsuarioOption = idUsuarioElement.options[idUsuarioElement.selectedIndex];
+                    const idUsuario = selectedIdUsuarioOption.getAttribute("id");
 
-            const idUsuarioElement = document.querySelector("#idUsuario2");
-            const selectedIdUsuarioOption = idUsuarioElement.options[idUsuarioElement.selectedIndex];
-            const idUsuario = selectedIdUsuarioOption.getAttribute("id");
+                    const idSedeElement = document.querySelector("#idSede2");
+                    const selectedIdSedeOption = idSedeElement.options[idSedeElement.selectedIndex];
+                    const idSede = selectedIdSedeOption.getAttribute("id");
 
-            const idSedeElement = document.querySelector("#idSede2");
-            const selectedIdSedeOption = idSedeElement.options[idSedeElement.selectedIndex];
-            const idSede = selectedIdSedeOption.getAttribute("id");
+                    const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-                        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                    const interpretaciones = [...document.querySelectorAll(".interpretacion")].map((element, index) => ({
+                        id: data.interpretaciones[index]?.id || null,
+                        descripcion: element.querySelector(`#descripcion2-${index}`).value
+                    }));
 
-                        const interpretaciones = [...document.querySelectorAll(".interpretacion")].map((element, index) => ({
-                            id: data.interpretaciones[index]?.id || null,
-                           /*  idTipoEstudio: element.querySelector(`#idTipoEstudio2-${index}`).value, */
-                            descripcion: element.querySelector(`#descripcion2-${index}`).value
-                        }));
+                    console.table(interpretaciones);
 
-                        console.table(interpretaciones);
+                    console.log("Datos a enviar:", {
+                        fecha, codigo, valueOrgano, idTipo, idFormato, idCalidad, idUsuario, idSede, interpretaciones
+                    });
 
-                        console.log("Datos a enviar:", {
-                            fecha, codigo, valueOrgano, idTipo, idFormato, idCalidad, idUsuario, idSede, interpretaciones
-                        });
-                        
-
-                        fetch(`/listamuestras/update/${id}`, {
-                            method: "POST",
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': token
-                            },
-                            body: JSON.stringify({
-                                fecha: fecha || "",  // Asegurar que no sea undefined
-                                codigo: codigo || "",
-                                organo: organo || "",
-                                idTipo: idTipo || "",
-                                idFormato: idFormato || "",
-                                idCalidad: idCalidad || "",
-                                idUsuario: idUsuario || "",
-                                idSede: idSede || "",
-                                interpretaciones: interpretaciones,
-                                 _method: 'PUT'
-                            }),
-                        })
-                        .then(res => res.ok ? res.json() : Promise.reject("Error en la solicitud"))
-                        .then(() => {
-                            Swal.fire('Éxito', 'Muestra actualizada correctamente', 'success');
-                            location.reload();
-                        })
-                        .catch(error => {
-                            console.error("Error en la petición:", error);
-                            Swal.fire('Error', error, 'error');
-                        });
+                    fetch(`listamuestras/update/${id}`, {
+                        method: "PUT",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': token
+                        },
+                        body: JSON.stringify({
+                            fecha: fecha,  
+                            codigo: codigo,
+                            organo: valueOrgano,
+                            idTipo: idTipo,
+                            idFormato: idFormato,
+                            idCalidad: idCalidad,
+                            idUsuario: idUsuario,
+                            idSede: idSede,
+                            interpretaciones: interpretaciones,
+                        }),
+                    })
+                    .then(res => res.ok ? res.json() : Promise.reject("Error en la solicitud"))
+                    .then(() => {
+                        Swal.fire('Éxito', 'Muestra actualizada correctamente', 'success');
+                        location.reload();
+                    })
+                    .catch(error => {
+                        console.error("Error en la petición:", error);
+                        Swal.fire('Error', error, 'error');
                     });
                 }
             });
@@ -341,7 +335,7 @@ const modal_mostar = document.querySelector('#modal_mostrar');
             Swal.fire('Error', error, 'error');
         });
     });
-});
+});;
 
 
 
@@ -356,14 +350,14 @@ function rendermodal_update(datos) {
     const fecha = modal_update.querySelector('#fecha2');
     const codigo = modal_update.querySelector('#codigo2');
     const organo = modal_update.querySelector('#organo2');
-    const idTipo = modal_update.querySelector('#idTipo2');
-    const idFormato = modal_update.querySelector('#idFormato2');
-    const idCalidad = modal_update.querySelector('#idCalidad2');
-    const idUsuario = modal_update.querySelector('#idUsuario2');
-    const idSede = modal_update.querySelector('#idSede2');
+    const tipo = modal_update.querySelector('#idTipo2');
+    const formato = modal_update.querySelector('#idFormato2');
+    const calidad = modal_update.querySelector('#idCalidad2');
+    const usuario = modal_update.querySelector('#idUsuario2');
+    const sede = modal_update.querySelector('#idSede2');
     const interpretacionesContainer = modal_update.querySelector('#interpretaciones-container');
 
-    if (!fecha || !codigo || !organo || !idTipo || !idFormato || !idCalidad || !idUsuario || !idSede || !interpretacionesContainer) {
+    if (!fecha || !codigo || !organo || !tipo || !formato || !calidad || !usuario || !sede || !interpretacionesContainer) {
         console.error("Elementos del modal no encontrados o incorrectos");
         return;
     }
@@ -372,11 +366,129 @@ function rendermodal_update(datos) {
     fecha.value = datos.muestra.fecha || "";
     codigo.value = datos.muestra.codigo || "";
 
+    //Tipo de Naturaleza
+    fetch(`listamuestras/tipo/${datos.muestra.idTipo}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al obtener la sede`);
+        }
+        return response.json();
+    })
+    .then(sedeData => {
+        console.log("Datos del tipo recibidos:", sedeData);
+        tipo.value = sedeData.nombre; 
+    })
+    .catch(error => {
+        console.error("Error al obtener la sede:", error);
+        alert("Error al cargar la información del tipo. Por favor, inténtelo de nuevo más tarde.")
+    });
+
+    //Formato
+    fetch(`listamuestras/formato/${datos.muestra.idFormato}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al obtener la sede`);
+        }
+        return response.json();
+    })
+    .then(sedeData => {
+        console.log("Datos de la sede recibidos:", sedeData);
+        formato.value = sedeData.nombre; 
+    })
+    .catch(error => {
+        console.error("Error al obtener la sede:", error);
+        alert("Error al cargar la información del formato. Por favor, inténtelo de nuevo más tarde.")
+    });
+
+    //calidad
+    fetch(`listamuestras/calidad/${datos.muestra.idcalidad}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al obtener la sede`);
+        }
+        return response.json();
+    })
+    .then(sedeData => {
+        console.log("Datos de la calidad recibidos:", sedeData);
+        calidad.value = sedeData.nombre; 
+    })
+    .catch(error => {
+        console.error("Error al obtener la sede:", error);
+        alert("Error al cargar la información de la calidad. Por favor, inténtelo de nuevo más tarde.")
+    });
+
+
+    //Usuario
+    fetch(`listamuestras/usuario/${datos.muestra.idUsuario}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al obtener la sede`);
+        }
+        return response.json();
+    })
+    .then(sedeData => {
+        console.log("Datos del usuario recibidos:", sedeData);
+        usuario.value = sedeData.email; 
+    })
+    .catch(error => {
+        console.error("Error al obtener el usuario:", error);
+        alert("Error al cargar la información del usuario. Por favor, inténtelo de nuevo más tarde.")
+    });
+
+
+
+    //Sede de Usuario
+    fetch(`listamuestras/sede/${datos.muestra.idSede}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error ${response.status} al obtener la sede`);
+        }
+        return response.json();
+    })
+    .then(sedeData => {
+        console.log("Datos de la sede recibidos:", sedeData);
+        sede.value = sedeData.nombre; 
+    })
+    .catch(error => {
+        console.error("Error al obtener la sede:", error);
+        alert("Error al cargar la información de la sede. Por favor, inténtelo de nuevo más tarde.")
+    });
+
     // Limpiamos el contenedor de interpretaciones
-    interpretacionesContainer.innerHTML = "";
+   /*  interpretacionesContainer.innerHTML = "";
 
     // Validación de tiposEstudio
-    const tiposEstudio = datos.tiposEstudio || [];  // Si no existe, asignamos un array vacío
+    const tiposEstudio = datos.interpretaciones.tiposEstudio || [];  // Si no existe, asignamos un array vacío
 
     // Crear un campo para cada interpretación
     datos.interpretaciones.forEach((interpretacion, index) => {
@@ -398,8 +510,8 @@ function rendermodal_update(datos) {
         if (tiposEstudio.length > 0) {
             tiposEstudio.forEach(tipoEstudio => {
                 const option = document.createElement('option');
-                option.value = tipoEstudio.id; // El valor del tipo de estudio
-                option.textContent = tipoEstudio.nombre; // El nombre del tipo de estudio
+                option.value = interpretacion.tipoEstudio.id; // El valor del tipo de estudio
+                option.textContent = interpretacion.tipoEstudio.nombre; // El nombre del tipo de estudio
                 selectTipoEstudio.appendChild(option);
             });
         } else {
@@ -464,73 +576,7 @@ function rendermodal_update(datos) {
         div.appendChild(buttonEliminar);
 
         interpretacionesContainer.appendChild(div);
-    });
-
-    // SweetAlert para confirmar los cambios
-Swal.fire({
-    title: '¿Estás seguro de que quieres guardar los cambios?',
-    showCancelButton: true,
-    confirmButtonText: 'Guardar',
-    cancelButtonText: 'Cancelar'
-}).then((result) => {
-    if (result.isConfirmed) {
-        const interpretacionesActualizadas = [];
-
-                // Capturamos todos los cambios de las interpretaciones
-        const interpretacionElements = document.querySelectorAll('.interpretacion');
-                
-        interpretacionElements.forEach((element, index) => {
-            // Capturamos el valor del textarea
-            const descripcion = element.querySelector(`#descripcion2-${index}`).value;
-            console.log(`Valor de descripcion ${index}:`, descripcion);  // Depuración para ver el valor capturado
-
-            // Capturamos el valor del select (TipoEstudio) con template literals
-            const tipoEstudioId = document.querySelector(`#idTipoEstudio2-${index}`).value;
-            console.log(`Valor de tipoEstudioId ${index}:`, tipoEstudioId);  // Depuración para ver el valor del select
-
-            // Verificamos si hay una interpretación previamente guardada (si tiene ID) o si es nueva
-            interpretacionesActualizadas.push({
-                id: datos.interpretaciones[index]?.id || null, // Si no tiene ID, se considera nuevo
-                descripcion: descripcion,
-                idTipoEstudio: tipoEstudioId,
-            });
-        });
-
-
-        // Verifica qué contiene interpretacionesActualizadas antes de enviarlo
-        console.log("Interpretaciones actualizadas:", interpretacionesActualizadas);
-
-        const requestData = {
-            ...datos.muestra, // Asegúrate de que esto contenga los datos correctos
-            interpretaciones: interpretacionesActualizadas, // Interpretaciones es un array con los valores actuales
-        };
-        
-
-        // Verifica el requestData antes de enviarlo al backend
-        console.log("Datos para enviar al backend:", requestData);
-
-        // Enviar la solicitud de actualización al backend
-        fetch(`listamuestras/update/${datos.muestra.id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(requestData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Muestra actualizada con éxito:', data);
-            Swal.fire('¡Actualizado!', 'La muestra ha sido actualizada correctamente.', 'success');
-        })
-        .catch(error => {
-            console.error('Error al actualizar la muestra:', error);
-            Swal.fire('Error', 'Hubo un error al actualizar la muestra. Inténtalo de nuevo.', 'error');
-        });
-    } else {
-        console.log('No se realizaron cambios.');
-    }
-});
+    }); */
 
 
     return modal_update;
