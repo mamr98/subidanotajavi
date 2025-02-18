@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Sede;
 use App\Models\Tipo;
+use App\Models\Imagen;
 use App\Models\Calidad;
 use App\Models\Formato;
 use App\Models\Muestra;
@@ -11,7 +12,11 @@ use App\Models\Usuario;
 use App\Models\TipoEstudio;
 use Illuminate\Http\Request;
 use App\Models\Interpretacion;
+use Cloudinary\Transformation\Format;
+use Cloudinary\Transformation\Resize;
 use App\Models\MuestrasInterpretacion;
+use Cloudinary\Transformation\Delivery;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class MuestraController extends Controller
 {
@@ -56,10 +61,40 @@ class MuestraController extends Controller
    }
 
    return response()->json(['mensaje' => 'Muestra creada correctamente'], 201);
-
 }
 
+public function guardarImagen(Request $request)
+{
+    $request->validate([
+        'imagen' => 'required|image|mimes:jpg,jpeg,png|max:2048'
+    ]);
 
+    $uploadResponse = Cloudinary::upload($request->file('imagen')->getRealPath(), [
+        'folder' => 'prueba'
+    ]);
+
+    $publicID_image = $uploadResponse->getPublicId();
+
+    // Construye la URL de la imagen con Cloudinary
+    $url_image = /* (string) */ (new \Cloudinary\Cloudinary())->image($publicID_image)
+        ->resize(Resize::scale()->width(250))
+        ->delivery(Delivery::quality(35))
+        ->delivery(Delivery::format(Format::auto()));
+
+        $id_muestra = (int)$request->input('id_muestra');
+        if (!$id_muestra) {
+            return response()->json(['error' => 'ID de muestra no proporcionado'], 400);
+        }
+        
+        $imagen = new Imagen();
+        $imagen->ruta = $url_image;
+        $imagen->zoom = 4;
+        $imagen->idMuestras = $id_muestra; // Asegúrate de que esto sea un valor único, no un array
+        $imagen->save();
+        
+
+    return response()->json(['nombre_archivo' => $publicID_image]);
+}
 
 public function show()
 {

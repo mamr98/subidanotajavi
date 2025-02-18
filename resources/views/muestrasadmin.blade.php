@@ -112,6 +112,10 @@
                                         Modificar
                                     </button>
 
+                                    <button style="padding: 10px 18px; margin-left:4px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$m->id}}" class="imagenes" type="submit">
+                                        Añadir Imagenes
+                                    </button>
+
                                     <form action="/subidanotajavi/public/pdf/{{$m->id}}" method="POST">
                                         @csrf
                                         <button style="padding: 10px 18px; margin-left:4px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$m->id}}" class="imprimir" type="submit">
@@ -210,7 +214,6 @@
                     </div>
                 </div>
 
-               
                 <div class="bg-gray-100 p-4 rounded shadow mt-4">
                     <h3>Interpretación</h3>
                     <div id="interpretaciones-container">
@@ -235,10 +238,6 @@
                     </button>
                 </div>
                 <div>
-                    <br>
-                    <input type="file" id="imagen">
-                    <br>
-                </div>
             </form>
         </div>
         
@@ -344,9 +343,6 @@
                     </button>
                     <br>
                     <br>
-                    <div>
-                        <input type="file" id="imagen2">
-                    </div>
             </form>
         </div>
 
@@ -391,4 +387,12 @@
         </div>
     </div>
 </div>
+
+
+    <form id="modal_imagen" class="bg-white p-4 rounded shadow">
+        <div class="mb-4">
+            <label for="imagen"></label>
+            <input type="file" name="imagen" id="imagen">
+        </div>
+    </form>
 @endsection

@@ -2,15 +2,18 @@ import Swal from 'sweetalert2';
 
 const crearMuestra = document.querySelector('#crear_muestra');
 const modificar = document.querySelectorAll('.modificar');
+const imagenes = document.querySelectorAll('.imagenes');
 const eliminar = document.querySelectorAll('.eliminar');
 const contenido = document.querySelectorAll('.contenido');
 const modal_add = document.querySelector('#modal_add');
 const modal_update = document.getElementById('modal_update');
 const modal_mostar = document.querySelector('#modal_mostrar');
+const modal_imagen = document.querySelector('#modal_imagen');
 
 modal_add.style.display = "none";
 modal_update.style.display = "none";
 modal_mostar.style.display = "none";
+modal_imagen.style.display = "none";
 
 crearMuestra.addEventListener('click', () => {
     modal_add.style.display = "block";
@@ -54,10 +57,6 @@ crearMuestra.addEventListener('click', () => {
             const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             const interpretaciones = [];
 
-            const imagen = document.querySelector('#imagen').src
-
-            console.log(imagen)
-
             for (let i = 0; i < idTipoEstudioElements.length; i++) {
                 const selectElement = idTipoEstudioElements[i];
                 const idTipoEstudio = selectElement.value;
@@ -69,7 +68,6 @@ crearMuestra.addEventListener('click', () => {
                     descripcion: descripcion
                 });
             }
-
 
             fetch('listamuestras/create', {
                 method: "POST",
@@ -86,8 +84,7 @@ crearMuestra.addEventListener('click', () => {
                     idCalidad: idCalidad,
                     idUsuario: idUsuario,
                     idSede: idSede,
-                    interpretaciones: interpretaciones,
-                    imagen: imagen
+                    interpretaciones: interpretaciones
                 })
             })
             .then(respuesta => {
@@ -725,3 +722,32 @@ contenido.forEach(boton => {
             interpretacionesContainer.removeChild(newInterpretacion);
         });
     })
+
+    imagenes.forEach(boton => {
+        boton.addEventListener('click', () => {
+            modal_imagen.style.display = "block";
+            let idMuestras = boton.id; // Obtener el ID de la muestra al hacer clic
+    
+            Swal.fire({
+                title: 'introduce las imagenes',
+                html: rendermodal_imagen(), // Asegúrate de que esta función está definida
+                confirmButtonText: "Guardar",
+                showCancelButton: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const imagen = document.querySelector('#imagen').value
+
+                    console.log(imagen)
+                }
+            });
+        });
+    });
+    
+    // Definir la función correctamente
+    function rendermodal_imagen() {
+        const modal_imagen = document.querySelector('#modal_imagen'); // Asegúrate de que exista en tu HTML
+        const imagen = modal_imagen.querySelector('#imagen'); 
+        
+        return modal_imagen; // Retorna el modal con la imagen
+    }
+    
