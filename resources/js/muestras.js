@@ -54,6 +54,10 @@ crearMuestra.addEventListener('click', () => {
             const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             const interpretaciones = [];
 
+            const imagen = document.querySelector('#imagen').src
+
+            console.log(imagen)
+
             for (let i = 0; i < idTipoEstudioElements.length; i++) {
                 const selectElement = idTipoEstudioElements[i];
                 const idTipoEstudio = selectElement.value;
@@ -65,6 +69,7 @@ crearMuestra.addEventListener('click', () => {
                     descripcion: descripcion
                 });
             }
+
 
             fetch('listamuestras/create', {
                 method: "POST",
@@ -81,7 +86,8 @@ crearMuestra.addEventListener('click', () => {
                     idCalidad: idCalidad,
                     idUsuario: idUsuario,
                     idSede: idSede,
-                    interpretaciones: interpretaciones
+                    interpretaciones: interpretaciones,
+                    imagen: imagen
                 })
             })
             .then(respuesta => {

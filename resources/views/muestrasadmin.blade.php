@@ -209,6 +209,8 @@
                         </select><br>
                     </div>
                 </div>
+
+               
                 <div class="bg-gray-100 p-4 rounded shadow mt-4">
                     <h3>Interpretación</h3>
                     <div id="interpretaciones-container">
@@ -231,6 +233,11 @@
                     <button type="button" class="btn btn-primary btn-mas" id="add-interpretacion">
                         <i class="fas fa-plus"></i> Agregar más interpretaciones
                     </button>
+                </div>
+                <div>
+                    <br>
+                    <input type="file" id="imagen">
+                    <br>
                 </div>
             </form>
         </div>
@@ -312,7 +319,7 @@
                     </div>
                 </div>
 
-                 <div class="bg-gray-100 p-4 rounded shadow mt-4">
+                <div class="bg-gray-100 p-4 rounded shadow mt-4">
                     <h3>Interpretación</h3>
                     <div id="interpretaciones-container">
                         <div class="interpretacion-fields">
@@ -335,6 +342,11 @@
                     <button type="button" class="btn btn-primary btn-mas" id="agregar-interpretacion">
                         <i class="fas fa-plus"></i> Agregar más interpretaciones
                     </button>
+                    <br>
+                    <br>
+                    <div>
+                        <input type="file" id="imagen2">
+                    </div>
             </form>
         </div>
 
