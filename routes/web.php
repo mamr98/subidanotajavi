@@ -93,3 +93,7 @@ Route::get('/usuarios/{email}', [UsuarioController::class, 'buscarUsuario'])->na
 Route::get('/muestras/{codigo}', [MuestraController::class, 'buscarMuestra'])->name('muestras.buscar');
 
 Route::post('/pdf/{id}', [PdfController::class, 'generarPDF'])->name('generarPDF');
+
+Route::get('/ini', function () {
+    return view('inicioadminlte');
+});

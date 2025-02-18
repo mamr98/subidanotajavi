@@ -313,6 +313,12 @@ return [
 
         ['header' => 'Páginas'],
         [
+            'text' => 'Inicio',
+            'url' => 'ini',
+            'icon' => 'far fa fa-home',
+            'label_color' => 'success',
+        ],
+        [
             'text' => 'Usuarios',
             'url' => 'admin',
             'icon' => 'far fa fa-users',
