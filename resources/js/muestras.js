@@ -724,24 +724,67 @@ contenido.forEach(boton => {
     })
 
     imagenes.forEach(boton => {
-        boton.addEventListener('click', () => {
+        boton.addEventListener('click', async () => { // Se añade async aquí porque se usa await dentro
             modal_imagen.style.display = "block";
             let idMuestras = boton.id; // Obtener el ID de la muestra al hacer clic
     
+            const zoomElement = document.querySelector("#zoom");
+            const selectedZoomOption = zoomElement.options[zoomElement.selectedIndex];
+            const zoom = selectedZoomOption.getAttribute("value");
+    
             Swal.fire({
-                title: 'introduce las imagenes',
+                title: 'Introduce las imágenes',
                 html: rendermodal_imagen(), // Asegúrate de que esta función está definida
                 confirmButtonText: "Guardar",
                 showCancelButton: true,
-            }).then((result) => {
+            }).then(async (result) => { // Se añade async aquí para usar await dentro
                 if (result.isConfirmed) {
-                    const imagen = document.querySelector('#imagen').value
-
-                    console.log(imagen)
+                    try {
+                        const imagenInput = document.querySelector('#imagen');
+                        const formData = new FormData();
+                        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        
+                        if (imagenInput && imagenInput.files.length > 0) {
+                            formData.append('imagen', imagenInput.files[0]);
+                            formData.append('idMuestras', idMuestras); // Pasar el ID de la muestra
+                            formData.append('zoom', zoom); // Pasar el zoom seleccionado
+        
+                            const imagenResponse = await fetch('guardar_imagen', { 
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    'X-CSRF-TOKEN': token // Si es necesario
+                                }
+                            });
+        
+                            if (!imagenResponse.ok) {
+                                const errorText = await imagenResponse.text();
+                                throw new Error("Error al subir la imagen: " + errorText);
+                            }
+        
+                            const imagenData = await imagenResponse.json();
+                            const nombreImagen = imagenData.nombre_archivo; // Obtener el nombre de la imagen
+        
+                            console.log("Imagen subida:", nombreImagen);
+                            Swal.fire('Éxito', 'Imagen subida correctamente', 'success');
+        
+                            // Aquí puedes hacer algo con el nombre de la imagen, por ejemplo, mostrarla en pantalla
+                            // o guardarla en una variable para usarla posteriormente.
+        
+                        } else {
+                            console.warn("No se ha seleccionado ninguna imagen");
+                            Swal.fire('Advertencia', 'No se ha seleccionado ninguna imagen', 'warning');
+                        }
+        
+                    } catch (error) {
+                        console.error("Error en la petición:", error);
+                        Swal.fire('Error', error.message, 'error');
+                    }
                 }
             });
         });
     });
+    
     
     // Definir la función correctamente
     function rendermodal_imagen() {
@@ -750,4 +793,3 @@ contenido.forEach(boton => {
         
         return modal_imagen; // Retorna el modal con la imagen
     }
-    

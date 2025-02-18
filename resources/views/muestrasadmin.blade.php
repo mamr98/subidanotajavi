@@ -388,11 +388,23 @@
     </div>
 </div>
 
-
+<div class="col-12 col-md-6 mt-4">
     <form id="modal_imagen" class="bg-white p-4 rounded shadow">
         <div class="mb-4">
             <label for="imagen"></label>
             <input type="file" name="imagen" id="imagen">
+            <br>
+            <br>
+
+            <label for="zoom">Introduce el Zoom de la Imagen</label>
+            <select name="zoom" id="zoom">
+                <option value="4">x4</option>
+                <option value="10">x10</option>
+                <option value="40">x40</option>
+                <option value="100">x100</option>
+            </select>
         </div>
     </form>
+</div>
+    
 @endsection

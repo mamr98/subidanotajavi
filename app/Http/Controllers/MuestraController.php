@@ -76,19 +76,20 @@ public function guardarImagen(Request $request)
     $publicID_image = $uploadResponse->getPublicId();
 
     // Construye la URL de la imagen con Cloudinary
-    $url_image = /* (string) */ (new \Cloudinary\Cloudinary())->image($publicID_image)
+    $url_image = (new \Cloudinary\Cloudinary())->image($publicID_image)
         ->resize(Resize::scale()->width(250))
         ->delivery(Delivery::quality(35))
         ->delivery(Delivery::format(Format::auto()));
 
-        $id_muestra = (int)$request->input('id_muestra');
+        $id_muestra = (int)$request->input('idMuestras');
+        $zoom = (int)$request->input('zoom');
         if (!$id_muestra) {
             return response()->json(['error' => 'ID de muestra no proporcionado'], 400);
         }
         
         $imagen = new Imagen();
         $imagen->ruta = $url_image;
-        $imagen->zoom = 4;
+        $imagen->zoom = $zoom;
         $imagen->idMuestras = $id_muestra; // Asegúrate de que esto sea un valor único, no un array
         $imagen->save();
         
