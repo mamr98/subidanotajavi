@@ -35,7 +35,7 @@
                             <label class="font-weight-bold text-muted mb-2">Imagen de perfil:</label>
                             <div class="text-center mb-3">
                                 <img id="profileImage" class="img-fluid shadow-sm" width="100" height="100" 
-                                     src="{{ $url_image ?? asset('usuario_defecto.png') }}" 
+                                     src="{{ !empty($usuario->imagen) ? $usuario->imagen : asset('usuario_defecto.png') }}" 
                                      alt="Profile Image"
                                      data-default-image="{{ asset('usuario_defecto.png') }}"
                                      data-upload-route="{{ route('upload') }}">

@@ -12,6 +12,15 @@ use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class ImagenController extends Controller
 {
+    public function mostrarPerfil()
+    {
+        // Obtener el usuario actual (puedes cambiar esto según tu lógica de autenticación)
+        $usuario = Usuario::find(1); // Obtener el usuario con ID 1
+
+        // Pasar el usuario a la vista
+        return view('perfil', compact('usuario'));
+    }
+
     public function subirImagen(Request $request)
     {
         try {
@@ -24,7 +33,7 @@ class ImagenController extends Controller
             ]);
 
             $publicID_image = $uploadResponse->getPublicId();
-            
+
             $url_image = (string)(new Image($publicID_image))
                 ->resize(Resize::scale()->width(250))
                 ->delivery(Delivery::quality(35))
@@ -45,12 +54,6 @@ class ImagenController extends Controller
                 'success' => true,
                 'url' => $url_image
             ]);
-
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->validator->errors()->first()
-            ], 422);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
