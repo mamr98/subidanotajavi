@@ -531,15 +531,21 @@ buscador.addEventListener("input", function () {
                                 <td id='${muestra.idUsuario}' class='block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 usuario' style="display: none"></td>
                                 <td id='${muestra.idSede}' class='block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 sede' style="display: none"></td>
                                 <td>
-                                <div class="d-flex justify-content-center align-items-center gap-2">
-
-                                    <button class="contenido" id="${muestra.id}" style="padding: 10px 20px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer;">Ver más</button>
-                                    <button class="modificar" id="${muestra.id}" style="padding: 10px 20px; margin-left:4px; background-color: purple; color: white; border: none; border-radius: 5px; cursor: pointer;">Modificar</button>
-                                    <button class="eliminar" id="${muestra.id}" style="padding: 10px 20px; margin-left:4px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer;">Eliminar</button>
+                                    <div class="d-flex justify-content-center align-items-center gap-2">
+                                        <button class="contenido" id="${muestra.id}" style="padding: 10px 20px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer;">Ver más</button>
+                                        <button class="modificar" id="${muestra.id}" style="padding: 10px 20px; margin-left:4px; background-color: purple; color: white; border: none; border-radius: 5px; cursor: pointer;">Modificar</button>
+                                        <button class="eliminar" id="${muestra.id}" style="padding: 10px 20px; margin-left:4px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer;">Eliminar</button>
                                     </div>
+                                    <!-- Formulario para imprimir PDF -->
+                                    <form action="/subidanotajavi/public/pdf/${muestra.id}" method="POST" style="margin-top: 10px;">
+                                        @csrf
+                                        <button style="padding: 10px 18px; margin-left:4px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;" id="${muestra.id}" class="imprimir" type="submit">
+                                            Imprimir PDF
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>`;
-                            cargarDatos()
+                        cargarDatos();
                     });
                 } else {
                     mostrar_muestras.innerHTML = `<tr><td colspan="7">No se encontraron usuarios</td></tr>`;
@@ -550,6 +556,7 @@ buscador.addEventListener("input", function () {
         location.reload();
     }
 });
+
 
 function rendermodal_mostrar(datos) {
     console.log("Datos recibidos por rendermodal_mostrar:", datos);
@@ -724,66 +731,79 @@ contenido.forEach(boton => {
     })
 
     imagenes.forEach(boton => {
-        boton.addEventListener('click', async () => { // Se añade async aquí porque se usa await dentro
+        boton.addEventListener('click', async () => {
             modal_imagen.style.display = "block";
             let idMuestras = boton.id; // Obtener el ID de la muestra al hacer clic
-    
-            const zoomElement = document.querySelector("#zoom");
-            const selectedZoomOption = zoomElement.options[zoomElement.selectedIndex];
-            const zoom = selectedZoomOption.getAttribute("value");
     
             Swal.fire({
                 title: 'Introduce las imágenes',
                 html: rendermodal_imagen(), // Asegúrate de que esta función está definida
                 confirmButtonText: "Guardar",
                 showCancelButton: true,
-            }).then(async (result) => { // Se añade async aquí para usar await dentro
+            }).then(async (result) => {
                 if (result.isConfirmed) {
                     try {
-                        const imagenInput = document.querySelector('#imagen');
+                        // Obtener todos los inputs de tipo archivo (imagen)
+                        const imagenInputs = document.querySelectorAll('input[type="file"][name="imagen"]');
+                        const zoomInputs = document.querySelectorAll('select[name="zoom"]');
                         const formData = new FormData();
                         const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        
-                        if (imagenInput && imagenInput.files.length > 0) {
-                            formData.append('imagen', imagenInput.files[0]);
-                            formData.append('idMuestras', idMuestras); // Pasar el ID de la muestra
-                            formData.append('zoom', zoom); // Pasar el zoom seleccionado
-        
-                            const imagenResponse = await fetch('guardar_imagen', { 
-                                method: 'POST',
-                                body: formData,
-                                headers: {
-                                    'X-CSRF-TOKEN': token // Si es necesario
-                                }
-                            });
-        
-                            if (!imagenResponse.ok) {
-                                const errorText = await imagenResponse.text();
-                                throw new Error("Error al subir la imagen: " + errorText);
+                        
+                        let hasImages = false; // Bandera para verificar si se seleccionaron imágenes
+    
+                        // Recorrer todos los inputs de imagen y agregar las imágenes al FormData con su respectivo zoom
+                        imagenInputs.forEach((imagenInput, index) => {
+                            if (imagenInput.files.length > 0) {
+                                Array.from(imagenInput.files).forEach(file => {
+                                    formData.append('imagenes[]', file);
+                                    formData.append('zoom[]', zoomInputs[index].options[zoomInputs[index].selectedIndex].id); // Asociar zoom a la imagen
+
+                                    console.log( zoomInputs[index].options[zoomInputs[index].selectedIndex].id)
+                                });
+                                hasImages = true;
                             }
-        
-                            const imagenData = await imagenResponse.json();
-                            const nombreImagen = imagenData.nombre_archivo; // Obtener el nombre de la imagen
-        
-                            console.log("Imagen subida:", nombreImagen);
-                            Swal.fire('Éxito', 'Imagen subida correctamente', 'success');
-        
-                            // Aquí puedes hacer algo con el nombre de la imagen, por ejemplo, mostrarla en pantalla
-                            // o guardarla en una variable para usarla posteriormente.
-        
-                        } else {
+                        });
+    
+                        // Si no se seleccionaron imágenes, mostrar advertencia
+                        if (!hasImages) {
                             console.warn("No se ha seleccionado ninguna imagen");
                             Swal.fire('Advertencia', 'No se ha seleccionado ninguna imagen', 'warning');
+                            return; // No continuar
                         }
-        
+    
+                        // Agregar los otros datos (idMuestras)
+                        formData.append('idMuestras', idMuestras);
+                        
+                        // Enviar los datos al backend
+                        const imagenResponse = await fetch('guardar_imagen', {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-CSRF-TOKEN': token // Si es necesario
+                            }
+                        });
+    
+                        if (!imagenResponse.ok) {
+                            const errorText = await imagenResponse.text();
+                            throw new Error("Error al subir las imágenes: " + errorText);
+                        }
+    
+                        const imagenData = await imagenResponse.json();
+                        console.log("Imágenes subidas:", imagenData);
+                        Swal.fire('Éxito', 'Imágenes subidas correctamente', 'success');
+    
                     } catch (error) {
                         console.error("Error en la petición:", error);
                         Swal.fire('Error', error.message, 'error');
                     }
                 }
+                location.reload() 
             });
+           
         });
+        
     });
+    
     
     
     // Definir la función correctamente
@@ -792,4 +812,67 @@ contenido.forEach(boton => {
         const imagen = modal_imagen.querySelector('#imagen'); 
         
         return modal_imagen; // Retorna el modal con la imagen
+    }
+
+
+    const addImageButton = document.getElementById('addImage');
+    const removeAllImagesButton = document.getElementById('removeAllImages');
+    const extraImagesDiv = document.getElementById('extraImages');
+    
+    // Aseguramos que el botón "Añadir otra imagen" funcione correctamente
+    if (addImageButton && extraImagesDiv) {
+        addImageButton.addEventListener('click', function() {
+            console.log('Añadir otra imagen');
+            
+            // Creamos un nuevo contenedor para el input, select y el botón de eliminar
+            const newInputWrapper = document.createElement('div');
+            newInputWrapper.classList.add('mt-2');
+
+            const newInput = document.createElement('input');
+            newInput.type = 'file';
+            newInput.name = 'imagen';
+            newInput.classList.add('mt-2');
+
+            const newLabel = document.createElement('label');
+            newLabel.innerText = "Introduce el Zoom de la Imagen";
+            newLabel.classList.add('mt-2');
+
+            const newSelect = document.createElement('select');
+            newSelect.name = 'zoom';
+            newSelect.classList.add('mt-2');
+            newSelect.innerHTML = `
+                <option value="4">x4</option>
+                <option value="10">x10</option>
+                <option value="40">x40</option>
+                <option value="100">x100</option>
+            `;
+
+            const newButton = document.createElement('button');
+            newButton.type = 'button';
+            newButton.classList.add('btn', 'btn-danger', 'mt-2');
+            newButton.innerText = 'Eliminar imagen';
+
+            newButton.addEventListener('click', function() {
+                newInputWrapper.remove();
+            });
+
+            // Añadir los nuevos elementos al wrapper
+            newInputWrapper.appendChild(newInput);
+            newInputWrapper.appendChild(document.createElement('br'));
+            newInputWrapper.appendChild(newLabel);
+            newInputWrapper.appendChild(newSelect);
+            newInputWrapper.appendChild(document.createElement('br'));
+            newInputWrapper.appendChild(newButton);
+
+            // Añadir el nuevo wrapper al contenedor de imágenes extra
+            extraImagesDiv.appendChild(newInputWrapper);
+        });
+    }
+
+    // Aseguramos que el botón "Eliminar todas las imágenes" funcione correctamente
+    if (removeAllImagesButton && extraImagesDiv) {
+        removeAllImagesButton.addEventListener('click', function() {
+            console.log('Eliminar todas las imágenes');
+            extraImagesDiv.innerHTML = ''; // Elimina todo el contenido dentro de extraImagesDiv
+        });
     }

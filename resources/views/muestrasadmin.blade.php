@@ -398,11 +398,18 @@
 
             <label for="zoom">Introduce el Zoom de la Imagen</label>
             <select name="zoom" id="zoom">
-                <option value="4">x4</option>
-                <option value="10">x10</option>
-                <option value="40">x40</option>
-                <option value="100">x100</option>
+                <option id="4">x4</option>
+                <option id="10">x10</option>
+                <option id="40">x40</option>
+                <option id="100">x100</option>
             </select>
+            <br>
+            <br>
+            <div id="extraImages"></div>
+            <br>
+            <br>
+            <button type="button" id="addImage" class="btn btn-primary">Añadir otra imagen</button>
+            
         </div>
     </form>
 </div>

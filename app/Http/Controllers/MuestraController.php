@@ -65,36 +65,54 @@ class MuestraController extends Controller
 
 public function guardarImagen(Request $request)
 {
+    // Validación para asegurarse de que hay imágenes y que son del tipo correcto
     $request->validate([
-        'imagen' => 'required|image|mimes:jpg,jpeg,png|max:2048'
+        'imagenes' => 'required|array', // Espera un arreglo de imágenes
+        'imagenes.*' => 'image|mimes:jpg,jpeg,png|max:2048', // Cada imagen debe ser válida
+        'idMuestras' => 'required|integer',
+        'zoom' => 'required|array', // Asegura que el zoom sea un array
+        'zoom.*' => 'integer', // Cada valor de zoom debe ser un número entero
     ]);
 
-    $uploadResponse = Cloudinary::upload($request->file('imagen')->getRealPath(), [
-        'folder' => 'prueba'
-    ]);
+    $id_muestra = (int)$request->input('idMuestras');
+    $zoom_values = $request->input('zoom'); // Obtener los valores de zoom como array
+    
+    if (!$id_muestra) {
+        return response()->json(['error' => 'ID de muestra no proporcionado'], 400);
+    }
 
-    $publicID_image = $uploadResponse->getPublicId();
+    // Recorrer todas las imágenes
+    $uploadedImages = [];
+    foreach ($request->file('imagenes') as $index => $imagenFile) {
+        // Subir la imagen a Cloudinary
+        $uploadResponse = Cloudinary::upload($imagenFile->getRealPath(), [
+            'folder' => 'prueba'
+        ]);
 
-    // Construye la URL de la imagen con Cloudinary
-    $url_image = (new \Cloudinary\Cloudinary())->image($publicID_image)
-        ->resize(Resize::scale()->width(250))
-        ->delivery(Delivery::quality(35))
-        ->delivery(Delivery::format(Format::auto()));
+        // Obtener el Public ID de la imagen subida
+        $publicID_image = $uploadResponse->getPublicId();
 
-        $id_muestra = (int)$request->input('idMuestras');
-        $zoom = (int)$request->input('zoom');
-        if (!$id_muestra) {
-            return response()->json(['error' => 'ID de muestra no proporcionado'], 400);
-        }
-        
+        // Construir la URL de la imagen con Cloudinary
+        $url_image = (new \Cloudinary\Cloudinary())->image($publicID_image)
+            ->resize(Resize::scale()->width(250))
+            ->delivery(Delivery::quality(35))
+            ->delivery(Delivery::format(Format::auto()));
+
+        // Guardar la imagen en la base de datos
         $imagen = new Imagen();
         $imagen->ruta = $url_image;
-        $imagen->zoom = $zoom;
-        $imagen->idMuestras = $id_muestra; // Asegúrate de que esto sea un valor único, no un array
+        $imagen->zoom = $zoom_values[$index] ?? null; // Asociar el zoom correspondiente
+        $imagen->idMuestras = $id_muestra;
         $imagen->save();
-        
 
-    return response()->json(['nombre_archivo' => $publicID_image]);
+        // Guardar los nombres de las imágenes subidas para enviar como respuesta
+        $uploadedImages[] = $publicID_image;
+    }
+
+    // Retornar los datos de las imágenes subidas
+    return response()->json([
+        'nombre_archivo' => $uploadedImages
+    ]);
 }
 
 public function show()
