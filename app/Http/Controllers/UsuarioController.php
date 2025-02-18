@@ -112,9 +112,11 @@ class UsuarioController extends Controller
 
                
                     $email = $request->email;
+                    $usuarios = Usuario::all();
+                    $sedes = Sede::all();
         
         
-                    return redirect()->route('muestras')->with(['email' => $email]); 
+                    return view('admin')->with(['email' => $email, 'usuarios' => $usuarios, 'sedes' => $sedes]); 
                 }
             
     

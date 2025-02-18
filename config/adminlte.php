@@ -64,7 +64,7 @@ return [
     */
 
     'logo' => '<b>Laboratorio</b>',
-    'logo_img' => 'miguel.png',
+    'logo_img' => env('APP_LOGO', 'usuario_defecto.png'),
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',

@@ -379,16 +379,10 @@ function rendermodal_update(datos) {
                 const div = document.createElement('div');
                 div.classList.add('interpretacion');
 
-                const inputDescripcion = document.createElement('textarea');
-                inputDescripcion.id = `descripcion2-${index}`;
-                inputDescripcion.value = interpretacion.texto || "";
-                inputDescripcion.placeholder = `Descripción de la interpretación ${index + 1}`;
-                div.appendChild(inputDescripcion);
-
                 // Crear el `<select>` de tipo de estudio
                 const selectTipoEstudio = document.createElement('select');
                 selectTipoEstudio.id = `idTipoEstudio2-${index}`;
-
+                selectTipoEstudio.className = 'w-full p-2 border rounded bg-white text-gray-700 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-3 text-center block';
                 // Agregar todas las opciones al select
                 tiposEstudio.forEach(tipo => {
                     const option = document.createElement('option');
@@ -402,9 +396,18 @@ function rendermodal_update(datos) {
 
                 div.appendChild(selectTipoEstudio);
 
+                const inputDescripcion = document.createElement('textarea');
+                inputDescripcion.id = `descripcion2-${index}`;
+                inputDescripcion.value = interpretacion.texto || "";
+                inputDescripcion.placeholder = `Descripción de la interpretación ${index + 1}`;
+                inputDescripcion.className = 'w-full p-3 border rounded-lg shadow-sm text-gray-800 bg-gray-100 focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none mb-5 text-center block';
+                div.appendChild(inputDescripcion);
+
+
                 // Botón para eliminar la interpretación
                 const buttonEliminar = document.createElement('button');
                 buttonEliminar.textContent = "Eliminar";
+                buttonEliminar.className = 'btn btn-danger btn-sm eliminar-interpretacion mt-2 px-4 py-2 rounded shadow mx-auto block';
                 buttonEliminar.addEventListener('click', () => {
                     interpretacionesContainers.removeChild(div);
                 });

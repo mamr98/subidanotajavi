@@ -83,9 +83,6 @@ Route::get('/listamuestras/tiposEstudio',[MuestraController::class,'tiposEstudio
 
 Route::get('/muestrasadmin',[MuestraController::class,'showAdmin'])->name('muestrasadmin');
 
-Route::get('/miperfil', function () {
-    return view('perfil');
-})->name('perfil');
 
 
 Route::get('/usuarios/{email}', [UsuarioController::class, 'buscarUsuario'])->name('usuarios.buscar');
@@ -93,6 +90,8 @@ Route::get('/usuarios/{email}', [UsuarioController::class, 'buscarUsuario'])->na
 Route::get('/muestras/{codigo}', [MuestraController::class, 'buscarMuestra'])->name('muestras.buscar');
 
 Route::post('/pdf/{id}', [PdfController::class, 'generarPDF'])->name('generarPDF');
+Route::post('/subir-imagen', [ImagenController::class, 'subirImagen'])->name('upload');
+Route::get('/miperfil', [ImagenController::class, 'mostrarPerfil'])->name('perfil');
 
 Route::get('/ini', function () {
     return view('inicioadminlte');

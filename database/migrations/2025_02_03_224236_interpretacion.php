@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('interpretacion', function (Blueprint $table) {
             $table->id();
-            $table->string('texto');
+            $table->string('texto', 2550);
             $table->unsignedBigInteger('idTipoEstudio');
             $table->timestamps();
             $table->softDeletes();
