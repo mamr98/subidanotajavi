@@ -588,7 +588,8 @@ function rendermodal_mostrar(datos) {
         fetchData(`listamuestras/formato/${datos.muestra.idFormato}`, 'formato'),
         fetchData(`listamuestras/calidad/${datos.muestra.idCalidad}`, 'calidad'),
         fetchData(`listamuestras/usuario/${datos.muestra.idUsuario}`, 'usuario'),
-        fetchData(`listamuestras/sede/${datos.muestra.idSede}`, 'sede')
+        fetchData(`listamuestras/sede/${datos.muestra.idSede}`, 'sede'),
+        fetchData(`listamuestras/imagenes/${datos.muestra.id}`, 'imagenes')
     ];
 
     // Esperar a que todas las promesas se resuelvan
@@ -601,13 +602,26 @@ function rendermodal_mostrar(datos) {
                     <div class="interpretacion-box p-3 mb-3 border rounded shadow-sm">
                         <h4>Interpretación ${index + 1}</h4>
                         <label for="tipoEstudio">Tipo de Estudio:</label>
-                        <input type="text" value="${datos.tipoEstudio.nombre || 'N/A'}" readonly class="form-control mb-2">
+                        <input type="text" value="${datos.tipoEstudio?.nombre || 'N/A'}" readonly class="form-control mb-2">
                         <label for="descripcion">Descripción:</label>
                         <textarea readonly class="form-control">${inter.texto || 'Sin descripción'}</textarea>
                     </div>
                 `).join('');
             } else {
                 return '<p class="text-muted">No hay interpretaciones disponibles</p>';
+            }
+        }
+
+        // Función para generar el HTML de las imágenes
+        function generarImagenesHTML(imagenes) {
+            if (Array.isArray(imagenes) && imagenes.length > 0) {
+                return imagenes.map(img => `
+                    <div class="col-md-4">
+                        <img src="${img.ruta}" alt="Imagen de muestra" class="img-fluid rounded shadow-sm">
+                    </div>
+                `).join('');
+            } else {
+                return '<p class="text-muted">No hay imágenes disponibles</p>';
             }
         }
 
@@ -620,7 +634,6 @@ function rendermodal_mostrar(datos) {
                 <div class="info-box mb-4">
                     <div class="row">
                         ${clavesAMostrar.map(key => {
-                            // Verificar si la clave existe en datos.muestra
                             if (datos.muestra.hasOwnProperty(key)) {
                                 return `
                                     <div class="col-md-6 mb-2">
@@ -643,6 +656,12 @@ function rendermodal_mostrar(datos) {
                     <h3>Interpretaciones</h3>
                     ${generarInterpretacionesHTML(datos.interpretaciones)}
                 </div>
+                <div class="bg-light p-4 rounded shadow mt-3">
+                    <h3>Imágenes</h3>
+                    <div class="row">
+                        ${generarImagenesHTML(relatedData['imagenes'])}
+                    </div>
+                </div>
             </div>
         `;
 
@@ -663,6 +682,7 @@ function rendermodal_mostrar(datos) {
         });
     });
 }
+
 
 
 contenido.forEach(boton => {

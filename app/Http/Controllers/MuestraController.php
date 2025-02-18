@@ -251,6 +251,11 @@ public function show()
         return $tipoEstudio;
     }
 
+    public function imagenes($id)
+    {
+        return response()->json(Imagen::where('idMuestras', $id)->get());
+    }
+
     public function muestra($id){
         // Obtener la muestra con el ID proporcionado
         $muestra = Muestra::where('id', $id)->first();

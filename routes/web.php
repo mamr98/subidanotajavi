@@ -80,6 +80,7 @@ Route::get('/listamuestras/usuario/{id}',[MuestraController::class,'usuario']);
 Route::get('/listamuestras/sede/{id}',[MuestraController::class,'sede']);
 Route::get('/listamuestras/tipoEstudio/{id}',[MuestraController::class,'tipoEstudio']);
 Route::get('/listamuestras/tiposEstudio',[MuestraController::class,'tiposEstudios']);
+Route::get('/listamuestras/imagenes/{id}',[MuestraController::class,'imagenes']);
 
 
 
