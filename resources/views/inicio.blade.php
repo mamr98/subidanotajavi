@@ -33,7 +33,7 @@
     
     </nav>
     
-    <header class="relative w-full h-[460px] bg-cover bg-center" style="background-image: url('image.png');">
+    <header class="relative w-full h-[460px] bg-cover bg-center" style="background-image: url('portada.png');">
         <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center">
             <h1 class="text-white text-5xl font-bold">Bienvenido a Laboratorio Medac</h1>
             <div class="mt-4">

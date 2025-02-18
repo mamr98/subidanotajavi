@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@vite(['resources/js/app.js'])
+@vite([ 'resources/js/imagenes.js'])
 <meta content="{{ csrf_token() }}" name="csrf-token" />
 
 @section('content')
@@ -7,7 +7,7 @@
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-6">
             <h1 class="text-center display-4 font-weight-bold text-dark mb-5">Perfil de Usuario</h1>
-
+            <form action={{-- "{{route('imagenUsuario')}} --}} method="POST" enctype="multipart/form-data">
             <div class="card shadow-lg border-0">
                 <div class="card-body p-4 p-md-5">
                     <div class="mb-4">
@@ -32,36 +32,34 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="font-weight-bold text-muted mb-2">Muestras Realizadas:</label>
-                            <p class="form-control-plaintext bg-light rounded py-2 px-3">{{-- {{ Auth::user()->muestras->count() }} --}}</p>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="font-weight-bold text-muted mb-2">Fecha de Registro:</label>
-                            <p class="form-control-plaintext bg-light rounded py-2 px-3">{{-- {{ Auth::user()->created_at->format('d/m/Y H:i') }} --}}</p>
-                        </div>
-
-                        <div class="form-group">
                             <label class="font-weight-bold text-muted mb-2">Imagen de perfil:</label>
                             <div class="text-center mb-3">
-                                <img class="img-fluid shadow-sm" width="100" height="100" src="miguel.png{{-- {{ Auth::user()->profile_image ?? '/images/default-avatar.png' }} --}}" alt="Profile Image">
+                                <img id="profileImage" class="img-fluid shadow-sm" width="100" height="100" 
+                                     src="{{ !empty($usuario->imagen) ? $usuario->imagen : asset('usuario_defecto.png') }}" 
+                                     alt="Profile Image"
+                                     data-default-image="{{ asset('usuario_defecto.png') }}"
+                                     data-upload-route="{{ route('upload') }}">
+                            
                             </div>
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="customFile" name="profile_image">
+                                <input type="file" class="custom-file-input" id="customFile" 
+                                       name="imagen" 
+                                       accept="image/jpeg, image/png"
+                                       onchange="handleImageUpload(this)">
                                 <label class="custom-file-label" for="customFile">Cambiar imagen</label>
                             </div>
                         </div>
-                    </div>
 
                     <div class="text-center mt-5">
-                        <a href="{{-- {{ route('perfil.edit') }} --}}" class="btn btn-primary btn-lg px-5 py-3 rounded-pill shadow">
+                        <a href="{{-- {{ route('perfil.edit') }} --}}" class="btn btn-primary btn-lg px-5 py-3 rounded-pill shadow" id="changeImageButton">
                             <i class="fas fa-edit mr-2"></i> Editar Perfil
                         </a>
                     </div>
                 </div>
+                
             </div>
+        </form>
         </div>
     </div>
 </div>
 @endsection
-
