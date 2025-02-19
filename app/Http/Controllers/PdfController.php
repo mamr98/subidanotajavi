@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Imagen;
 use App\Models\Muestra;
 use App\Models\TipoEstudio;
 use Illuminate\Http\Request;
@@ -33,7 +34,9 @@ class PdfController extends Controller
             }
         }
 
-        $pdf = PDF::loadView('pdf', compact('muestra','interpretaciones_detalladas', 'tipoEstudio'));
+        $imagen = Imagen::where('idMuestras', $muestra->id)->get();
+
+        $pdf = PDF::loadView('pdf', compact('muestra','interpretaciones_detalladas', 'tipoEstudio', 'imagen'));
 
         return $pdf->download('muestras_'.$muestra->codigo.'.pdf');
         
