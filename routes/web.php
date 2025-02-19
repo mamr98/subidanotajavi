@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\SedeController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\MuestrasController;
 use App\Http\Controllers\InterpretacionesController;
 use App\Http\Controllers\SubidaImagenesController;
+use App\Models\Muestra;
 
 Route::get('/', function () {
     return view('login');
@@ -106,3 +108,17 @@ Route::get('/muestras/{codigo}', [MuestraController::class, 'buscarMuestra'])->n
 Route::post('/pdf/{id}', [PdfController::class, 'generarPDF'])->name('generarPDF');
 Route::post('/subir-imagen', [ImagenController::class, 'subirImagen'])->name('upload');
 Route::get('/miperfil', [ImagenController::class, 'mostrarPerfil'])->name('perfil');
+
+
+// Sanctum
+// Route::post('register', [AuthController::class, 'register']);
+
+// Route::middleware(['auth:sanctum'])->group(function (){
+    
+//     Route::get('logout', [AuthController::class, 'logout']);
+    
+//     Route::get('login', [MuestraController::class, 'index']);
+//     Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+
+
+// });
