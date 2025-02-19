@@ -354,8 +354,9 @@ function rendermodal_add() {
                         }),
                     })
                     .then(res => res.ok ? res.json() : Promise.reject("Error en la solicitud"))
-                    .then(() => {
+                    .then((datos) => {
                         Swal.fire('Éxito', 'Muestra actualizada correctamente', 'success');
+                        console.log(datos)
                         location.reload();
                     })
                     .catch(error => {
@@ -738,57 +739,61 @@ function rendermodal_mostrar(datos) {
         }
 
         // Función para generar el HTML de las imágenes
-        function generarImagenesHTML(imagenes) {
-            if (Array.isArray(imagenes) && imagenes.length > 0) {
-                return imagenes.map(img => `
-                    <div class="col-md-4">
-                        <img src="${img.ruta}" alt="Imagen de muestra" class="img-fluid rounded shadow-sm">
-                    </div>
-                `).join('');
-            } else {
-                return '<p class="text-muted">No hay imágenes disponibles</p>';
-            }
-        }
+function generarImagenesHTML(imagenes) {
+    if (Array.isArray(imagenes) && imagenes.length > 0) {
+        return imagenes.map(img => `
+            <div class="col-md-4">
+                <img src="${img.ruta}" alt="Imagen de muestra" class="img-fluid rounded shadow-sm">
+            </div>
+        `).join('');
+    } else {
+        return `<p class="text-muted">No hay imágenes disponibles</p>
+        `;
+    }
+}
+
 
         // Contenido del modal
         const clavesAMostrar = ["fecha", "codigo", "organo", "tipo", "formato", "calidad", "usuario", "sede"];
 
         // Contenido del modal - FILTRADO DE CLAVES
         const modalContent = `
-            <div class="container">
-                <div class="info-box mb-4">
-                    <div class="row">
-                        ${clavesAMostrar.map(key => {
-                            if (datos.muestra.hasOwnProperty(key)) {
-                                return `
-                                    <div class="col-md-6 mb-2">
-                                        <label for="${key}3" class="modal-label">${key.charAt(0).toUpperCase() + key.slice(1)}:</label>
-                                        <input type="text" id="${key}3" value="${datos.muestra[key] || ''}" readonly class="form-control modal-input">
-                                    </div>
-                                `;
-                            } else if (relatedData.hasOwnProperty(key)) {
-                                return `
-                                    <div class="col-md-6 mb-2">
-                                        <label for="${key}3" class="modal-label">${key.charAt(0).toUpperCase() + key.slice(1)}:</label>
-                                        <input type="text" id="${key}3" value="${relatedData[key].nombre || relatedData[key].email || ''}" readonly class="form-control modal-input">
-                                    </div>
-                                `;
-                            }
-                        }).join('')}
-                    </div>
-                </div>
-                <div class="bg-light p-4 rounded shadow">
-                    <h3>Interpretaciones</h3>
-                    ${generarInterpretacionesHTML(datos.interpretaciones)}
-                </div>
-                <div class="bg-light p-4 rounded shadow mt-3">
-                    <h3>Imágenes</h3>
-                    <div class="row">
-                        ${generarImagenesHTML(relatedData['imagenes'])}
-                    </div>
+        <div class="container">
+            <div class="info-box mb-4">
+                <div class="row">
+                    ${clavesAMostrar.map(key => {
+                        if (datos.muestra.hasOwnProperty(key)) {
+                            return `
+                                <div class="col-md-6 mb-2">
+                                    <label for="${key}3" class="modal-label">${key.charAt(0).toUpperCase() + key.slice(1)}:</label>
+                                    <input type="text" id="${key}3" value="${datos.muestra[key] || ''}" readonly class="form-control modal-input">
+                                </div>
+                            `;
+                        } else if (relatedData.hasOwnProperty(key)) {
+                            return `
+                                <div class="col-md-6 mb-2">
+                                    <label for="${key}3" class="modal-label">${key.charAt(0).toUpperCase() + key.slice(1)}:</label>
+                                    <input type="text" id="${key}3" value="${relatedData[key].nombre || relatedData[key].email || ''}" readonly class="form-control modal-input">
+                                </div>
+                            `;
+                        }
+                    }).join('')}
                 </div>
             </div>
-        `;
+            
+            <div class="bg-light p-4 rounded shadow">
+                <h3>Interpretaciones</h3>
+                ${datos.interpretaciones && datos.interpretaciones.length > 0 
+                    ? generarInterpretacionesHTML(datos.interpretaciones) 
+                    : '<p class="text-muted">No hay interpretaciones disponibles.</p>'}
+            </div>
+            <div class="bg-light p-4 rounded shadow mt-3">
+                <h3>Imágenes</h3>
+                    ${generarImagenesHTML(relatedData['imagenes'])}
+            </div>
+        </div>
+    `;
+    
 
         Swal.fire({
             title: 'MUESTRA',
