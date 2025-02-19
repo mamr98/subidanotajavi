@@ -23,7 +23,7 @@
             <a href="#" class="h1"><b>Admin</b>LTE</a>
         </div>
         <div class="card-body">
-            <p class="login-box-msg">Registrate si no tienes cuenta</p>
+            <p class="login-box-msg">Registrate</p>
 
             <form action="{{ route('registro.post') }}" method="post">
                 @csrf 
