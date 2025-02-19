@@ -234,20 +234,22 @@ public function eliminar_imagen($id)
 
 public function eliminar_interpretaciones($id)
 {
-    // Intentar encontrar la interpretación por su ID
     $interpretacion = Interpretacion::find($id);
 
-    // Si no se encuentra la interpretación, retornar un error
     if (!$interpretacion) {
         return response()->json(['error' => 'Interpretación no encontrada'], 404);
     }
 
-    // Eliminar el registro de la base de datos
+    // Eliminar registros en MuestrasInterpretacion que dependen de esta interpretación
+    MuestrasInterpretacion::where('idInterpretacion', $id)->delete();
+
+    // Eliminar la interpretación
     $interpretacion->delete();
 
-    // Retornar una respuesta exitosa
     return response()->json(['success' => 'Interpretación eliminada correctamente']);
 }
+
+
 
 
 
