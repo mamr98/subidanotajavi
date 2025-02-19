@@ -8,17 +8,23 @@
     <style>
         /* Estilos generales */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #333;
             margin: 0;
             padding: 0;
-            font-size: 12px;
+            font-size: 14px;
+            background-color: #f4f4f9;
         }
 
         /* Contenedor principal */
         .container {
-            width: 100%;
-            padding: 20px;
+            width: 90%;
+            max-width: 1200px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         /* Encabezado */
@@ -26,37 +32,48 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 2px solid #e04725;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+            border-bottom: 3px solid #2a3d4f;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
         }
 
         .header img {
-            width: 60px;
+            width: 80px;
             height: auto;
         }
 
         .header h1 {
-            font-size: 18px;
-            color: #102D4B;
+            font-size: 24px;
+            color: #2a3d4f;
             margin: 0;
+            font-weight: bold;
+        }
+
+        /* Subtítulos */
+        h2 {
+            color: #2a3d4f;
+            font-size: 20px;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #e04725;
+            padding-bottom: 5px;
         }
 
         /* Tabla */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
+            margin-top: 20px;
         }
 
         th, td {
-            padding: 8px;
+            padding: 12px;
             text-align: left;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 2px solid #f0f0f0;
         }
 
         th {
-            background-color: #102D4B;
+            background-color: #2a3d4f;
             color: white;
             font-weight: bold;
             text-transform: uppercase;
@@ -66,38 +83,54 @@
             background-color: #f9f9f9;
         }
 
+        tr:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Imágenes */
+        img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            margin: 5px;
+            display: block;
+        }
+
         /* Footer */
         .footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
             text-align: center;
-            background-color: #102D4B;
+            font-size: 12px;
+            color: #777;
+            padding: 15px 0;
+            background-color: #2a3d4f;
             color: white;
-            padding: 5px 0;
-            font-size: 10px;
-    }
+            margin-top: 30px;
+            border-top: 2px solid #e04725;
+        }
+
+        .footer p {
+            margin: 0;
+        }
+
+        /* Ajuste para evitar espacio innecesario */
+        .no-page-break {
+            page-break-inside: avoid;
+        }
 
         /* Estilos para salto de página */
         .page-break {
             page-break-after: always;
         }
-
-        h2 {
-            color: #102D4B;
-            font-size: 16px;
-            margin-top: 20px;
-        }
     </style>
 </head>
 <body>
 
-    <!-- Encabezado -->
+    <!-- Contenedor principal -->
     <div class="container">
+        <!-- Encabezado -->
         <div class="header">
             <img src="{{ public_path('medac.png') }}" alt="Logo Medac">
-            <h1>Datos de la Muestra</h1>
+            <h1>Detalles de la Muestra</h1>
         </div>
 
         <!-- Detalles de la Muestra -->
@@ -165,23 +198,15 @@
         </table>
 
         <!-- Imagenes -->
-        <h2>Imagenes de la Muestra</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Imagen</th>
-                    <th>Zoom</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($imagen as $img)
-                    <tr>
-                        <td><img src={{ $img->ruta }}></td>
-                        <td>x{{ $img->zoom }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <h2 class="no-page-break">Imágenes de la Muestra</h2>
+        <div class="no-page-break">
+            @foreach($imagen as $img)
+                <div style="display: inline-block; width: 160px; padding: 5px; text-align: center;">
+                    <img src="{{ $img->ruta }}" alt="Imagen de la muestra">
+                    <p>Zoom: x{{ $img->zoom }}</p>
+                </div>
+            @endforeach
+        </div>
     </div>
 
     <!-- Footer -->
@@ -191,6 +216,7 @@
         </p>
     </div>
 
+    <!-- Scripts -->
     <script type="text/php">
         if (isset($pdf)) {
             $pdf->page_script('
@@ -200,14 +226,5 @@
         }
     </script>
 
-    <script type="text/php">
-        if (isset($pdf)) {
-            $pdf->page_script('
-                $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
-                $pdf->text(30, 750, "muestras.com - Todos los derechos reservados", $font, 8);
-                $pdf->text(520, 750, "Página $PAGE_NUM de $PAGE_COUNT", $font, 8);
-            ');
-        }
-    </script>
 </body>
 </html>
