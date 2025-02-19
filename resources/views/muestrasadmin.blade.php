@@ -343,6 +343,7 @@
                     </button>
                     <br>
                     <br>
+                    <div id="imagenes-container"></div>
             </form>
         </div>
 

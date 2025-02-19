@@ -212,7 +212,44 @@ public function show()
 
     
 
-    
+public function eliminar_imagen($id)
+{
+    $imagen = Imagen::find($id);
+
+    if (!$imagen) {
+        return response()->json(['error' => 'Imagen no encontrada'], 404);
+    }
+
+    // Eliminar el archivo de almacenamiento si es necesario
+    $rutaImagen = public_path($imagen->ruta);
+    if (file_exists($rutaImagen)) {
+        unlink($rutaImagen);
+    }
+
+    // Eliminar el registro de la base de datos
+    $imagen->delete();
+
+    return response()->json(['success' => 'Imagen eliminada correctamente']);
+}
+
+public function eliminar_interpretaciones($id)
+{
+    // Intentar encontrar la interpretación por su ID
+    $interpretacion = Interpretacion::find($id);
+
+    // Si no se encuentra la interpretación, retornar un error
+    if (!$interpretacion) {
+        return response()->json(['error' => 'Interpretación no encontrada'], 404);
+    }
+
+    // Eliminar el registro de la base de datos
+    $interpretacion->delete();
+
+    // Retornar una respuesta exitosa
+    return response()->json(['success' => 'Interpretación eliminada correctamente']);
+}
+
+
 
 
     public function tipo($id)

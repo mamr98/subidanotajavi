@@ -4,6 +4,7 @@ const crearMuestra = document.querySelector('#crear_muestra');
 const modificar = document.querySelectorAll('.modificar');
 const imagenes = document.querySelectorAll('.imagenes');
 const eliminar = document.querySelectorAll('.eliminar');
+const eliminar_imagenes = document.querySelectorAll('.eliminar_imagen');
 const contenido = document.querySelectorAll('.contenido');
 const modal_add = document.querySelector('#modal_add');
 const modal_update = document.getElementById('modal_update');
@@ -351,28 +352,39 @@ function rendermodal_update(datos) {
     const calidad = modal_update.querySelector('#idCalidad2');
     const usuario = modal_update.querySelector('#idUsuario2');
     const sede = modal_update.querySelector('#idSede2');
-    const interpretacionesContainers = modal_update.querySelector('#interpretaciones-container');
+    const interpretacionesContainer = modal_update.querySelector('#interpretaciones-container');
+    const imagenesContainer = modal_update.querySelector('#imagenes-container');
 
-    if (!fecha || !codigo || !organo || !tipo || !formato || !calidad || !usuario || !sede || !interpretacionesContainers) {
+    if (!fecha || !codigo || !organo || !tipo || !formato || !calidad || !usuario || !sede || !interpretacionesContainer) {
         console.error("Elementos del modal no encontrados o incorrectos");
         return;
     }
 
-    // Inicializar los campos con los datos actuales
     fecha.value = datos.muestra.fecha || "";
     codigo.value = datos.muestra.codigo || "";
 
-    // Obtener y llenar los datos de la muestra
-    fetch(`listamuestras/tipo/${datos.muestra.idTipo}`).then(response => response.json()).then(data => tipo.value = data.nombre);
-    fetch(`listamuestras/formato/${datos.muestra.idFormato}`).then(response => response.json()).then(data => formato.value = data.nombre);
-    fetch(`listamuestras/calidad/${datos.muestra.idCalidad}`).then(response => response.json()).then(data => calidad.value = data.nombre);
-    fetch(`listamuestras/usuario/${datos.muestra.idUsuario}`).then(response => response.json()).then(data => usuario.value = data.email);
-    fetch(`listamuestras/sede/${datos.muestra.idSede}`).then(response => response.json()).then(data => sede.value = data.nombre);
+    fetch(`listamuestras/tipo/${datos.muestra.idTipo}`)
+        .then(response => response.json())
+        .then(data => tipo.value = data.nombre);
+    
+    fetch(`listamuestras/formato/${datos.muestra.idFormato}`)
+        .then(response => response.json())
+        .then(data => formato.value = data.nombre);
+    
+    fetch(`listamuestras/calidad/${datos.muestra.idCalidad}`)
+        .then(response => response.json())
+        .then(data => calidad.value = data.nombre);
+    
+    fetch(`listamuestras/usuario/${datos.muestra.idUsuario}`)
+        .then(response => response.json())
+        .then(data => usuario.value = data.email);
+    
+    fetch(`listamuestras/sede/${datos.muestra.idSede}`)
+        .then(response => response.json())
+        .then(data => sede.value = data.nombre);
 
-    // Limpiamos el contenedor de interpretaciones
-    interpretacionesContainers.innerHTML = "";
+    interpretacionesContainer.innerHTML = "";
 
-    // 🔹 Obtener **todos los tipos de estudio** para usar en los selects
     fetch(`listamuestras/tiposEstudio`)
         .then(response => response.json())
         .then(tiposEstudio => {
@@ -382,17 +394,16 @@ function rendermodal_update(datos) {
                 const div = document.createElement('div');
                 div.classList.add('interpretacion');
 
-                // Crear el `<select>` de tipo de estudio
                 const selectTipoEstudio = document.createElement('select');
                 selectTipoEstudio.id = `idTipoEstudio2-${index}`;
                 selectTipoEstudio.className = 'w-full p-2 border rounded bg-white text-gray-700 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-3 text-center block';
-                // Agregar todas las opciones al select
+                
                 tiposEstudio.forEach(tipo => {
                     const option = document.createElement('option');
                     option.value = tipo.id;
                     option.textContent = tipo.nombre;
                     if (tipo.id == interpretacion.idTipoEstudio) {
-                        option.selected = true; // Seleccionar el tipo de estudio correcto
+                        option.selected = true;
                     }
                     selectTipoEstudio.appendChild(option);
                 });
@@ -406,57 +417,94 @@ function rendermodal_update(datos) {
                 inputDescripcion.className = 'w-full p-3 border rounded-lg shadow-sm text-gray-800 bg-gray-100 focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none mb-5 text-center block';
                 div.appendChild(inputDescripcion);
 
-
-                // Botón para eliminar la interpretación
                 const buttonEliminar = document.createElement('button');
                 buttonEliminar.textContent = "Eliminar";
                 buttonEliminar.className = 'btn btn-danger btn-sm eliminar-interpretacion mt-2 px-4 py-2 rounded shadow mx-auto block';
-                buttonEliminar.addEventListener('click', () => {
-                    interpretacionesContainers.removeChild(div);
-                });
+                buttonEliminar.addEventListener('click', () => eliminarInterpretacion(interpretacion.id, div));
                 div.appendChild(buttonEliminar);
 
-                interpretacionesContainers.appendChild(div);
-            });
-
-            // Agregar botón para nuevas interpretaciones
-            const agregarBtn = modal_update.querySelector('#agregar-interpretacion');
-            agregarBtn.addEventListener('click', () => {
-                const div = document.createElement('div');
-                div.classList.add('interpretacion');
-
-                // Crear el `<select>` con **todas** las opciones de tipo de estudio
-                const selectTipoEstudio = document.createElement('select');
-                selectTipoEstudio.className = 'w-full p-2 border rounded bg-white text-gray-700 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-3 text-center block';
-                tiposEstudio.forEach(tipo => {
-                    const option = document.createElement('option');
-                    option.value = tipo.id;
-                    option.textContent = tipo.nombre;
-                    selectTipoEstudio.appendChild(option);
-                });
-
-                div.appendChild(selectTipoEstudio);
-
-                const inputDescripcion = document.createElement('textarea');
-                inputDescripcion.placeholder = "Nueva descripción de la interpretación";
-                inputDescripcion.className = 'w-full p-3 border rounded-lg shadow-sm text-gray-800 bg-gray-100 focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none mb-5 text-center block';
-                div.appendChild(inputDescripcion);
-
-                const buttonEliminar = document.createElement('button');
-                buttonEliminar.textContent = "Eliminar";
-                buttonEliminar.className = 'btn btn-danger btn-sm eliminar-interpretacion mt-2 px-4 py-2 rounded shadow mx-auto block';                buttonEliminar.addEventListener('click', () => {
-                    interpretacionesContainers.removeChild(div);
-                });
-                div.appendChild(buttonEliminar);
-
-                interpretacionesContainers.appendChild(div);
+                interpretacionesContainer.appendChild(div);
             });
         })
-        .catch(error => {
-            console.error("Error al obtener los tipos de estudio:", error);
-        });
+        .catch(error => console.error("Error al obtener los tipos de estudio:", error));
+
+    fetch(`listamuestras/imagenes/${datos.muestra.id}`)
+        .then(response => response.json())
+        .then(imagenes => {
+            imagenesContainer.innerHTML = "";
+            if (Array.isArray(imagenes) && imagenes.length > 0) {
+                imagenes.forEach(img => {
+                    const div = document.createElement('div');
+                    div.classList.add('col-md-4', 'text-center');
+
+                    const imageElement = document.createElement('img');
+                    imageElement.src = img.ruta;
+                    imageElement.alt = "Imagen de muestra";
+                    imageElement.className = 'img-fluid rounded shadow-sm mb-2';
+                    div.appendChild(imageElement);
+
+                    const buttonEliminar = document.createElement('button');
+                    buttonEliminar.textContent = "Eliminar";
+                    buttonEliminar.className = 'btn btn-danger btn-sm eliminar_imagen';
+                    buttonEliminar.addEventListener('click', () => eliminarImagen(img.id, div));
+                    div.appendChild(buttonEliminar);
+
+                    imagenesContainer.appendChild(div);
+                });
+            } else {
+                imagenesContainer.innerHTML = '<p class="text-muted">No hay imágenes disponibles</p>';
+            }
+        })
+        .catch(error => console.error("Error al cargar imágenes:", error));
 
     return modal_update;
+}
+
+
+function eliminarImagen(idImagen, divElement) {
+    fetch(`eliminar_imagen/${idImagen}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            Swal.fire('Eliminado', 'La imagen ha sido eliminada.', 'success');
+            divElement.remove();
+        } else {
+            Swal.fire('Error', data.error || 'No se pudo eliminar la imagen.', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error eliminando la imagen:', error);
+        Swal.fire('Error', 'Hubo un problema al eliminar la imagen.', 'error');
+    });
+}
+
+function eliminarInterpretacion(idInterpretacion, divElement) {
+    fetch(`listamuestras/interpretaciones/${idInterpretacion}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            Swal.fire('Eliminado', 'La interpretación ha sido eliminada.', 'success');
+            divElement.remove();
+        } else {
+            Swal.fire('Error', data.error || 'No se pudo eliminar la interpretación.', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error eliminando la interpretación:', error);
+        Swal.fire('Error', 'Hubo un problema al eliminar la interpretación.', 'error');
+    });
 }
 
 
