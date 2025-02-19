@@ -163,6 +163,25 @@
                 @endforeach
             </tbody>
         </table>
+
+        <!-- Imagenes -->
+        <h2>Imagenes de la Muestra</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Zoom</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($imagen as $img)
+                    <tr>
+                        <td><img src={{ $img->ruta }}></td>
+                        <td>x{{ $img->zoom }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 
     <!-- Footer -->
