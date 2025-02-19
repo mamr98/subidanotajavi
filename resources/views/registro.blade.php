@@ -25,7 +25,7 @@
         <div class="card-body">
             <p class="login-box-msg">Registrate si no tienes cuenta</p>
 
-            <form action="{{ route('login.post') }}" method="post">{{-- Cambiar --}}
+            <form action="{{ route('registro.post') }}" method="post">
                 @csrf 
                 <div class="input-group mb-3">
                     <input type="email" class="form-control" placeholder="Email" name="email" required>
@@ -54,7 +54,7 @@
                 <span class="mr-2">Si tienes una cuenta </span><a href="{{route('login')}}">Inicia Sesión</a>
                 <div class=" mt-2 row">
                     <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+                        <button type="submit" class="btn btn-primary btn-block">Registrar</button>
                     </div>
                 </div>
             </form>

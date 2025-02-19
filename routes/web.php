@@ -33,6 +33,7 @@ Route::get('/usuarios', [UserController::class,'all']);
 Route::get('/laboratorio/crear',[MuestraController::class,'save']);
 
 Route::post('/login',[UsuarioController::class,'login'])->name('login.post');
+Route::post('/registro',[UsuarioController::class,'registro'])->name('registro.post');
 
 Route::post('/laboratorio',[MuestraController::class,'welcome'])->name('welcome');
     

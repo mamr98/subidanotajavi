@@ -116,7 +116,7 @@ class UsuarioController extends Controller
                     $sedes = Sede::all();
         
         
-                    return view('admin')->with(['email' => $email, 'usuarios' => $usuarios, 'sedes' => $sedes]); 
+                    return view('inicioadminlte')->with(['email' => $email, 'usuarios' => $usuarios, 'sedes' => $sedes]); 
                 }
             
     
@@ -145,7 +145,11 @@ class UsuarioController extends Controller
         return response()->json($sede,200);
     }
         
+    public function registro(Request $request){
 
+
+        
+    }
         
 
     
