@@ -158,6 +158,7 @@ public function show()
 
     public function update(Request $request, $id)
 {
+    $ids=[];
     // Buscar la muestra por ID
     $muestra = Muestra::findOrFail($id);
 
@@ -165,33 +166,42 @@ public function show()
     $muestra->update($request->only([
         'fecha', 'codigo', 'organo', 'idTipo', 'idFormato', 'idCalidad', 'idUsuario', 'idSede'
     ]));
-
+  
     // Actualizar interpretaciones si existen en la solicitud
     if ($request->has('interpretaciones')) {
+        // Depuración: Verificar datos recibidos
+       
         foreach ($request->input('interpretaciones') as $interpretacionData) {
+            $ids[]=$interpretacionData['id'];
+            // Si el id no está vacío, actualizamos la interpretación
             if (!empty($interpretacionData['id'])) {
-                // Si el id existe (estamos actualizando una interpretación)
                 $interpretacion = Interpretacion::find($interpretacionData['id']);
                 if ($interpretacion) {
                     $interpretacion->texto = $interpretacionData['descripcion'] ?? '';
                     $interpretacion->idTipoEstudio = $interpretacionData['tipoEstudio'] ?? null;
                     $interpretacion->save(); // Guardamos la interpretación
                 }
-            } else {
-                // Si el id no existe (es una nueva interpretación), creamos una nueva interpretación
-                $interpretacion2 = new Interpretacion(); // Creamos una nueva instancia del modelo
-                $interpretacion2->texto = $interpretacionData['descripcion'] ?? '';
-                $interpretacion2->idTipoEstudio = $interpretacionData['tipoEstudio'] ?? null;
-                $interpretacion2->save(); // Guardamos la nueva interpretación en la base de datos
-            }
+                else {
+                    // Si no existe id, creamos una nueva interpretación
+                    $interpretacion2 = new Interpretacion();
+                    $interpretacion2->texto = $interpretacionData['descripcion'] ?? '';
+                    $interpretacion2->idTipoEstudio = $interpretacionData['tipoEstudio'] ?? null;
+                    $interpretacion2->save(); // Guardamos la nueva interpretación
+    
+                    // Si necesitas asociarla con la muestra, agrega el código para asociar
+                    $muestra->interpretaciones()->attach($interpretacion2->id);
+                }
+            } 
         }
     }
 
     return response()->json([
         'message' => 'Muestra actualizada correctamente',
-        'muestra' => $muestra
+        'muestra' => $muestra,
+        'ids' => $ids
     ]);
 }
+
 
 
 

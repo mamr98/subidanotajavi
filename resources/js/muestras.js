@@ -354,8 +354,9 @@ function rendermodal_add() {
                         }),
                     })
                     .then(res => res.ok ? res.json() : Promise.reject("Error en la solicitud"))
-                    .then(() => {
+                    .then((datos) => {
                         Swal.fire('Éxito', 'Muestra actualizada correctamente', 'success');
+                        console.log(datos)
                         location.reload();
                     })
                     .catch(error => {
