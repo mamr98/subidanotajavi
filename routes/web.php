@@ -12,7 +12,7 @@ use App\Http\Controllers\MuestrasController;
 use App\Http\Controllers\InterpretacionesController;
 use App\Http\Controllers\SubidaImagenesController;
 
-Route::get('/', function () {
+Route::get('/login', function () {
     return view('login');
 })->name('login');
 
@@ -21,7 +21,7 @@ Route::get('/ini', function () {
     return view('inicioadminlte');
 });
 
-Route::get('/inicio', function () {
+Route::get('/', function () {
     return view('inicio');
 })->name('inicio');
 
