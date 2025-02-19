@@ -25,7 +25,7 @@ class ImagenController extends Controller
     {
         try {
             $request->validate([
-                'imagen' => 'required|image|mimes:jpg,jpeg,png|max:2048'
+                'imagen' => 'required|image|mimes:jpg,jpeg,png,webp|max:5048'
             ]);
 
             $uploadResponse = Cloudinary::upload($request->file('imagen')->getRealPath(), [
