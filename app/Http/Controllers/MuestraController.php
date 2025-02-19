@@ -189,7 +189,11 @@ public function show()
                     $interpretacion2->save(); // Guardamos la nueva interpretación
     
                     // Si necesitas asociarla con la muestra, agrega el código para asociar
-                    $muestra->interpretaciones()->attach($interpretacion2->id);
+                   $muestra_interpretacion = new MuestrasInterpretacion();
+                   $muestra_interpretacion->calidad = $muestra->idCalidad;
+                   $muestra_interpretacion->idMuestras = $muestra->id;
+                   $muestra_interpretacion->idInterpretacion = $interpretacion2->id;
+                   $muestra_interpretacion->save();
                 }
             } 
         }
