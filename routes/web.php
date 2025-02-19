@@ -16,6 +16,11 @@ Route::get('/', function () {
     return view('login');
 })->name('login');
 
+
+Route::get('/ini', function () {
+    return view('inicioadminlte');
+});
+
 Route::get('/inicio', function () {
     return view('inicio');
 })->name('inicio');
