@@ -319,7 +319,8 @@ public function eliminar_interpretaciones($id)
         return response()->json(Imagen::where('idMuestras', $id)->get());
     }
 
-    public function muestra($id){
+    public function muestra($id)
+    {
         // Obtener la muestra con el ID proporcionado
         $muestra = Muestra::where('id', $id)->first();
         
@@ -328,27 +329,32 @@ public function eliminar_interpretaciones($id)
     
         // Inicializar un arreglo para almacenar las interpretaciones detalladas
         $interpretaciones_detalladas = [];
+        
+        // Inicializar la variable tipoEstudio como null, por si no se encuentra
+        $tipoEstudio = null;
     
         // Iterar sobre las interpretaciones obtenidas
         foreach ($muestra_interpretaciones as $interpretacion) {
-            // Obtener detalles de la tabla Interpretacione para cada id
+            // Obtener detalles de la tabla Interpretacion para cada id
             $detalle_interpretacion = Interpretacion::where('id', $interpretacion->id)->first();
-
-            $tipoEstudio = TipoEstudio::where('id', $detalle_interpretacion->idTipoEstudio)->first();
-            
-            // Agregar el detalle de la interpretación al arreglo
+    
             if ($detalle_interpretacion) {
+                // Obtener el tipo de estudio si existe
+                $tipoEstudio = TipoEstudio::where('id', $detalle_interpretacion->idTipoEstudio)->first();
+                
+                // Agregar el detalle de la interpretación al arreglo
                 $interpretaciones_detalladas[] = $detalle_interpretacion;
             }
         }
     
-        // Retornar la muestra y las interpretaciones detalladas en formato JSON
+        // Retornar la muestra, las interpretaciones detalladas y el tipo de estudio (si existe)
         return response()->json([
             'muestra' => $muestra,
             'interpretaciones' => $interpretaciones_detalladas,
-            'tipoEstudio' => $tipoEstudio,
+            'tipoEstudio' => $tipoEstudio, // Puede ser null si no se encontró
         ], 200);
     }
+    
     
     
     
