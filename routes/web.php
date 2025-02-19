@@ -63,6 +63,10 @@ Route::get('/listamuestras',[MuestraController::class,'show'])->name('listamuest
 
 Route::post('/listamuestras/create',[MuestraController::class,'create'])->name('crear.muestra');
 
+Route::post('/guardar_imagen', [MuestraController::class, 'guardarImagen']);
+
+Route::delete('/eliminar_imagen/{id}', [MuestraController::class, 'eliminar_imagen']);
+
 Route::put('/listamuestras/update/{id}', [MuestraController::class, 'update']);
 
 Route::get('/muestra/{id}',[MuestraController::class,'muestra']);
@@ -78,6 +82,11 @@ Route::get('/listamuestras/usuario/{id}',[MuestraController::class,'usuario']);
 Route::get('/listamuestras/sede/{id}',[MuestraController::class,'sede']);
 Route::get('/listamuestras/tipoEstudio/{id}',[MuestraController::class,'tipoEstudio']);
 Route::get('/listamuestras/tiposEstudio',[MuestraController::class,'tiposEstudios']);
+Route::get('/listamuestras/imagenes/{id}',[MuestraController::class,'imagenes']);
+
+// Si estás utilizando rutas API
+Route::delete('/listamuestras/interpretaciones/{id}', [MuestraController::class, 'eliminar_interpretaciones']); 
+
 
 
 

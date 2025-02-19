@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Sede;
 use App\Models\Tipo;
+use App\Models\Imagen;
 use App\Models\Calidad;
 use App\Models\Formato;
 use App\Models\Muestra;
@@ -11,7 +12,11 @@ use App\Models\Usuario;
 use App\Models\TipoEstudio;
 use Illuminate\Http\Request;
 use App\Models\Interpretacion;
+use Cloudinary\Transformation\Format;
+use Cloudinary\Transformation\Resize;
 use App\Models\MuestrasInterpretacion;
+use Cloudinary\Transformation\Delivery;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class MuestraController extends Controller
 {
@@ -56,10 +61,59 @@ class MuestraController extends Controller
    }
 
    return response()->json(['mensaje' => 'Muestra creada correctamente'], 201);
-
 }
 
+public function guardarImagen(Request $request)
+{
+    // Validación para asegurarse de que hay imágenes y que son del tipo correcto
+    $request->validate([
+        'imagenes' => 'required|array', // Espera un arreglo de imágenes
+        'imagenes.*' => 'image|mimes:jpg,jpeg,png|max:2048', // Cada imagen debe ser válida
+        'idMuestras' => 'required|integer',
+        'zoom' => 'required|array', // Asegura que el zoom sea un array
+        'zoom.*' => 'integer', // Cada valor de zoom debe ser un número entero
+    ]);
 
+    $id_muestra = (int)$request->input('idMuestras');
+    $zoom_values = $request->input('zoom'); // Obtener los valores de zoom como array
+    
+    if (!$id_muestra) {
+        return response()->json(['error' => 'ID de muestra no proporcionado'], 400);
+    }
+
+    // Recorrer todas las imágenes
+    $uploadedImages = [];
+    foreach ($request->file('imagenes') as $index => $imagenFile) {
+        // Subir la imagen a Cloudinary
+        $uploadResponse = Cloudinary::upload($imagenFile->getRealPath(), [
+            'folder' => 'prueba'
+        ]);
+
+        // Obtener el Public ID de la imagen subida
+        $publicID_image = $uploadResponse->getPublicId();
+
+        // Construir la URL de la imagen con Cloudinary
+        $url_image = (new \Cloudinary\Cloudinary())->image($publicID_image)
+            ->resize(Resize::scale()->width(250))
+            ->delivery(Delivery::quality(35))
+            ->delivery(Delivery::format(Format::auto()));
+
+        // Guardar la imagen en la base de datos
+        $imagen = new Imagen();
+        $imagen->ruta = $url_image;
+        $imagen->zoom = $zoom_values[$index] ?? null; // Asociar el zoom correspondiente
+        $imagen->idMuestras = $id_muestra;
+        $imagen->save();
+
+        // Guardar los nombres de las imágenes subidas para enviar como respuesta
+        $uploadedImages[] = $publicID_image;
+    }
+
+    // Retornar los datos de las imágenes subidas
+    return response()->json([
+        'nombre_archivo' => $uploadedImages
+    ]);
+}
 
 public function show()
 {
@@ -158,7 +212,46 @@ public function show()
 
     
 
-    
+public function eliminar_imagen($id)
+{
+    $imagen = Imagen::find($id);
+
+    if (!$imagen) {
+        return response()->json(['error' => 'Imagen no encontrada'], 404);
+    }
+
+    // Eliminar el archivo de almacenamiento si es necesario
+    $rutaImagen = public_path($imagen->ruta);
+    if (file_exists($rutaImagen)) {
+        unlink($rutaImagen);
+    }
+
+    // Eliminar el registro de la base de datos
+    $imagen->delete();
+
+    return response()->json(['success' => 'Imagen eliminada correctamente']);
+}
+
+public function eliminar_interpretaciones($id)
+{
+    $interpretacion = Interpretacion::find($id);
+
+    if (!$interpretacion) {
+        return response()->json(['error' => 'Interpretación no encontrada'], 404);
+    }
+
+    // Eliminar registros en MuestrasInterpretacion que dependen de esta interpretación
+    MuestrasInterpretacion::where('idInterpretacion', $id)->delete();
+
+    // Eliminar la interpretación
+    $interpretacion->delete();
+
+    return response()->json(['success' => 'Interpretación eliminada correctamente']);
+}
+
+
+
+
 
 
     public function tipo($id)
@@ -195,6 +288,11 @@ public function show()
     {
         $tipoEstudio = TipoEstudio::where('id', $id)->first();
         return $tipoEstudio;
+    }
+
+    public function imagenes($id)
+    {
+        return response()->json(Imagen::where('idMuestras', $id)->get());
     }
 
     public function muestra($id){

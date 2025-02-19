@@ -2,15 +2,19 @@ import Swal from 'sweetalert2';
 
 const crearMuestra = document.querySelector('#crear_muestra');
 const modificar = document.querySelectorAll('.modificar');
+const imagenes = document.querySelectorAll('.imagenes');
 const eliminar = document.querySelectorAll('.eliminar');
+const eliminar_imagenes = document.querySelectorAll('.eliminar_imagen');
 const contenido = document.querySelectorAll('.contenido');
 const modal_add = document.querySelector('#modal_add');
 const modal_update = document.getElementById('modal_update');
 const modal_mostar = document.querySelector('#modal_mostrar');
+const modal_imagen = document.querySelector('#modal_imagen');
 
 modal_add.style.display = "none";
 modal_update.style.display = "none";
 modal_mostar.style.display = "none";
+modal_imagen.style.display = "none";
 
 crearMuestra.addEventListener('click', () => {
     modal_add.style.display = "block";
@@ -348,28 +352,39 @@ function rendermodal_update(datos) {
     const calidad = modal_update.querySelector('#idCalidad2');
     const usuario = modal_update.querySelector('#idUsuario2');
     const sede = modal_update.querySelector('#idSede2');
-    const interpretacionesContainers = modal_update.querySelector('#interpretaciones-container');
+    const interpretacionesContainer = modal_update.querySelector('#interpretaciones-container');
+    const imagenesContainer = modal_update.querySelector('#imagenes-container');
 
-    if (!fecha || !codigo || !organo || !tipo || !formato || !calidad || !usuario || !sede || !interpretacionesContainers) {
+    if (!fecha || !codigo || !organo || !tipo || !formato || !calidad || !usuario || !sede || !interpretacionesContainer) {
         console.error("Elementos del modal no encontrados o incorrectos");
         return;
     }
 
-    // Inicializar los campos con los datos actuales
     fecha.value = datos.muestra.fecha || "";
     codigo.value = datos.muestra.codigo || "";
 
-    // Obtener y llenar los datos de la muestra
-    fetch(`listamuestras/tipo/${datos.muestra.idTipo}`).then(response => response.json()).then(data => tipo.value = data.nombre);
-    fetch(`listamuestras/formato/${datos.muestra.idFormato}`).then(response => response.json()).then(data => formato.value = data.nombre);
-    fetch(`listamuestras/calidad/${datos.muestra.idCalidad}`).then(response => response.json()).then(data => calidad.value = data.nombre);
-    fetch(`listamuestras/usuario/${datos.muestra.idUsuario}`).then(response => response.json()).then(data => usuario.value = data.email);
-    fetch(`listamuestras/sede/${datos.muestra.idSede}`).then(response => response.json()).then(data => sede.value = data.nombre);
+    fetch(`listamuestras/tipo/${datos.muestra.idTipo}`)
+        .then(response => response.json())
+        .then(data => tipo.value = data.nombre);
+    
+    fetch(`listamuestras/formato/${datos.muestra.idFormato}`)
+        .then(response => response.json())
+        .then(data => formato.value = data.nombre);
+    
+    fetch(`listamuestras/calidad/${datos.muestra.idCalidad}`)
+        .then(response => response.json())
+        .then(data => calidad.value = data.nombre);
+    
+    fetch(`listamuestras/usuario/${datos.muestra.idUsuario}`)
+        .then(response => response.json())
+        .then(data => usuario.value = data.email);
+    
+    fetch(`listamuestras/sede/${datos.muestra.idSede}`)
+        .then(response => response.json())
+        .then(data => sede.value = data.nombre);
 
-    // Limpiamos el contenedor de interpretaciones
-    interpretacionesContainers.innerHTML = "";
+    interpretacionesContainer.innerHTML = "";
 
-    // 🔹 Obtener **todos los tipos de estudio** para usar en los selects
     fetch(`listamuestras/tiposEstudio`)
         .then(response => response.json())
         .then(tiposEstudio => {
@@ -379,17 +394,16 @@ function rendermodal_update(datos) {
                 const div = document.createElement('div');
                 div.classList.add('interpretacion');
 
-                // Crear el `<select>` de tipo de estudio
                 const selectTipoEstudio = document.createElement('select');
                 selectTipoEstudio.id = `idTipoEstudio2-${index}`;
                 selectTipoEstudio.className = 'w-full p-2 border rounded bg-white text-gray-700 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-3 text-center block';
-                // Agregar todas las opciones al select
+                
                 tiposEstudio.forEach(tipo => {
                     const option = document.createElement('option');
                     option.value = tipo.id;
                     option.textContent = tipo.nombre;
                     if (tipo.id == interpretacion.idTipoEstudio) {
-                        option.selected = true; // Seleccionar el tipo de estudio correcto
+                        option.selected = true;
                     }
                     selectTipoEstudio.appendChild(option);
                 });
@@ -403,57 +417,94 @@ function rendermodal_update(datos) {
                 inputDescripcion.className = 'w-full p-3 border rounded-lg shadow-sm text-gray-800 bg-gray-100 focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none mb-5 text-center block';
                 div.appendChild(inputDescripcion);
 
-
-                // Botón para eliminar la interpretación
                 const buttonEliminar = document.createElement('button');
                 buttonEliminar.textContent = "Eliminar";
                 buttonEliminar.className = 'btn btn-danger btn-sm eliminar-interpretacion mt-2 px-4 py-2 rounded shadow mx-auto block';
-                buttonEliminar.addEventListener('click', () => {
-                    interpretacionesContainers.removeChild(div);
-                });
+                buttonEliminar.addEventListener('click', () => eliminarInterpretacion(interpretacion.id, div));
                 div.appendChild(buttonEliminar);
 
-                interpretacionesContainers.appendChild(div);
-            });
-
-            // Agregar botón para nuevas interpretaciones
-            const agregarBtn = modal_update.querySelector('#agregar-interpretacion');
-            agregarBtn.addEventListener('click', () => {
-                const div = document.createElement('div');
-                div.classList.add('interpretacion');
-
-                // Crear el `<select>` con **todas** las opciones de tipo de estudio
-                const selectTipoEstudio = document.createElement('select');
-                selectTipoEstudio.className = 'w-full p-2 border rounded bg-white text-gray-700 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-3 text-center block';
-                tiposEstudio.forEach(tipo => {
-                    const option = document.createElement('option');
-                    option.value = tipo.id;
-                    option.textContent = tipo.nombre;
-                    selectTipoEstudio.appendChild(option);
-                });
-
-                div.appendChild(selectTipoEstudio);
-
-                const inputDescripcion = document.createElement('textarea');
-                inputDescripcion.placeholder = "Nueva descripción de la interpretación";
-                inputDescripcion.className = 'w-full p-3 border rounded-lg shadow-sm text-gray-800 bg-gray-100 focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none mb-5 text-center block';
-                div.appendChild(inputDescripcion);
-
-                const buttonEliminar = document.createElement('button');
-                buttonEliminar.textContent = "Eliminar";
-                buttonEliminar.className = 'btn btn-danger btn-sm eliminar-interpretacion mt-2 px-4 py-2 rounded shadow mx-auto block';                buttonEliminar.addEventListener('click', () => {
-                    interpretacionesContainers.removeChild(div);
-                });
-                div.appendChild(buttonEliminar);
-
-                interpretacionesContainers.appendChild(div);
+                interpretacionesContainer.appendChild(div);
             });
         })
-        .catch(error => {
-            console.error("Error al obtener los tipos de estudio:", error);
-        });
+        .catch(error => console.error("Error al obtener los tipos de estudio:", error));
+
+    fetch(`listamuestras/imagenes/${datos.muestra.id}`)
+        .then(response => response.json())
+        .then(imagenes => {
+            imagenesContainer.innerHTML = "";
+            if (Array.isArray(imagenes) && imagenes.length > 0) {
+                imagenes.forEach(img => {
+                    const div = document.createElement('div');
+                    div.classList.add('col-md-4', 'text-center');
+
+                    const imageElement = document.createElement('img');
+                    imageElement.src = img.ruta;
+                    imageElement.alt = "Imagen de muestra";
+                    imageElement.className = 'img-fluid rounded shadow-sm mb-2';
+                    div.appendChild(imageElement);
+
+                    const buttonEliminar = document.createElement('button');
+                    buttonEliminar.textContent = "Eliminar";
+                    buttonEliminar.className = 'btn btn-danger btn-sm eliminar_imagen';
+                    buttonEliminar.addEventListener('click', () => eliminarImagen(img.id, div));
+                    div.appendChild(buttonEliminar);
+
+                    imagenesContainer.appendChild(div);
+                });
+            } else {
+                imagenesContainer.innerHTML = '<p class="text-muted">No hay imágenes disponibles</p>';
+            }
+        })
+        .catch(error => console.error("Error al cargar imágenes:", error));
 
     return modal_update;
+}
+
+
+function eliminarImagen(idImagen, divElement) {
+    fetch(`eliminar_imagen/${idImagen}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            Swal.fire('Eliminado', 'La imagen ha sido eliminada.', 'success');
+            divElement.remove();
+        } else {
+            Swal.fire('Error', data.error || 'No se pudo eliminar la imagen.', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error eliminando la imagen:', error);
+        Swal.fire('Error', 'Hubo un problema al eliminar la imagen.', 'error');
+    });
+}
+
+function eliminarInterpretacion(idInterpretacion, divElement) {
+    fetch(`listamuestras/interpretaciones/${idInterpretacion}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            Swal.fire('Eliminado', 'La interpretación ha sido eliminada.', 'success');
+            divElement.remove();
+        } else {
+            Swal.fire('Error', data.error || 'No se pudo eliminar la interpretación.', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error eliminando la interpretación:', error);
+        Swal.fire('Error', 'Hubo un problema al eliminar la interpretación.', 'error');
+    });
 }
 
 
@@ -528,15 +579,21 @@ buscador.addEventListener("input", function () {
                                 <td id='${muestra.idUsuario}' class='block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 usuario' style="display: none"></td>
                                 <td id='${muestra.idSede}' class='block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 sede' style="display: none"></td>
                                 <td>
-                                <div class="d-flex justify-content-center align-items-center gap-2">
-
-                                    <button class="contenido" id="${muestra.id}" style="padding: 10px 20px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer;">Ver más</button>
-                                    <button class="modificar" id="${muestra.id}" style="padding: 10px 20px; margin-left:4px; background-color: purple; color: white; border: none; border-radius: 5px; cursor: pointer;">Modificar</button>
-                                    <button class="eliminar" id="${muestra.id}" style="padding: 10px 20px; margin-left:4px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer;">Eliminar</button>
+                                    <div class="d-flex justify-content-center align-items-center gap-2">
+                                        <button class="contenido" id="${muestra.id}" style="padding: 10px 20px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer;">Ver más</button>
+                                        <button class="modificar" id="${muestra.id}" style="padding: 10px 20px; margin-left:4px; background-color: purple; color: white; border: none; border-radius: 5px; cursor: pointer;">Modificar</button>
+                                        <button class="eliminar" id="${muestra.id}" style="padding: 10px 20px; margin-left:4px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer;">Eliminar</button>
                                     </div>
+                                    <!-- Formulario para imprimir PDF -->
+                                    <form action="/subidanotajavi/public/pdf/${muestra.id}" method="POST" style="margin-top: 10px;">
+                                        @csrf
+                                        <button style="padding: 10px 18px; margin-left:4px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;" id="${muestra.id}" class="imprimir" type="submit">
+                                            Imprimir PDF
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>`;
-                            cargarDatos()
+                        cargarDatos();
                     });
                 } else {
                     mostrar_muestras.innerHTML = `<tr><td colspan="7">No se encontraron usuarios</td></tr>`;
@@ -547,6 +604,7 @@ buscador.addEventListener("input", function () {
         location.reload();
     }
 });
+
 
 function rendermodal_mostrar(datos) {
     console.log("Datos recibidos por rendermodal_mostrar:", datos);
@@ -578,7 +636,8 @@ function rendermodal_mostrar(datos) {
         fetchData(`listamuestras/formato/${datos.muestra.idFormato}`, 'formato'),
         fetchData(`listamuestras/calidad/${datos.muestra.idCalidad}`, 'calidad'),
         fetchData(`listamuestras/usuario/${datos.muestra.idUsuario}`, 'usuario'),
-        fetchData(`listamuestras/sede/${datos.muestra.idSede}`, 'sede')
+        fetchData(`listamuestras/sede/${datos.muestra.idSede}`, 'sede'),
+        fetchData(`listamuestras/imagenes/${datos.muestra.id}`, 'imagenes')
     ];
 
     // Esperar a que todas las promesas se resuelvan
@@ -591,13 +650,26 @@ function rendermodal_mostrar(datos) {
                     <div class="interpretacion-box p-3 mb-3 border rounded shadow-sm">
                         <h4>Interpretación ${index + 1}</h4>
                         <label for="tipoEstudio">Tipo de Estudio:</label>
-                        <input type="text" value="${datos.tipoEstudio.nombre || 'N/A'}" readonly class="form-control mb-2">
+                        <input type="text" value="${datos.tipoEstudio?.nombre || 'N/A'}" readonly class="form-control mb-2">
                         <label for="descripcion">Descripción:</label>
                         <textarea readonly class="form-control">${inter.texto || 'Sin descripción'}</textarea>
                     </div>
                 `).join('');
             } else {
                 return '<p class="text-muted">No hay interpretaciones disponibles</p>';
+            }
+        }
+
+        // Función para generar el HTML de las imágenes
+        function generarImagenesHTML(imagenes) {
+            if (Array.isArray(imagenes) && imagenes.length > 0) {
+                return imagenes.map(img => `
+                    <div class="col-md-4">
+                        <img src="${img.ruta}" alt="Imagen de muestra" class="img-fluid rounded shadow-sm">
+                    </div>
+                `).join('');
+            } else {
+                return '<p class="text-muted">No hay imágenes disponibles</p>';
             }
         }
 
@@ -610,7 +682,6 @@ function rendermodal_mostrar(datos) {
                 <div class="info-box mb-4">
                     <div class="row">
                         ${clavesAMostrar.map(key => {
-                            // Verificar si la clave existe en datos.muestra
                             if (datos.muestra.hasOwnProperty(key)) {
                                 return `
                                     <div class="col-md-6 mb-2">
@@ -633,6 +704,12 @@ function rendermodal_mostrar(datos) {
                     <h3>Interpretaciones</h3>
                     ${generarInterpretacionesHTML(datos.interpretaciones)}
                 </div>
+                <div class="bg-light p-4 rounded shadow mt-3">
+                    <h3>Imágenes</h3>
+                    <div class="row">
+                        ${generarImagenesHTML(relatedData['imagenes'])}
+                    </div>
+                </div>
             </div>
         `;
 
@@ -653,6 +730,7 @@ function rendermodal_mostrar(datos) {
         });
     });
 }
+
 
 
 contenido.forEach(boton => {
@@ -719,3 +797,150 @@ contenido.forEach(boton => {
             interpretacionesContainer.removeChild(newInterpretacion);
         });
     })
+
+    imagenes.forEach(boton => {
+        boton.addEventListener('click', async () => {
+            modal_imagen.style.display = "block";
+            let idMuestras = boton.id; // Obtener el ID de la muestra al hacer clic
+    
+            Swal.fire({
+                title: 'Introduce las imágenes',
+                html: rendermodal_imagen(), // Asegúrate de que esta función está definida
+                confirmButtonText: "Guardar",
+                showCancelButton: true,
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    try {
+                        // Obtener todos los inputs de tipo archivo (imagen)
+                        const imagenInputs = document.querySelectorAll('input[type="file"][name="imagen"]');
+                        const zoomInputs = document.querySelectorAll('select[name="zoom"]');
+                        const formData = new FormData();
+                        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                        
+                        let hasImages = false; // Bandera para verificar si se seleccionaron imágenes
+    
+                        // Recorrer todos los inputs de imagen y agregar las imágenes al FormData con su respectivo zoom
+                        imagenInputs.forEach((imagenInput, index) => {
+                            if (imagenInput.files.length > 0) {
+                                Array.from(imagenInput.files).forEach(file => {
+                                    formData.append('imagenes[]', file);
+                                    formData.append('zoom[]', zoomInputs[index].options[zoomInputs[index].selectedIndex].id); // Asociar zoom a la imagen
+
+                                    console.log( zoomInputs[index].options[zoomInputs[index].selectedIndex].id)
+                                });
+                                hasImages = true;
+                            }
+                        });
+    
+                        // Si no se seleccionaron imágenes, mostrar advertencia
+                        if (!hasImages) {
+                            console.warn("No se ha seleccionado ninguna imagen");
+                            Swal.fire('Advertencia', 'No se ha seleccionado ninguna imagen', 'warning');
+                            return; // No continuar
+                        }
+    
+                        // Agregar los otros datos (idMuestras)
+                        formData.append('idMuestras', idMuestras);
+                        
+                        // Enviar los datos al backend
+                        const imagenResponse = await fetch('guardar_imagen', {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-CSRF-TOKEN': token // Si es necesario
+                            }
+                        });
+    
+                        if (!imagenResponse.ok) {
+                            const errorText = await imagenResponse.text();
+                            throw new Error("Error al subir las imágenes: " + errorText);
+                        }
+    
+                        const imagenData = await imagenResponse.json();
+                        console.log("Imágenes subidas:", imagenData);
+                        Swal.fire('Éxito', 'Imágenes subidas correctamente', 'success');
+    
+                    } catch (error) {
+                        console.error("Error en la petición:", error);
+                        Swal.fire('Error', error.message, 'error');
+                    }
+                }
+                location.reload() 
+            });
+           
+        });
+        
+    });
+    
+    
+    
+    // Definir la función correctamente
+    function rendermodal_imagen() {
+        const modal_imagen = document.querySelector('#modal_imagen'); // Asegúrate de que exista en tu HTML
+        const imagen = modal_imagen.querySelector('#imagen'); 
+        
+        return modal_imagen; // Retorna el modal con la imagen
+    }
+
+
+    const addImageButton = document.getElementById('addImage');
+    const removeAllImagesButton = document.getElementById('removeAllImages');
+    const extraImagesDiv = document.getElementById('extraImages');
+    
+    // Aseguramos que el botón "Añadir otra imagen" funcione correctamente
+    if (addImageButton && extraImagesDiv) {
+        addImageButton.addEventListener('click', function() {
+            console.log('Añadir otra imagen');
+            
+            // Creamos un nuevo contenedor para el input, select y el botón de eliminar
+            const newInputWrapper = document.createElement('div');
+            newInputWrapper.classList.add('mt-2');
+
+            const newInput = document.createElement('input');
+            newInput.type = 'file';
+            newInput.name = 'imagen';
+            newInput.classList.add('mt-2');
+
+            const newLabel = document.createElement('label');
+            newLabel.innerText = "Introduce el Zoom de la Imagen";
+            newLabel.classList.add('mt-2');
+
+            const newSelect = document.createElement('select');
+            newSelect.name = 'zoom';
+            newSelect.classList.add('mt-2');
+            newSelect.innerHTML = `
+                <option value="4">x4</option>
+                <option value="10">x10</option>
+                <option value="40">x40</option>
+                <option value="100">x100</option>
+            `;
+
+            const newButton = document.createElement('button');
+            newButton.type = 'button';
+            newButton.classList.add('btn', 'btn-danger', 'mt-2');
+            newButton.innerText = 'Eliminar imagen';
+
+            newButton.addEventListener('click', function() {
+                newInputWrapper.remove();
+            });
+
+            // Añadir los nuevos elementos al wrapper
+            newInputWrapper.appendChild(newInput);
+            newInputWrapper.appendChild(document.createElement('br'));
+            newInputWrapper.appendChild(newLabel);
+            newInputWrapper.appendChild(newSelect);
+            newInputWrapper.appendChild(document.createElement('br'));
+            newInputWrapper.appendChild(newButton);
+
+            // Añadir el nuevo wrapper al contenedor de imágenes extra
+            extraImagesDiv.appendChild(newInputWrapper);
+        });
+    }
+
+    // Aseguramos que el botón "Eliminar todas las imágenes" funcione correctamente
+    if (removeAllImagesButton && extraImagesDiv) {
+        removeAllImagesButton.addEventListener('click', function() {
+            console.log('Eliminar todas las imágenes');
+            extraImagesDiv.innerHTML = ''; // Elimina todo el contenido dentro de extraImagesDiv
+        });
+    }
