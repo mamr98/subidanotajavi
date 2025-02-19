@@ -177,7 +177,7 @@
                 @foreach($imagen as $img)
                     <tr>
                         <td><img src={{ $img->ruta }}></td>
-                        <td>{{ $img->zoom }}</td>
+                        <td>x{{ $img->zoom }}</td>
                     </tr>
                 @endforeach
             </tbody>

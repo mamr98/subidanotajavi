@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Dompdf\Options;
 use App\Models\Imagen;
 use App\Models\Muestra;
 use App\Models\TipoEstudio;
@@ -36,9 +37,12 @@ class PdfController extends Controller
 
         $imagen = Imagen::where('idMuestras', $muestra->id)->get();
 
-        $pdf = PDF::loadView('pdf', compact('muestra','interpretaciones_detalladas', 'tipoEstudio', 'imagen'));
+        $options = new Options();
+        $options->set('isRemoteEnabled', true);
 
-        return $pdf->download('muestras_'.$muestra->codigo.'.pdf');
-        
+        $pdf = PDF::loadView('pdf', compact('muestra','interpretaciones_detalladas', 'tipoEstudio', 'imagen'));
+        $pdf->getDomPDF()->setOptions($options);
+
+        return $pdf->download('muestras_'.$muestra->codigo.'.pdf');        
     }
 }
