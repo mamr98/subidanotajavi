@@ -112,6 +112,10 @@
                                         Modificar
                                     </button>
 
+                                    <button style="padding: 10px 18px; margin-left:4px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$m->id}}" class="imagenes" type="submit">
+                                        Añadir Imagenes
+                                    </button>
+
                                     <form action="/subidanotajavi/public/pdf/{{$m->id}}" method="POST">
                                         @csrf
                                         <button style="padding: 10px 18px; margin-left:4px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$m->id}}" class="imprimir" type="submit">
@@ -209,6 +213,7 @@
                         </select><br>
                     </div>
                 </div>
+
                 <div class="bg-gray-100 p-4 rounded shadow mt-4">
                     <h3>Interpretación</h3>
                     <div id="interpretaciones-container">
@@ -232,6 +237,7 @@
                         <i class="fas fa-plus"></i> Agregar más interpretaciones
                     </button>
                 </div>
+                <div>
             </form>
         </div>
         
@@ -312,7 +318,7 @@
                     </div>
                 </div>
 
-                 <div class="bg-gray-100 p-4 rounded shadow mt-4">
+                <div class="bg-gray-100 p-4 rounded shadow mt-4">
                     <h3>Interpretación</h3>
                     <div id="interpretaciones-container">
                         <div class="interpretacion-fields">
@@ -335,6 +341,9 @@
                     <button type="button" class="btn btn-primary btn-mas" id="agregar-interpretacion">
                         <i class="fas fa-plus"></i> Agregar más interpretaciones
                     </button>
+                    <br>
+                    <br>
+                    <div id="imagenes-container"></div>
             </form>
         </div>
 
@@ -379,4 +388,31 @@
         </div>
     </div>
 </div>
+
+<div class="col-12 col-md-6 mt-4">
+    <form id="modal_imagen" class="bg-white p-4 rounded shadow">
+        <div class="mb-4">
+            <label for="imagen"></label>
+            <input type="file" name="imagen" id="imagen">
+            <br>
+            <br>
+
+            <label for="zoom">Introduce el Zoom de la Imagen</label>
+            <select name="zoom" id="zoom">
+                <option id="4">x4</option>
+                <option id="10">x10</option>
+                <option id="40">x40</option>
+                <option id="100">x100</option>
+            </select>
+            <br>
+            <br>
+            <div id="extraImages"></div>
+            <br>
+            <br>
+            <button type="button" id="addImage" class="btn btn-primary">Añadir otra imagen</button>
+            
+        </div>
+    </form>
+</div>
+    
 @endsection
