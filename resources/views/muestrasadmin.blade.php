@@ -320,8 +320,8 @@
 
                 <div class="bg-gray-100 p-4 rounded shadow mt-4">
                     <h3>Interpretación</h3>
-                    <div id="interpretaciones-container">
-                        <div class="interpretacion-fields">
+                    <div id="interpretaciones-container2">
+                        <div class="interpretacion-fields2">
                             <div>
                                 <label for="TipoEstudio2">Tipo de Estudio</label><br>
                                 <select id="TipoEstudio2" class="w-full p-2 border rounded">
@@ -338,9 +338,9 @@
                     </div>
                 </div>
                 <br>
-                    <button type="button" class="btn btn-primary btn-mas" id="agregar-interpretacion">
-                        <i class="fas fa-plus"></i> Agregar más interpretaciones
-                    </button>
+                <button type="button" class="btn btn-primary btn-mas" id="add-interpretacion2">
+                    <i class="fas fa-plus"></i> Agregar más interpretaciones
+                </button>
                     <br>
                     <br>
                     <div id="imagenes-container"></div>

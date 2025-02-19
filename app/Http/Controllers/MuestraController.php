@@ -53,7 +53,7 @@ class MuestraController extends Controller
 
            // Crear y guardar la relación en la tabla pivote
            $muestra_interpretacion = new MuestrasInterpretacion();
-           $muestra_interpretacion->calidad = 'hola'; // Puedes obtener este valor de otro input si lo necesitas
+           $muestra_interpretacion->calidad = $request->input('idCalidad');; // Puedes obtener este valor de otro input si lo necesitas
            $muestra_interpretacion->idMuestras = $muestra->id; // Usamos el ID de la muestra guardada
            $muestra_interpretacion->idInterpretacion = $interpretacion->id; // Usamos el ID de la interpretación guardada
            $muestra_interpretacion->save();
@@ -170,11 +170,19 @@ public function show()
     if ($request->has('interpretaciones')) {
         foreach ($request->input('interpretaciones') as $interpretacionData) {
             if (!empty($interpretacionData['id'])) {
-                Interpretacion::where('id', $interpretacionData['id'])
-                    ->update([
-                        'texto' => $interpretacionData['descripcion'] ?? '',
-                        'idTipoEstudio' => $interpretacionData['tipoEstudio'] ?? null
-                    ]);
+                // Si el id existe (estamos actualizando una interpretación)
+                $interpretacion = Interpretacion::find($interpretacionData['id']);
+                if ($interpretacion) {
+                    $interpretacion->texto = $interpretacionData['descripcion'] ?? '';
+                    $interpretacion->idTipoEstudio = $interpretacionData['tipoEstudio'] ?? null;
+                    $interpretacion->save(); // Guardamos la interpretación
+                }
+            } else {
+                // Si el id no existe (es una nueva interpretación), creamos una nueva interpretación
+                $interpretacion2 = new Interpretacion(); // Creamos una nueva instancia del modelo
+                $interpretacion2->texto = $interpretacionData['descripcion'] ?? '';
+                $interpretacion2->idTipoEstudio = $interpretacionData['tipoEstudio'] ?? null;
+                $interpretacion2->save(); // Guardamos la nueva interpretación en la base de datos
             }
         }
     }
@@ -184,6 +192,8 @@ public function show()
         'muestra' => $muestra
     ]);
 }
+
+
 
 
     public function destroy($id)
