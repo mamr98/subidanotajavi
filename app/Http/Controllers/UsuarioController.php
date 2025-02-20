@@ -115,8 +115,10 @@ class UsuarioController extends Controller
                     $usuarios = Usuario::all();
                     $sedes = Sede::all();
         
+                    $toastr = new Toastr();
+                    $toastr->success('Te has logueado correctamente','topRight');
         
-                    return view('admin')->with(['email' => $email, 'usuarios' => $usuarios, 'sedes' => $sedes]); 
+                    return view('inicioadminlte')->with(['email' => $email, 'usuarios' => $usuarios, 'sedes' => $sedes]); 
                 }
             
     
@@ -135,6 +137,22 @@ class UsuarioController extends Controller
         }
     }
 
+    public function registro(Request $request){
+
+        $usuario= new Usuario();
+        $usuario->email = $request->input('email');
+        $usuario->password = $request->input('password');
+        $usuario->estado = 1;
+        $usuario->idSede = $request->input('idSede');
+        $usuario->save();
+
+        $toastr = new Toastr();
+        $toastr->success('Te has registrado correctamente','topRight');
+
+        return view('login');
+        
+    }
+
     public function usuario($id){
         $usuario = Usuario::where('id', $id)->first();
         return response()->json($usuario,200);
@@ -145,11 +163,7 @@ class UsuarioController extends Controller
         return response()->json($sede,200);
     }
         
-
         
-
-    
-
     public function logout(Request $request){
         /* Auth::logout();
         $request->session()->invalidate();

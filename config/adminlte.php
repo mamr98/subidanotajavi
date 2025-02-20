@@ -327,14 +327,6 @@ return [
             'label' => 4,
             'label_color' => 'success',
         ],
-        [
-            'text' => 'Listado de muestras',
-            'url' => 'listamuestras',
-            'icon' => 'far fa fa-flask',
-            'label' => 0,
-            'label_color' => 'success',
-        ], 
-        
         ['header' => 'Sesión'],
         [
             'text' => 'Mi perfil',
