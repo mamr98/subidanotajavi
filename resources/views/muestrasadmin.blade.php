@@ -117,7 +117,7 @@
                                         Añadir Imagenes
                                     </button>
 
-                                    <form action="/subidanotajavi/public/pdf/{{$m->id}}"style="display: contents;" method="POST">
+                                    <form action="/pdf/{{$m->id}}"style="display: contents;" method="POST">
                                         @csrf
                                         <button style="padding: 10px 18px; margin-left:4px; background-color: #4c9baf; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$m->id}}" class="imprimir" type="submit">
                                             Imprimir PDF
