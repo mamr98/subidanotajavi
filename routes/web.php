@@ -44,6 +44,20 @@ Route::get('/admin',[UsuarioController::class,'show'])->name('administrador');
 Route::get('/logout', [UsuarioController::class, 'logout'])->name('logout');
 
 
+Route::get('/listamuestras',[MuestraController::class,'show'])->name('listamuestras');
+Route::post('/listamuestras/create',[MuestraController::class,'create'])->name('crear.muestra');
+Route::put('/listamuestras/update/{id}', [MuestraController::class, 'update']);
+Route::delete('/listamuestras/destroy/{id}',[MuestraController::class,'destroy']);
+Route::get('/listamuestras/tipo/{id}',[MuestraController::class,'tipo']);
+Route::get('/listamuestras/formato/{id}',[MuestraController::class,'formato']);
+Route::get('/listamuestras/calidad/{id}',[MuestraController::class,'calidad']);
+Route::get('/listamuestras/usuario/{id}',[MuestraController::class,'usuario']);
+Route::get('/listamuestras/sede/{id}',[MuestraController::class,'sede']);
+Route::get('/listamuestras/tipoEstudio/{id}',[MuestraController::class,'tipoEstudio']);
+Route::get('/listamuestras/tiposEstudio',[MuestraController::class,'tiposEstudios']);
+Route::get('/listamuestras/imagenes/{id}',[MuestraController::class,'imagenes']);
+Route::delete('/listamuestras/interpretaciones/{id}', [MuestraController::class, 'eliminar_interpretaciones']); 
+
 Route::post('/admin/create',[UsuarioController::class,'create'])->name('crear.usuario');
 
 Route::delete('/admin/desactivar/{id}',[UsuarioController::class,'desactivar']);
