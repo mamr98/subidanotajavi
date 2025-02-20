@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-
+<link rel="shortcut icon" href="{{ asset('logoMedac.ico') }}" type="image/x-icon">
 @section('content')
     <header
         class="position-relative bg-cover bg-center text-white text-center d-flex flex-column justify-content-center align-items-center p-3"

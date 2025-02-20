@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-
+<link rel="shortcut icon" href="{{ asset('logoMedac.ico') }}" type="image/x-icon">
 @section('content')
 <button id = "crear-muestra">Crear muestra</button>
 <div
