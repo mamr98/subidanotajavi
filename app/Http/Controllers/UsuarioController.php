@@ -47,9 +47,11 @@ class UsuarioController extends Controller
      */
     public function show()
     {
-        $usuarios = Usuario::paginate(10);
+        /* $usuarios = Usuario::paginate(10);
         $sedes = Sede::all();
-        return view('admin')->with(['usuarios'=>$usuarios, 'sedes' => $sedes]);
+        return view('admin')->with(['usuarios'=>$usuarios, 'sedes' => $sedes]); */
+
+        return response()->json(Sede::all());
     }
 
     /**

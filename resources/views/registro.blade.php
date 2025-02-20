@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="{{ csrf_token() }}" name="csrf-token" />
     <title>AdminLTE 3 | Registro</title>
 
     <!-- Toastr CSS -->
@@ -25,10 +26,9 @@
         <div class="card-body">
             <p class="login-box-msg">Registrate</p>
 
-            <form action="{{ route('registro.post') }}" method="post">
-                @csrf 
+           
                 <div class="input-group mb-3">
-                    <input type="email" class="form-control" placeholder="Email" name="email" required>
+                    <input type="email" class="form-control email" placeholder="Email" name="email" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>
@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Contraseña" name="password" required>
+                    <input type="text" class="form-control contraseña" placeholder="Contraseña" name="password" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
@@ -45,19 +45,15 @@
                 </div>
                 <div class="input-group mb-3">
                     <label for="idSede" class="block text-gray-700 font-medium mb-2 mr-2 mt-2">Sede</label>
-                    {{-- <select id="idSede" class="w-full p-2 border rounded">
-                        @foreach ($sedes as $se)
-                        <option id="{{$se->id}}">{{$se->nombre}}</option>
-                        @endforeach
-                    </select> --}}
+                    <select id="idSede" class="w-full p-2 border rounded">
+                    </select>
                 </div>
                 <span class="mr-2">Si tienes una cuenta </span><a href="{{route('login')}}">Inicia Sesión</a>
                 <div class=" mt-2 row">
                     <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+                       <a href="{{route('login')}}"><button type="submit" class="btn btn-primary btn-block registrar">Registrar</button></a> 
                     </div>
                 </div>
-            </form>
         </div>
     </div>
 </div>
@@ -73,3 +69,4 @@
 
 </body>
 </html>
+@vite(['resources/js/registro.js'])
