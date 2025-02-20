@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,19 +14,9 @@
             margin: 0;
             padding: 0;
             font-size: 14px;
-            background-color: #f4f4f9;
+
         }
 
-        /* Contenedor principal */
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 50px auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
 
         /* Encabezado */
         .header {
@@ -49,7 +40,6 @@
             font-weight: bold;
         }
 
-        /* Subtítulos */
         h2 {
             color: #2a3d4f;
             font-size: 20px;
@@ -59,14 +49,14 @@
             padding-bottom: 5px;
         }
 
-        /* Tabla */
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
 
-        th, td {
+        th,
+        td {
             padding: 12px;
             text-align: left;
             border-bottom: 2px solid #f0f0f0;
@@ -87,24 +77,16 @@
             background-color: #f0f0f0;
         }
 
-        /* Imágenes */
-        img {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            margin: 5px;
-            display: block;
-        }
-
-        /* Footer */
         .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
             text-align: center;
             font-size: 12px;
-            color: #777;
-            padding: 15px 0;
-            background-color: #2a3d4f;
             color: white;
-            margin-top: 30px;
+            padding: 10px 0;
+            background-color: #2a3d4f;
             border-top: 2px solid #e04725;
         }
 
@@ -112,25 +94,30 @@
             margin: 0;
         }
 
-        /* Ajuste para evitar espacio innecesario */
-        .no-page-break {
-            page-break-inside: avoid;
+
+        td {
+            max-width: 400px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
         }
 
-        /* Estilos para salto de página */
-        .page-break {
-            page-break-after: always;
+        .arreglo {
+            margin-top: 45px;
+        }
+
+        .contenedor-imagenes {
+            page-break-inside: avoid;
         }
     </style>
 </head>
-<body>
 
-    <!-- Contenedor principal -->
-    <div class="container">
+<body>
+    <div>
         <!-- Encabezado -->
         <div class="header">
-            <img src="{{ public_path('medac.png') }}" alt="Logo Medac">
-            <h1>Detalles de la Muestra</h1>
+            <img src="{{ asset('medac.png') }}" alt="Logo Medac">
+            <h1>Informe de la Muestra</h1>
         </div>
 
         <!-- Detalles de la Muestra -->
@@ -187,7 +174,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($interpretaciones_detalladas as $interpretacion)
+                @foreach ($interpretaciones_detalladas as $interpretacion)
                     <tr>
                         <td>{{ $tipoEstudio->nombre }}</td>
                         <td>{{ $interpretacion->texto }}</td>
@@ -198,21 +185,27 @@
         </table>
 
         <!-- Imagenes -->
-        <h2 class="no-page-break">Imágenes de la Muestra</h2>
-        <div class="no-page-break">
-            @foreach($imagen as $img)
-                <div style="display: inline-block; width: 160px; padding: 5px; text-align: center;">
-                    <img src="{{ $img->ruta }}" alt="Imagen de la muestra">
-                    <p>Zoom: x{{ $img->zoom }}</p>
-                </div>
-            @endforeach
+        <div class="contenedor-imagenes">
+            <h2>Imágenes de la Muestra</h2>
+            <div class="arreglo">
+                @foreach ($imagen as $img)
+                    <div style="display: inline-block; width: 160px; padding: 6px; text-align: center;">
+                        <div style="
+                            width: 160px;
+                            height: 160px;
+                            background: url('{{ $img->ruta }}') no-repeat center center;
+                            background-size: cover;">
+                        </div>
+                        <p>Zoom: x{{ $img->zoom }}</p>
+                    </div>
+                @endforeach
+            </div>
         </div>
     </div>
 
     <!-- Footer -->
     <div class="footer">
-        <p>muestras.com - Todos los derechos reservados - Página 
-            <span class="pagenum"></span>
+        <p>&copy; 2025 Medac. Todos los derechos reservados.
         </p>
     </div>
 
@@ -225,6 +218,15 @@
             ');
         }
     </script>
+    <script type="text/php">
+        if (isset($pdf)) {
+            $pdf->page_script('
+                $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
+                $pdf->text(270, 20, "Página $PAGE_NUM", $font, 10);
+            ');
+        }
+    </script>
 
 </body>
+
 </html>
