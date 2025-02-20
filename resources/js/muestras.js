@@ -728,7 +728,7 @@ function rendermodal_mostrar(datos) {
                     <div class="interpretacion-box p-3 mb-3 border rounded shadow-sm">
                         <h4>Interpretación ${index + 1}</h4>
                         <label for="tipoEstudio">Tipo de Estudio:</label>
-                        <input type="text" value="${datos.tipoEstudio?.nombre || 'N/A'}" readonly class="form-control mb-2">
+                        <input type="text" value="${inter.tipoEstudio?.nombre || 'N/A'}" readonly class="form-control mb-2">
                         <label for="descripcion">Descripción:</label>
                         <textarea readonly class="form-control">${inter.texto || 'Sin descripción'}</textarea>
                     </div>
@@ -737,6 +737,8 @@ function rendermodal_mostrar(datos) {
                 return '<p class="text-muted">No hay interpretaciones disponibles</p>';
             }
         }
+        
+        
 
         // Función para generar el HTML de las imágenes
 function generarImagenesHTML(imagenes) {

@@ -320,40 +320,41 @@ public function eliminar_interpretaciones($id)
     }
 
     public function muestra($id)
-    {
-        // Obtener la muestra con el ID proporcionado
-        $muestra = Muestra::where('id', $id)->first();
-        
-        // Obtener todas las interpretaciones asociadas a esa muestra con todos sus campos
-        $muestra_interpretaciones = MuestrasInterpretacion::where('idMuestras', $id)->get();
+{
+    // Obtener la muestra con el ID proporcionado
+    $muestra = Muestra::where('id', $id)->first();
     
-        // Inicializar un arreglo para almacenar las interpretaciones detalladas
-        $interpretaciones_detalladas = [];
-        
-        // Inicializar la variable tipoEstudio como null, por si no se encuentra
-        $tipoEstudio = null;
-    
-        // Iterar sobre las interpretaciones obtenidas
-        foreach ($muestra_interpretaciones as $interpretacion) {
-            // Obtener detalles de la tabla Interpretacion para cada id
-            $detalle_interpretacion = Interpretacion::where('id', $interpretacion->id)->first();
-    
-            if ($detalle_interpretacion) {
-                // Obtener el tipo de estudio si existe
-                $tipoEstudio = TipoEstudio::where('id', $detalle_interpretacion->idTipoEstudio)->first();
-                
-                // Agregar el detalle de la interpretación al arreglo
-                $interpretaciones_detalladas[] = $detalle_interpretacion;
-            }
+    // Obtener todas las interpretaciones asociadas a esa muestra con todos sus campos
+    $muestra_interpretaciones = MuestrasInterpretacion::where('idMuestras', $id)->get();
+
+    // Inicializar un arreglo para almacenar las interpretaciones detalladas
+    $interpretaciones_detalladas = [];
+
+    // Iterar sobre las interpretaciones obtenidas
+    foreach ($muestra_interpretaciones as $interpretacion) {
+        // Obtener detalles de la tabla Interpretacion para cada id
+        $detalle_interpretacion = Interpretacion::where('id', $interpretacion->id)->first();
+
+        if ($detalle_interpretacion) {
+            // Obtener el tipo de estudio si existe
+            $tipoEstudio = TipoEstudio::where('id', $detalle_interpretacion->idTipoEstudio)->first();
+            
+            // Agregar el detalle de la interpretación junto con su tipo de estudio
+            $interpretaciones_detalladas[] = [
+                'id' => $detalle_interpretacion->id,
+                'texto' => $detalle_interpretacion->texto,
+                'tipoEstudio' => $tipoEstudio, // Ahora cada interpretación tiene su propio tipo de estudio
+            ];
         }
-    
-        // Retornar la muestra, las interpretaciones detalladas y el tipo de estudio (si existe)
-        return response()->json([
-            'muestra' => $muestra,
-            'interpretaciones' => $interpretaciones_detalladas,
-            'tipoEstudio' => $tipoEstudio, // Puede ser null si no se encontró
-        ], 200);
     }
+
+    // Retornar la muestra y las interpretaciones detalladas (cada una con su tipo de estudio)
+    return response()->json([
+        'muestra' => $muestra,
+        'interpretaciones' => $interpretaciones_detalladas,
+    ], 200);
+}
+
     
     
     
