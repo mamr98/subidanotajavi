@@ -1,6 +1,7 @@
 @extends('adminlte::page')
 @vite([ 'resources/js/imagenes.js'])
 <meta content="{{ csrf_token() }}" name="csrf-token" />
+<link rel="shortcut icon" href="{{ asset('logoMedac.ico') }}" type="image/x-icon">
 
 @section('content')
 <div class="container py-5">

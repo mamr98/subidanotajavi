@@ -1,6 +1,7 @@
 @extends('adminlte::page')
 <meta content="{{ csrf_token() }}" name="csrf-token" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="shortcut icon" href="{{ asset('logoMedac.ico') }}" type="image/x-icon">
 
 @section('content')
 <div class="container">
