@@ -105,28 +105,41 @@
                             </td> 
                             <td class="p-4 border-b border-blue-gray-50">
                                 <div class="d-flex justify-content-center align-items-center gap-2">
-                                    <button style="padding: 10px 18px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$m->id}}" class="contenido">
-                                        Ver más
-                                    </button>
-                                    
-                                    <button style="padding: 10px 18px; margin-left:4px; background-color: purple; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$m->id}}" class="modificar">
-                                        Modificar
-                                    </button>
-
-                                    <button style="padding: 10px 18px; margin-left:4px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$m->id}}" class="imagenes" type="submit">
-                                        Añadir Imagenes
-                                    </button>
-
-                                    <form action="/pdf/{{$m->id}}"style="display: contents;" method="POST">
-                                        @csrf
-                                        <button style="padding: 10px 18px; margin-left:4px; background-color: #4c9baf; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$m->id}}" class="imprimir" type="submit">
-                                            Imprimir PDF
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton{{$m->id}}" data-toggle="dropdown" aria-expanded="false" style="background-color: #1E3A8A; color: white;">
+                                            Acciones
                                         </button>
-                                    </form>
-
-                                    <button style="padding: 10px 18px; margin-left:4px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$m->id}}" class="eliminar">
-                                        Eliminar
-                                    </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{$m->id}}" >
+                                            <li>
+                                                <button style="padding: 10px 18px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="contenido">
+                                                    Ver más
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button style="padding: 10px 18px; background-color: purple; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="modificar">
+                                                    Modificar
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button style="padding: 10px 18px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="imagenes" type="submit">
+                                                    Añadir Imágenes
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <form action="pdf/{{$m->id}}" style="display: contents;" method="POST">
+                                                    @csrf
+                                                    <button style="padding: 10px 18px; background-color: #4c9baf; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="imprimir" type="submit">
+                                                        Imprimir PDF
+                                                    </button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <button style="padding: 10px 18px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="eliminar">
+                                                    Eliminar
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
