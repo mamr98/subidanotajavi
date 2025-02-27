@@ -4,7 +4,7 @@
 <link rel="shortcut icon" href="{{ asset('logoMedac.ico') }}" type="image/x-icon">
 
 @section('content')
-<div class="container">
+<div class="container d-flex flex-column min-vh-100">
     <div class="row justify-content-between align-items-center mt-5 pt-5 mb-4 g-3">
         <div class="col-md-3 col-6 order-1">
             <h1 class="text-sky-950 text-5xl font-bold mb-0">Usuarios</h1>
@@ -95,7 +95,7 @@
                     </tbody>
                 </table>
                 <div class="mt-4 d-flex justify-content-end mx-5">
-                    {{-- {{ $usuarios->links() }} --}}
+                    {{ $usuarios->links() }}
                 </div>
             </div>
         </div>
@@ -165,6 +165,10 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('footer')
+    @include('includes.footer')
 @endsection
 @vite(['resources/js/app.js'])
 

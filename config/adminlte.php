@@ -191,14 +191,14 @@ return [
     */
 
     'classes_body' => '',
-    'classes_brand' => 'bg-gray',
+    'classes_brand' => 'bg-navy',
     'classes_brand_text' => '',
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => 'bg-light',
-    'classes_sidebar' => 'sidebar-dark-green bg-gray elevation-4 ',
+    'classes_sidebar' => 'sidebar-dark-green bg-navy elevation-4 ',
     'classes_sidebar_nav' => '',
-    'classes_topnav' => 'navbar-dark navbar-gray',
+    'classes_topnav' => 'navbar-dark navbar-navy',
     'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container',
 
