@@ -250,7 +250,7 @@
                     </div>
                     <div>
                         <label for="idFormato">Formato</label>
-                        <select id="idFormato" class="form-vontrol">
+                        <select id="idFormato" class="form-control">
                             @foreach ($formatos as $fo)
                             <option id="{{$fo->id}}">{{$fo->nombre}}</option>
                             @endforeach
