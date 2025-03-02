@@ -186,17 +186,17 @@
                 @csrf
                 <div class="mb-3">
                     <label for="email2" class="block text-gray-700 font-medium mb-2">Email</label>
-                    <input type="text" id="email2" class="w-full p-2 border rounded">
+                    <input type="text" id="email2" class="form-control">
                 </div>
 
                 <div class="mb-3">
                     <label for="password2" class="block text-gray-700 font-medium mb-2">Contraseña</label>
-                    <input type="text" id="password2" class="w-full p-2 border rounded">
+                    <input type="text" id="password2" class="form-control">
                 </div>
 
                 <div class="mb-3">
                     <label for="estado2" class="block text-gray-700 font-medium mb-2">Estado</label>
-                    <select id="estado2" class="w-full p-2 border rounded">
+                    <select id="estado2" class="form-control">
                         <option value="1">Activo</option>
                         <option value="0">Pausado</option>
                     </select>
@@ -204,7 +204,7 @@
 
                 <div class="mb-3">
                     <label for="idSede2" class="block text-gray-700 font-medium mb-2">Sede</label>
-                    <select id="idSede2" class="w-full p-2 border rounded">
+                    <select id="idSede2" class="form-control">
                         @foreach ($sedes as $se)
                         <option id="{{$se->id}}">{{$se->nombre}}</option>
                         @endforeach
