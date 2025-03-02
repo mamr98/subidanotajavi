@@ -1,4 +1,31 @@
-<footer class="main-footer bg-navy text-white py-3 text-center w-100 fixed-bottom">
+<style>
+    .sticky-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        /* Asegura que el footer esté por encima de otros elementos */
+    }
+
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+
+    }
+    @media (max-width: 503px) {
+    body {
+        margin-bottom: 110px; /* Aumenta el margen inferior en dispositivos móviles */
+    }
+}
+</style>
+<footer class="main-footer bg-navy text-white text-center">
     <div class="container">
         <div class="mb-2">
             <a href="#" class="text-light mx-2">Sobre nosotros</a>
@@ -23,3 +50,16 @@
         </div>
     </div>
 </footer>
+<script>
+    //quitar class footer
+    document.addEventListener("DOMContentLoaded", function() {
+        // Selecciona el footer predeterminado de AdminLTE
+        const adminlteFooter = document.querySelector('footer.main-footer');
+
+        // Si existe, elimina la clase "main-footer"
+        if (adminlteFooter) {
+            adminlteFooter.classList.remove('main-footer');
+            adminlteFooter.classList.add('sticky-footer');
+        }
+    });
+</script>

@@ -162,7 +162,7 @@
                                 </div>
                                 <div class="card-footer text-end">
                                     <div class="btn-group" style="position: relative;">
-                                        <button type="button" class="btn btn-primary dropdown-toggle" id="dropdownMenuButton{{$m->id}}" data-toggle="dropdown" aria-expanded="false"style="z-index: 1050;">
+                                        <button type="button" class="btn btn-primary dropdown-toggle" id="dropdownMenuButton{{$m->id}}" data-toggle="dropdown" aria-expanded="false">
                                             Acciones
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{$m->id}}" style="position: absolute; z-index: 1051;">
