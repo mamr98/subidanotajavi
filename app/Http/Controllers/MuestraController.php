@@ -117,7 +117,7 @@ public function guardarImagen(Request $request)
 
 public function show()
 {
-    $muestras = Muestra::paginate(5);
+    $muestras = Muestra::paginate(9);
     $tipos = Tipo::all();
     $formatos = Formato::all();
     $calidades = Calidad::all();
@@ -138,7 +138,7 @@ public function show()
 
     public function showAdmin()
     {
-        $muestras = Muestra::paginate(5);
+        $muestras = Muestra::paginate(6);
         $tipos = Tipo::all();
         $formatos = Formato::all();
         $calidades = Calidad::all();

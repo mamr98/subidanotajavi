@@ -37,7 +37,9 @@
     </div>
 
         <div class="col-12">
+            <!--
             <div class="table-responsive bg-white shadow-md rounded-xl">
+                
                 <table class="table table-hover mb-0 text-center" style="min-width: 1000px;">
                     <thead>
                         <tr>
@@ -146,10 +148,62 @@
                         @endforeach
                     </tbody>
                 </table>
+                -->
+                <div class="row">
+                    @foreach ($muestras as $muestra)
+                        <div class="col-md-4">
+                            <div class="card shadow-sm">
+                                <div class="card-header bg-primary text-white bg-navy">
+                                    <h5 class="card-title mb-0">Muestra #{{ $muestra->id }}</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Fecha de recolección:</strong> {{ $muestra->fecha }}</p>
+                                    <p><strong>Código muestra:</strong> {{ $muestra->codigo }}</p>
+                                </div>
+                                <div class="card-footer text-end">
+                                    <div class="btn-group" style="position: relative;">
+                                        <button type="button" class="btn btn-primary dropdown-toggle" id="dropdownMenuButton{{$m->id}}" data-toggle="dropdown" aria-expanded="false"style="z-index: 1050;">
+                                            Acciones
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{$m->id}}" style="position: absolute; z-index: 1051;">
+                                            <li>
+                                                <button style="padding: 10px 18px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="contenido">
+                                                    Ver más
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button style="padding: 10px 18px; background-color: purple; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="modificar">
+                                                    Modificar
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button style="padding: 10px 18px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="imagenes" type="submit">
+                                                    Añadir Imágenes
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <form action="pdf/{{$m->id}}" style="display: contents;" method="POST">
+                                                    @csrf
+                                                    <button style="padding: 10px 18px; background-color: #4c9baf; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="imprimir" type="submit">
+                                                        Imprimir PDF
+                                                    </button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <button style="padding: 10px 18px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="eliminar">
+                                                    Eliminar
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
                 <div class="mt-4 d-flex justify-content-end mx-5">
                     {{ $muestras->links() }}
                 </div>
-            </div>
         </div>
 
         <div class="col-12 col-md-6 mt-4">
