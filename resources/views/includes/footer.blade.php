@@ -61,5 +61,11 @@
             adminlteFooter.classList.remove('main-footer');
             adminlteFooter.classList.add('sticky-footer');
         }
+        //alert por encima
+        const alert = document.getElementById("alert");
+        if (alert) {
+            alert.style.zIndex = "1050";
+        }
+        
     });
 </script>
