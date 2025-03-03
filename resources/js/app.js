@@ -307,42 +307,44 @@ function rendermodal_update(datos) {
 const buscador = document.querySelector("#buscador");
 const mostrarUsuario = document.querySelector("#mostrar_usuario");
 
-buscador.addEventListener("input", function () {
+buscador.addEventListener("input", async function () {
     let email = buscador.value;
 
     if (email.length > 0) {
-        fetch(`usuarios/${email}`)
-            .then(response => {
-                if (!response.ok) {
-                    mostrarUsuario.innerHTML = `<tr><td colspan="7">No se encontraron usuarios</td></tr>`;
-                    throw new Error("Error en la consulta");
-                }
-                return response.json();
-            })
-            .then(data => {
-                mostrarUsuario.innerHTML = "";
+        try {
+            let response = await fetch(`usuarios/${email}`);
+            if (!response.ok) {
+                mostrarUsuario.innerHTML = `<tr><td colspan="7">No se encontraron usuarios</td></tr>`;
+                throw new Error("Error en la consulta");
+            }
 
-                if (data.length > 0) {
-                    data.forEach(usuario => {
-                        mostrarUsuario.innerHTML += `
-                            <tr>
-                                <td>${usuario.id}</td>
-                                <td>${usuario.email}</td>
-                                
-                                <td>${usuario.estado ? "Activo" : "Pausado"}</td>
-                                <td>${usuario.idSede}</td>
-                                <td>
-                                    <button class="modificar" id="${usuario.id}" style="padding: 10px 20px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer;">Modificar</button>
-                                    <button class="desactivar" id="${usuario.id}" style="padding: 10px 20px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer;">Desactivar</button>
-                                    <button class="activar" id="${usuario.id}" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Activar</button>
-                                </td>
-                            </tr>`;
-                    });
-                } else {
-                    mostrarUsuario.innerHTML = `<tr><td colspan="7">No se encontraron usuarios</td></tr>`;
-                }
-            })
-            .catch(error => console.error("Error:", error));
+            let data = await response.json();
+            mostrarUsuario.innerHTML = "";
+
+            if (data.length > 0) {
+                data.forEach(usuario => {
+                    mostrarUsuario.innerHTML += `
+                        <tr>
+                            <td>${usuario.id}</td>
+                            <td>${usuario.email}</td>
+                            <td>${usuario.estado ? "Activo" : "Pausado"}</td>
+                            <td class="sede" id="${usuario.idSede}"></td> 
+                            <td>
+                                <button class="modificar" id="${usuario.id}" style="padding: 10px 20px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer;">Modificar</button>
+                                <button class="desactivar" id="${usuario.id}" style="padding: 10px 20px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer;">Desactivar</button>
+                                <button class="activar" id="${usuario.id}" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Activar</button>
+                            </td>
+                        </tr>`;
+                });
+
+                // Llamamos a sedeUsuario() después de cargar los usuarios
+                sedeUsuario();
+            } else {
+                mostrarUsuario.innerHTML = `<tr><td colspan="7">No se encontraron usuarios</td></tr>`;
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
     } else {
         location.reload();
     }
@@ -372,8 +374,3 @@ function sedeUsuario() {
 }
 
 window.addEventListener('DOMContentLoaded', sedeUsuario);
-
-
-window.addEventListener('DOMContentLoaded', sedeUsuario);
-
-

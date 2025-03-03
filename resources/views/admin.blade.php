@@ -1,6 +1,7 @@
 @extends('adminlte::page')
 <meta content="{{ csrf_token() }}" name="csrf-token" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="shortcut icon" href="{{ asset('logoMedac.ico') }}" type="image/x-icon">
 
 @section('content')
 <div class="container">
@@ -52,7 +53,7 @@
                                 <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">Estado</p>
                             </th>
                             <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50 align-middle">
-                                <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">Id Sede</p>
+                                <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">Sede</p>
                             </th>
                             <th class="p-4 border-b border-blue-gray-100 bg-blue-gray-50 align-middle">
                                 <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">Acciones</p>

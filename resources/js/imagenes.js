@@ -10,8 +10,8 @@ window.handleImageUpload = function(input) {
     }
 
     // Se valida los tipos de archivos, el maximo de tamaño en MB y el maximo de tamaño en Bytes
-    const allowedTypes = ['image/jpeg', 'image/png'];
-    const maxSizeMB = 2;
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    const maxSizeMB = 5;
     const maxSizeBytes = maxSizeMB * 1024 * 1024;
 
     // Comprueba que el tipo de formato del archivo coincide con un tipo de formato del array y si no lo encuentra salta un error
