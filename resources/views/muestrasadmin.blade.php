@@ -149,7 +149,7 @@
                     </tbody>
                 </table>
                 -->
-                <div class="row">
+                <div class="row" id="mostrar_muestras">
                     @foreach ($muestras as $muestra)
                         <div class="col-md-4">
                             <div class="card shadow-sm">
