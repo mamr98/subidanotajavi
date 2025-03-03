@@ -17,8 +17,32 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/icheck-bootstrap/3.0.1/icheck-bootstrap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <style>
+        @media (max-width: 576px) {
+            .login-box {
+                margin-bottom: 125px;
+            }
+        }
+    </style>
 </head>
 <body class="hold-transition login-page">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-navy shadow fixed-top">
+        <div class="container">
+            <div class="navbar-brand align-items-center">
+                <img src="{{ asset('LogoMedac.png') }}" alt="Logo Medac" class="me-2" height="40">
+                <span class="fw-semibold">MEDAC</span>
+            </div>
+    
+            <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+                @isset($email)
+                    <span class="navbar-text text-light me-3">Sesión: {{ $email }}</span>
+                @endisset
+                <a href="{{ route('login') }}" class="btn btn-primary">Iniciar Sesión</a>
+            </div>
+        </div>
+    </nav>
 <div class="login-box">
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
@@ -51,13 +75,38 @@
                 </div>
                 <span class="mr-2">Si tienes una cuenta </span><a href="{{route('login')}}">Inicia Sesión</a>
                 <div class=" mt-2 row">
-                    <div class="col-4">
-                       <a href="{{route('login')}}"><button type="submit" class="btn btn-primary btn-block registrar">Registrar</button></a> 
+                    <div class="col-5">
+                       <a href="{{route('login')}}"><button type="submit" class="btn btn-primary btn-block registrar" style="white-space: nowrap;">Registrar</button></a> 
                     </div>
                 </div>
         </div>
     </div>
 </div>
+<footer class="bg-navy text-white py-3 text-center w-100 fixed-bottom">
+    <div class="container">
+        <div class="mb-2">
+            <a href="#" class="text-light mx-2">Sobre nosotros</a>
+            <a href="#" class="text-light mx-2">Política de privacidad</a>
+            <a href="#" class="text-light mx-2">Términos y condiciones</a>
+        </div>
+
+        <div class="mb-2">
+            <a href="https://www.instagram.com/institutomedac/?hl=es" target="_blank" class="text-light mx-2">
+                <i class="fab fa-instagram fa-lg"></i>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61572362099718" target="_blank" class="text-light mx-2">
+                <i class="fab fa-facebook fa-lg"></i>
+            </a>
+            <a href="https://es.linkedin.com/school/davante-medac/" target="_blank" class="text-light mx-2">
+                <i class="fab fa-linkedin fa-lg"></i>
+            </a>
+        </div>
+
+        <div class="text-light">
+            <p>&copy; {{ date('Y') }} Medac. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</footer>
 
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

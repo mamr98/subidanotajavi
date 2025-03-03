@@ -5,7 +5,7 @@
 <link rel="shortcut icon" href="{{ asset('logoMedac.ico') }}" type="image/x-icon">
 
 @section('content')
-<div class="container">
+<div class="container d-flex flex-column min-vh-100">
     <div class="row justify-content-between align-items-center mt-5 pt-5 mb-4 g-3">
         <div class="col-md-3 col-6 order-1">
             <h1 class="text-sky-950 text-5xl font-bold mb-0">Muestras</h1>
@@ -37,7 +37,9 @@
     </div>
 
         <div class="col-12">
+            <!--
             <div class="table-responsive bg-white shadow-md rounded-xl">
+                
                 <table class="table table-hover mb-0 text-center" style="min-width: 1000px;">
                     <thead>
                         <tr>
@@ -105,54 +107,119 @@
                             </td> 
                             <td class="p-4 border-b border-blue-gray-50">
                                 <div class="d-flex justify-content-center align-items-center gap-2">
-                                    <button style="padding: 10px 18px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$m->id}}" class="contenido">
-                                        Ver más
-                                    </button>
-                                    
-                                    <button style="padding: 10px 18px; margin-left:4px; background-color: purple; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$m->id}}" class="modificar">
-                                        Modificar
-                                    </button>
-
-                                    <button style="padding: 10px 18px; margin-left:4px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$m->id}}" class="imagenes" type="submit">
-                                        Añadir Imagenes
-                                    </button>
-
-                                    <form action="/pdf/{{$m->id}}"style="display: contents;" method="POST">
-                                        @csrf
-                                        <button style="padding: 10px 18px; margin-left:4px; background-color: #4c9baf; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$m->id}}" class="imprimir" type="submit">
-                                            Imprimir PDF
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton{{$m->id}}" data-toggle="dropdown" aria-expanded="false" style="background-color: #1E3A8A; color: white;">
+                                            Acciones
                                         </button>
-                                    </form>
-
-                                    <button style="padding: 10px 18px; margin-left:4px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer;" id="{{$m->id}}" class="eliminar">
-                                        Eliminar
-                                    </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{$m->id}}" >
+                                            <li>
+                                                <button style="padding: 10px 18px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="contenido">
+                                                    Ver más
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button style="padding: 10px 18px; background-color: purple; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="modificar">
+                                                    Modificar
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button style="padding: 10px 18px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="imagenes" type="submit">
+                                                    Añadir Imágenes
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <form action="pdf/{{$m->id}}" style="display: contents;" method="POST">
+                                                    @csrf
+                                                    <button style="padding: 10px 18px; background-color: #4c9baf; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="imprimir" type="submit">
+                                                        Imprimir PDF
+                                                    </button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <button style="padding: 10px 18px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="eliminar">
+                                                    Eliminar
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
+                -->
+                <div class="row">
+                    @foreach ($muestras as $muestra)
+                        <div class="col-md-4">
+                            <div class="card shadow-sm">
+                                <div class="card-header bg-primary text-white bg-navy">
+                                    <h5 class="card-title mb-0">Muestra #{{ $muestra->id }}</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Fecha de recolección:</strong> {{ $muestra->fecha }}</p>
+                                    <p><strong>Código muestra:</strong> {{ $muestra->codigo }}</p>
+                                </div>
+                                <div class="card-footer text-end">
+                                    <div class="btn-group" style="position: relative;">
+                                        <button type="button" class="btn btn-primary dropdown-toggle" id="dropdownMenuButton{{$m->id}}" data-toggle="dropdown" aria-expanded="false">
+                                            Acciones
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{$m->id}}" style="position: absolute; z-index: 1051;">
+                                            <li>
+                                                <button style="padding: 10px 18px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="contenido">
+                                                    Ver más
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button style="padding: 10px 18px; background-color: purple; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="modificar">
+                                                    Modificar
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button style="padding: 10px 18px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="imagenes" type="submit">
+                                                    Añadir Imágenes
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <form action="pdf/{{$m->id}}" style="display: contents;" method="POST">
+                                                    @csrf
+                                                    <button style="padding: 10px 18px; background-color: #4c9baf; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="imprimir" type="submit">
+                                                        Imprimir PDF
+                                                    </button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <button style="padding: 10px 18px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="eliminar">
+                                                    Eliminar
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
                 <div class="mt-4 d-flex justify-content-end mx-5">
                     {{ $muestras->links() }}
                 </div>
-            </div>
         </div>
 
-        <div class="container mx-auto mt-4 max-w-screen-lg"> <!-- Hace que sea más ancho -->
-            <form id="modal_add" class="bg-white p-6 rounded shadow w-full">
+        <div class="col-12 col-md-6 mt-4">
+            <form id="modal_add" class="bg-white p-4 rounded shadow">
                 @csrf
                 <div class="mb-4">
                     <label for="fecha" class="block text-gray-700 font-medium mb-1">Fecha de recolección</label>
-                    <input type="date" id="fecha" name="fecha" class="w-full p-2 border rounded">
+                    <input type="date" id="fecha" name="fecha" class="form-control">
                 </div>
                 <div class="mb-4">
                     <label for="codigo" class="block text-gray-700 font-medium mb-1">Código muestra</label>
-                    <input type="text" id="codigo" name="codigo" placeholder="Código" class="w-full p-2 border rounded">
+                    <input type="text" id="codigo" name="codigo" placeholder="Código" class="form-control">
                 </div>
                 <div class="mb-4">
                     <label for="organo" class="block text-gray-700 font-medium mb-1">Órgano</label>
-                    <select id="organo" name="organo" class="w-full p-2 border rounded">
+                    <select id="organo" name="organo" class="form-control">
                         <option value="BC">Corazón</option>
                         <option value="BB">Bazo</option>
                         <option value="BH">Hígado</option>
@@ -175,43 +242,40 @@
                 <div class="grid grid-cols-3 gap-4">
                     <div>
                         <label for="idTipo">Tipo</label>
-                        <select id="idTipo" class="w-full p-2 border rounded">
+                        <select id="idTipo" class="form-control">
                             @foreach ($tipos as $ti)
                             <option id="{{$ti->id}}">{{$ti->nombre}}</option>
                             @endforeach
                         </select><br>
                     </div>
-                    <br>
                     <div>
                         <label for="idFormato">Formato</label>
-                        <select id="idFormato" class="w-full p-2 border rounded">
+                        <select id="idFormato" class="form-control">
                             @foreach ($formatos as $fo)
                             <option id="{{$fo->id}}">{{$fo->nombre}}</option>
                             @endforeach
                         </select><br>
                     </div>
-                    <br>
                     <div>
                         <label for="idCalidad">Calidad</label>
-                        <select id="idCalidad" class="w-full p-2 border rounded">
+                        <select id="idCalidad" class="form-control">
                             @foreach ($calidades as $ca)
                             <option id="{{$ca->id}}">{{$ca->nombre}}</option>
                             @endforeach
                         </select><br>
                     </div>
-                    <br>
                     <div>
                         <label for="idUsuario">Usuario</label>
-                        <select id="idUsuario" class="w-full p-2 border rounded">
+                        <select id="idUsuario" class="form-control">
                             @foreach ($usuarios as $us)
                             <option id="{{$us->id}}">{{$us->email}}</option>
                             @endforeach
                         </select><br>
                     </div>
-                    <br>
+                    
                     <div>
                         <label for="idSede">Sede</label>
-                        <select id="idSede" class="w-full p-2 border rounded">
+                        <select id="idSede" class="form-control">
                             @foreach ($sedes as $se)
                             <option id="{{$se->id}}">{{$se->nombre}}</option>
                             @endforeach
@@ -225,7 +289,7 @@
                         <div class="interpretacion-fields">
                             <div>
                                 <label for="tipoEstudio">Tipo de Estudio</label>
-                                <select id="idTipoEstudio" class="w-full p-2 border rounded">
+                                <select id="idTipoEstudio" class="form-control">
                                     @foreach ($tipoEstudio as $ti)
                                     <option value="{{ $ti->id }}">{{ $ti->nombre }}</option>
                                     @endforeach
@@ -233,7 +297,7 @@
                             </div>
                             <div>
                                 <label for="descripcion">Descripción</label>
-                                <textarea name="descripcion" id="descripcion" cols="40" rows="5" class="w-full p-2 border rounded"></textarea>
+                                <textarea name="descripcion" id="descripcion" cols="40" rows="5" class="form-control"></textarea>
                             </div>
                         </div>
                     </div>
@@ -252,15 +316,15 @@
                 @csrf
                 <div class="mb-4">
                     <label for="fecha2" class="block text-gray-700 font-medium mb-1">Fecha de recolección</label>
-                    <input type="date" id="fecha2" name="fecha" class="w-full p-2 border rounded">
+                    <input type="date" id="fecha2" name="fecha" class="form-control">
                 </div>
                 <div class="mb-4">
                     <label for="codigo2" class="block text-gray-700 font-medium mb-1">Código muestra</label>
-                    <input type="text" id="codigo2" name="codigo" placeholder="Código" class="w-full p-2 border rounded">
+                    <input type="text" id="codigo2" name="codigo" placeholder="Código" class="form-control">
                 </div>
                 <div class="mb-4">
                     <label for="organo2" class="block text-gray-700 font-medium mb-1">Órgano</label>
-                    <select id="organo2" name="organo2" class="w-full p-2 border rounded">
+                    <select id="organo2" name="organo2" class="form-control">
                         <option value="BC">Corazón</option>
                         <option value="BB">Bazo</option>
                         <option value="BH">Hígado</option>
@@ -283,43 +347,43 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label for="idTipo2">Tipo</label>
-                        <select id="idTipo2" class="w-full p-2 border rounded">
+                        <select id="idTipo2" class="form-control">
                             @foreach ($tipos as $ti)
                             <option id="{{$ti->id}}">{{$ti->nombre}}</option>
                             @endforeach
                         </select><br> 
                     </div>
-                    <br>
+                    
                     <div>
                         <label for="idFormato2">Formato</label>
-                        <select id="idFormato2" class="w-full p-2 border rounded">
+                        <select id="idFormato2" class="form-control">
                             @foreach ($formatos as $fo)
                             <option id="{{$fo->id}}">{{$fo->nombre}}</option>
                             @endforeach
                         </select><br> 
                     </div>
-                    <br>
+                    
                     <div>
                         <label for="idCalidad2">Calidad</label>
-                        <select id="idCalidad2" class="w-full p-2 border rounded">
+                        <select id="idCalidad2" class="form-control">
                             @foreach ($calidades as $ca)
                             <option id="{{$ca->id}}">{{$ca->nombre}}</option>
                             @endforeach
                         </select><br> 
                     </div>
-                    <br>
+                    
                     <div>
                         <label for="idUsuario2">Usuario</label>
-                        <select id="idUsuario2" class="w-full p-2 border rounded">
+                        <select id="idUsuario2" class="form-control">
                             @foreach ($usuarios as $us)
                             <option id="{{$us->id}}">{{$us->email}}</option>
                             @endforeach
                         </select><br> 
                     </div>
-                    <br>
+                    
                     <div>
                         <label for="idSede2">Sede</label>
-                        <select id="idSede2" class="w-full p-2 border rounded">
+                        <select id="idSede2" class="form-control">
                             @foreach ($sedes as $se)
                             <option id="{{$se->id}}">{{$se->nombre}}</option>
                             @endforeach
@@ -424,4 +488,8 @@
     </form>
 </div>
     
+@endsection
+
+@section('footer')
+    @include('includes.footer')
 @endsection

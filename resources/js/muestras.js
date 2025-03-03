@@ -436,7 +436,7 @@ function rendermodal_update(datos) {
 
                 const selectTipoEstudio = document.createElement('select');
                 selectTipoEstudio.id = `TipoEstudio2`;
-                selectTipoEstudio.className = 'w-full p-2 border rounded bg-white text-gray-700 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-3 text-center block';
+                selectTipoEstudio.className = 'form-control bg-white text-gray-700 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-3 text-center block';
                 
                 tiposEstudio.forEach(tipo => {
                     const option = document.createElement('option');
@@ -454,12 +454,12 @@ function rendermodal_update(datos) {
                 inputDescripcion.id = `descripcion2`;
                 inputDescripcion.value = interpretacion.texto || "";
                 inputDescripcion.placeholder = `Descripción de la interpretación ${index + 1}`;
-                inputDescripcion.className = 'w-full p-3 border rounded-lg shadow-sm text-gray-800 bg-gray-100 focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none mb-5 text-center block';
+                inputDescripcion.className = 'form-control shadow-sm text-gray-800 bg-gray-100 focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none mb-5 text-center block';
                 div.appendChild(inputDescripcion);
 
                 const buttonEliminar = document.createElement('button');
                 buttonEliminar.textContent = "Eliminar";
-                buttonEliminar.className = 'btn btn-danger btn-sm eliminar-interpretacion mt-2 px-4 py-2 rounded shadow mx-auto block';
+                buttonEliminar.className = 'btn btn-danger btn-sm eliminar-interpretacion mt-2 px-4 py-2 rounded shadow mx-auto block mb-3';
                 buttonEliminar.addEventListener('click', () => eliminarInterpretacion(interpretacion.id, div));
                 div.appendChild(buttonEliminar);
 
