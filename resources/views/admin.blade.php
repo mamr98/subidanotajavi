@@ -98,7 +98,7 @@
                     {{ $usuarios->links() }}
                 </div>
             </div> --}}
-            <div class="row">
+            <div class="row" id="mostrar_usuario">
                 @foreach ($usuarios as $u)
                     <div class="col-md-4">
                         <div class="card shadow-sm">
