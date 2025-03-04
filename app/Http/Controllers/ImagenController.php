@@ -3,52 +3,53 @@
 namespace App\Http\Controllers;
 
 use App\Models\Usuario;
-use Cloudinary\Asset\Image;
 use Illuminate\Http\Request;
-use Cloudinary\Transformation\Format;
-use Cloudinary\Transformation\Resize;
-use Cloudinary\Transformation\Delivery;
+use Illuminate\Support\Facades\Auth; // Importar Auth
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class ImagenController extends Controller
 {
     public function mostrarPerfil()
     {
-        // Obtener el usuario actual (puedes cambiar esto según tu lógica de autenticación)
-        $usuario = Usuario::find(1); // Obtener el usuario con ID 1
+        // Obtener el usuario autenticado
+        $usuario = Auth::user();
 
-        // Pasar el usuario a la vista
+        if (!$usuario) {
+            return redirect()->route('login')->with('error', 'Debes iniciar sesión.');
+        }
+
         return view('perfil', compact('usuario'));
     }
 
     public function subirImagen(Request $request)
     {
         try {
+            // Validar la imagen
             $request->validate([
                 'imagen' => 'required|image|mimes:jpg,jpeg,png,webp|max:5048'
             ]);
 
+            // Subir la imagen a Cloudinary
             $uploadResponse = Cloudinary::upload($request->file('imagen')->getRealPath(), [
                 'folder' => 'prueba'
             ]);
 
-            $publicID_image = $uploadResponse->getPublicId();
+            // Obtener la URL segura de la imagen
+            $url_image = $uploadResponse->getSecurePath();
 
-            $url_image = (string)(new Image($publicID_image))
-                ->resize(Resize::scale()->width(250))
-                ->delivery(Delivery::quality(35))
-                ->delivery(Delivery::format(Format::auto()));
+            // Obtener el usuario autenticado
+            $usuario = Auth::user();
 
-            $usuario = Usuario::find(1); // Obtener el usuario con ID 1
-            if ($usuario) {
-                $usuario->imagen = $url_image;
-                $usuario->save(); // Guardar los cambios en la base de datos
-            } else {
+            if (!$usuario) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Usuario no encontrado'
                 ], 404);
             }
+
+            // Actualizar la foto del usuario en la base de datos
+            $usuario->foto = $url_image;
+            $usuario->save();
 
             return response()->json([
                 'success' => true,

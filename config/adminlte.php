@@ -64,11 +64,11 @@ return [
     */
 
     'logo' => '<b>Laboratorio</b>',
-    'logo_img' => env('APP_LOGO', 'usuario_defecto.png'),
+    'logo_img' =>  'Auth::user()->foto' ,
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Admin Logo',
+    'logo_img_alt' => 'foto perfil',
 
     /*
     |--------------------------------------------------------------------------
@@ -84,9 +84,9 @@ return [
     */
 
     'auth_logo' => [
-        'enabled' => false,
+        'enabled' => true,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'Auth::user()->foto',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 50,

@@ -30,6 +30,7 @@ class UsuarioController extends Controller
         $usuario->password = Hash::make($request->input('password'));
         $usuario->estado = $request->input('estado');
         $usuario->idSede = $request->input('idSede');
+        $usuario->foto= 'https://res.cloudinary.com/dyserxzvi/image/upload/v1741126994/usuario_defecto_gynvux.png';
         $usuario->save();
 
         return response()->json(['mensaje' => 'Usuario creado correctamente'], 201);
@@ -178,6 +179,7 @@ class UsuarioController extends Controller
         $usuario->password = Hash::make($request->input('password'));
         $usuario->estado = 1;
         $usuario->idSede = $request->input('idSede');
+        $usuario->foto= 'https://res.cloudinary.com/dyserxzvi/image/upload/v1741126994/usuario_defecto_gynvux.png';
         $usuario->save();
 
         $toastr = new Toastr();
