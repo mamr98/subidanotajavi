@@ -64,7 +64,7 @@ return [
     */
 
     'logo' => '<b>Laboratorio</b>',
-    'logo_img' =>  'Auth::user()->foto' ,
+    'logo_img' => env('APP_LOGO'),
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -86,7 +86,7 @@ return [
     'auth_logo' => [
         'enabled' => true,
         'img' => [
-            'path' => 'Auth::user()->foto',
+            'path' => 'https://res.cloudinary.com/dyserxzvi/image/upload/v1741131512/LogoMedac_pxqa9y.png',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 50,
