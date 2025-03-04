@@ -37,7 +37,7 @@
                 <img src="{{ asset('LogoMedac.png') }}" alt="Logo Medac" class="me-2" height="40">
             </a>
             <div class="text-center flex-grow-1">
-                <span class="text-white" style="font-size: 1rem; font-weight: 500;">MEDAC</span>
+                <span class="text-white" style="font-size: 18px; font-weight: 500;">MEDAC</span>
             </div>
             <div class="justify-content-end" id="navbarContent">
                 @isset($email)
@@ -87,7 +87,6 @@
     <footer class="bg-navy text-white py-3 w-100 fixed-bottom">
         <div class="container">
             <div class="row align-items-center">
-                <!-- Primera columna: Enlaces -->
                 <div class="col-md-4 text-md-left text-center mb-2 mb-md-0">
                     <a href="#" class="text-light d-block">Sobre nosotros</a>
                     <a href="#" class="text-light d-block">Política de privacidad</a>
