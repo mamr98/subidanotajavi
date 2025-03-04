@@ -2,21 +2,27 @@
 
 namespace App\Models;
 
-use App\Models\Muestra;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Usuario extends Model
+class Usuario extends Authenticatable
 {
-    protected $table ="usuario";
+    use Notifiable, HasFactory, SoftDeletes;
+
+    protected $table = "usuario"; // Asegúrate de que coincide con tu base de datos
 
     protected $fillable = [
         'email',
         'password',
         'estado',
-        /* 'image', */
         'idSede',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
     ];
 
     public function sede(){
@@ -26,6 +32,4 @@ class Usuario extends Model
     public function muestras(){
         return $this->hasMany(Muestra::class,'idUsuario','id');
     }
-    use HasFactory, SoftDeletes; 
-    //use HasRoles;
 }

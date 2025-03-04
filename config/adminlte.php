@@ -335,9 +335,10 @@ return [
         ],
         [
             'text' => 'Cerrar Sesión',
-            'url' => 'logout',
             'icon' => 'fas fa-sign-out-alt',
             'label_color' => 'success',
+            'url' => 'logout',
+            'onclick' => 'event.preventDefault(); document.getElementById("logout-form").submit();',
         ],
     ],
 
