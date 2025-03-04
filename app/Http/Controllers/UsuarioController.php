@@ -6,6 +6,8 @@ use App\Models\Sede;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Hilalahmad\PhpToastr\Toastr;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 
 class UsuarioController extends Controller
@@ -107,48 +109,73 @@ class UsuarioController extends Controller
         $usuario->save();
         return response()->json(['mensaje' => 'Usuario eliminado correctamente'], 201);
     }
+        
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
+        return redirect()->route('login'); 
+    }
 
     public function login(Request $request)
     {
-        $usuario = Usuario::where('email', $request->email)
-                       ->where('password', $request->password)
-                       ->first();
-        if($usuario){
-            if( $usuario->estado == true){
+
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+    
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->intended('/ini'); // Redirige a donde quieras
+            $toastr = new Toastr();
+            $toastr->success('Te has logueado correctamente','topRight');
+        }
+    
+        return back()->withErrors([
+            'email' => 'Las credenciales no coinciden con nuestros registros.',
+        ]);
+        
+        // $usuario = Usuario::where('email', $request->email)
+        //                ->where('password', $request->password)
+        //                ->first();
+        // if($usuario){
+        //     if( $usuario->estado == true){
 
                
-                    $email = $request->email;
-                    $usuarios = Usuario::all();
-                    $sedes = Sede::all();
+        //             $email = $request->email;
+        //             $usuarios = Usuario::all();
+        //             $sedes = Sede::all();
         
-                    $toastr = new Toastr();
-                    $toastr->success('Te has logueado correctamente','topRight');
+        //             $toastr = new Toastr();
+        //             $toastr->success('Te has logueado correctamente','topRight');
         
-                    return view('inicioadminlte')->with(['email' => $email, 'usuarios' => $usuarios, 'sedes' => $sedes]); 
-                }
+        //             return view('inicioadminlte')->with(['email' => $email, 'usuarios' => $usuarios, 'sedes' => $sedes]); 
+        //         }
             
     
-            else {
-                $toastr = new Toastr();
-                $toastr->warning('El Usuario está inactivo. Intente nuevamente.','topRight'); 
+        //     else {
+        //         $toastr = new Toastr();
+        //         $toastr->warning('El Usuario está inactivo. Intente nuevamente.','topRight'); 
         
-                return view('login');
-            }
-        }
-        else {
-            $toastr = new Toastr();
-            $toastr->warning('Datos Incorrectos. Intente nuevamente.','topRight'); 
+        //         return view('login');
+        //     }
+        // }
+        // else {
+        //     $toastr = new Toastr();
+        //     $toastr->warning('Datos Incorrectos. Intente nuevamente.','topRight'); 
     
-            return view('login');
-        }
+        //     return view('login');
+        // }
     }
 
     public function registro(Request $request){
 
         $usuario= new Usuario();
         $usuario->email = $request->input('email');
-        $usuario->password = $request->input('password');
+        $usuario->password = Hash::make($request->input('password'));
         $usuario->estado = 1;
         $usuario->idSede = $request->input('idSede');
         $usuario->save();
@@ -170,15 +197,7 @@ class UsuarioController extends Controller
         return response()->json($sede,200);
     }
         
-        
-    public function logout(Request $request){
-        /* Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        Session::flush(); //limpiar sesion */
 
-        return redirect()->route('login'); 
-}
 
 public function buscarUsuario($email)
 {
