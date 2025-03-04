@@ -38,7 +38,7 @@
                 <span class="fw-semibold">MEDAC</span>
             </div>
 
-            <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+            <div class="justify-content-end" id="navbarContent">
                 @isset($email)
                     <span class="navbar-text text-light me-3">Sesión: {{ $email }}</span>
                 @endisset
@@ -66,7 +66,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Contraseña" name="password" required>
+                        <input type="password" class="form-control" placeholder="Contraseña" name="password" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>

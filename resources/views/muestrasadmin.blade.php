@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="container d-flex flex-column min-vh-100">
-    <div class="row justify-content-between align-items-center mt-5 pt-5 mb-4 g-3">
+    <div class="row justify-content-between align-items-center mt-3 pt-3 mb-4 g-3">
         <div class="col-md-3 col-6 order-1">
             <h1 class="text-sky-950 text-5xl font-bold mb-0">Muestras</h1>
         </div>
@@ -167,30 +167,30 @@
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{$m->id}}" style="position: absolute; z-index: 1051;">
                                             <li>
-                                                <button style="padding: 10px 18px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="contenido">
+                                                <button style="padding: 10px 18px; background-color: #073B4C; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="contenido">
                                                     Ver más
                                                 </button>
                                             </li>
                                             <li>
-                                                <button style="padding: 10px 18px; background-color: purple; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="modificar">
+                                                <button style="padding: 10px 18px; background-color: #17A2B8; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="modificar">
                                                     Modificar
                                                 </button>
                                             </li>
                                             <li>
-                                                <button style="padding: 10px 18px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="imagenes" type="submit">
+                                                <button style="padding: 10px 18px; background-color: #06D6A0; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="imagenes" type="submit">
                                                     Añadir Imágenes
                                                 </button>
                                             </li>
                                             <li>
                                                 <form action="pdf/{{$m->id}}" style="display: contents;" method="POST">
                                                     @csrf
-                                                    <button style="padding: 10px 18px; background-color: #4c9baf; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="imprimir" type="submit">
+                                                    <button style="padding: 10px 18px; background-color: #FFD166; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="imprimir" type="submit">
                                                         Imprimir PDF
                                                     </button>
                                                 </form>
                                             </li>
                                             <li>
-                                                <button style="padding: 10px 18px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="eliminar">
+                                                <button style="padding: 10px 18px; background-color: #EF476F; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$m->id}}" class="eliminar">
                                                     Eliminar
                                                 </button>
                                             </li>

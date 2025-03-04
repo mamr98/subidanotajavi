@@ -20,9 +20,19 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
     <style>
-        @media (max-width: 576px) {
+        .login-box {
+                margin-bottom: 60px;
+            }
+
+        @media (min-width: 321px) and (max-width: 509px) {
             .login-box {
-                margin-bottom: 125px;
+                margin-bottom: 100px;
+            }
+        }
+        @media (max-width: 362px) {
+            .login-box {
+                margin-bottom: 130px;
+                margin-top:10px; 
             }
         }
     </style>
@@ -35,7 +45,7 @@
                 <span class="fw-semibold">MEDAC</span>
             </div>
     
-            <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+            <div class="justify-content-end" id="navbarContent">
                 @isset($email)
                     <span class="navbar-text text-light me-3">Sesión: {{ $email }}</span>
                 @endisset
@@ -61,7 +71,7 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control contraseña" placeholder="Contraseña" name="password" required>
+                    <input type="password" class="form-control contraseña" placeholder="Contraseña" name="password" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>

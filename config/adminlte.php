@@ -317,14 +317,12 @@ return [
             'text' => 'Usuarios',
             'url' => 'admin',
             'icon' => 'far fa fa-users',
-            'label' => 4,
             'label_color' => 'success',
         ],
         [
             'text' => 'Muestras',
             'url' => 'muestrasadmin',
             'icon' => 'far fa fa-book',
-            'label' => 4,
             'label_color' => 'success',
         ],
         ['header' => 'Sesión'],
@@ -338,7 +336,7 @@ return [
         [
             'text' => 'Cerrar Sesión',
             'url' => 'logout',
-            'icon' => '',
+            'icon' => 'fas fa-sign-out-alt',
             'label_color' => 'success',
         ],
     ],
