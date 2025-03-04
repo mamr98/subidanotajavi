@@ -14,9 +14,9 @@
 <body class="bg-slate-100">
     <nav class="bg-[#001f3f] text-white shadow-md top-0 z-50 sticky">
         <div class="max-w-screen-xl mx-auto flex items-center justify-between p-4">
-            <div class="flex items-center space-x-2">
+            <a class="flex items-center space-x-2" href="{{ url('/') }}">
                 <img src="{{ asset('LogoMedac.png') }}" alt="Logo Medac" class="h-10">
-            </div>
+            </a>
             
             <span class="text-lg font-semibold">MEDAC</span>
             <div class="md:flex items-center space-x-4">
@@ -113,33 +113,35 @@
 
 
 
-    <footer class="bg-[#001f3f] text-white pb-8 pt-4">
-        <div class="md:w-1/3"></div>
-        <div class="max-w-screen-xl mx-auto text-center md:w-1/3">
-            <div class="flex justify-center space-x-5 mb-1">
-                <a href="#" class="hover:text-white ">Sobre nosotros</a>
-                <a href="#" class="hover:text-white ">Política de privacidad</a>
-                <a href="#" class="hover:text-white ">Términos y condiciones</a>
+    <footer class="bg-[#001f3f] text-white py-4">
+        <div class="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+            <!-- Primera columna: Enlaces -->
+            <div class="flex flex-col items-start justify-center text-left md:pl-24">
+                <a href="#" class="hover:text-gray-300">Sobre nosotros</a>
+                <a href="#" class="hover:text-gray-300">Política de privacidad</a>
+                <a href="#" class="hover:text-gray-300">Términos y condiciones</a>
             </div>
-            
-            <div class="flex justify-center space-x-6 mb-3">
-                <a href="https://www.instagram.com/institutomedac/?hl=es" target="_blank" class="hover:text-white">
+    
+            <!-- Segunda columna: Derechos reservados -->
+            <div class="flex flex-col items-center justify-center">
+                <p>&copy; {{ date('Y') }} Medac. Todos los derechos reservados.</p>
+            </div>
+    
+            <!-- Tercera columna: Redes sociales -->
+            <div class="flex items-center justify-center space-x-4 md:pl-28">
+                <a href="https://www.instagram.com/institutomedac/?hl=es" target="_blank" class="hover:text-gray-300">
                     <i class="fab fa-instagram fa-lg"></i>
                 </a>
-                <a href="https://www.facebook.com/profile.php?id=61572362099718" target="_blank" class="hover:text-white">
+                <a href="https://www.facebook.com/profile.php?id=61572362099718" target="_blank" class="hover:text-gray-300">
                     <i class="fab fa-facebook fa-lg"></i>
                 </a>
-                <a href="https://es.linkedin.com/school/davante-medac/" target="_blank" class="hover:text-white">
+                <a href="https://es.linkedin.com/school/davante-medac/" target="_blank" class="hover:text-gray-300">
                     <i class="fab fa-linkedin fa-lg"></i>
                 </a>
             </div>
-    
-            <div>
-                <p>&copy; {{ date('Y') }} Medac. Todos los derechos reservados.</p>
-            </div>
         </div>
-        <div class="md:w-1/3"></div>
     </footer>    
+        
 
 </body>
 

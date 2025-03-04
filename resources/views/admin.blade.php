@@ -106,7 +106,7 @@
                                 <h5 class="card-title mb-0">Usuario #{{ $u->id }}</h5>
                             </div>
                             <div class="card-body">
-                                <p><strong>Email:</strong> {{ $u->email }}</p>
+                                <p class="block"><strong>Email:</strong><br> {{ $u->email }}</p>
                                 <p><strong>Estado:</strong> 
                                     @if ($u->estado)
                                         Activado
