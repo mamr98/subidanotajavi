@@ -645,32 +645,62 @@ buscador.addEventListener("input", function () {
 
                 if (data.length > 0) {
                     data.forEach(muestra => {
+                        let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
                         mostrar_muestras.innerHTML += `
-                            <tr>
-                                <td>${muestra.id}</td>
-                                <td>${muestra.fecha}</td>
-                                <td>${muestra.codigo}</td>
-                                <td style="display: none">${muestra.organo}</td>
-                                <td id='${muestra.idTipo}' class='block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 tipo' style="display: none"></td>
-                                <td id='${muestra.idFormato}' class='block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 formato' style="display: none"></td>
-                                <td id='${muestra.idCalidad}' class='block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 calidad' style="display: none"></td>
-                                <td id='${muestra.idUsuario}' class='block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 usuario' style="display: none"></td>
-                                <td id='${muestra.idSede}' class='block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 sede' style="display: none"></td>
-                                <td>
-                                    <div class="d-flex justify-content-center align-items-center gap-2">
-                                        <button class="contenido" id="${muestra.id}" style="padding: 10px 20px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer;">Ver más</button>
-                                        <button class="modificar" id="${muestra.id}" style="padding: 10px 20px; margin-left:4px; background-color: purple; color: white; border: none; border-radius: 5px; cursor: pointer;">Modificar</button>
-                                        <button class="eliminar" id="${muestra.id}" style="padding: 10px 20px; margin-left:4px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer;">Eliminar</button>
-                                    </div>
-                                    <!-- Formulario para imprimir PDF -->
-                                    <form action="/subidanotajavi/public/pdf/${muestra.id}" method="POST" style="margin-top: 10px;">
-                                        @csrf
-                                        <button style="padding: 10px 18px; margin-left:4px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;" id="${muestra.id}" class="imprimir" type="submit">
-                                            Imprimir PDF
+                        <div class="col-12">
+                            <div class="row" id="mostrar_muestras">
+                        <div class="col-md-4">
+                            <div class="card shadow-sm">
+                                <div class="card-header bg-primary text-white bg-navy">
+                                    <h5 class="card-title mb-0">Muestra #${muestra.id}</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Fecha de recolección:</strong> ${muestra.fecha}</p>
+                                    <p><strong>Código muestra:</strong> ${muestra.codigo}</p>
+                                </div>
+                                <div class="card-footer text-end">
+                                    <div class="btn-group" style="position: relative;">
+                                        <button type="button" class="btn btn-primary dropdown-toggle" id="dropdownMenuButton${muestra.id}" data-toggle="dropdown" aria-expanded="false">
+                                            Acciones
                                         </button>
-                                    </form>
-                                </td>
-                            </tr>`;
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton${muestra.id}" style="position: absolute; z-index: 1051;">
+                                            <li>
+                                                <button style="padding: 10px 18px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="${muestra.id}" class="contenido">
+                                                    Ver más
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button style="padding: 10px 18px; background-color: purple; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="${muestra.id}" class="modificar">
+                                                    Modificar
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button style="padding: 10px 18px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="${muestra.id}" class="imagenes" type="submit">
+                                                    Añadir Imágenes
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <form action="pdf/${muestra.id}" style="display: contents;" method="POST">
+                                                   <input type="hidden" name="_token" value="${csrfToken}">
+                                                    <button style="padding: 10px 18px; background-color: #4c9baf; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="${muestra.id}" class="imprimir" type="submit">
+                                                        Imprimir PDF
+                                                    </button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <button style="padding: 10px 18px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="${muestra.id}" class="eliminar">
+                                                    Eliminar
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+                        
+                        asignarEventos()
                         cargarDatos();
                     });
                 } else {
@@ -682,6 +712,254 @@ buscador.addEventListener("input", function () {
         location.reload();
     }
 });
+
+function asignarEventos(){
+    const contenido = document.querySelectorAll('.contenido');
+    contenido.forEach(boton => {
+        boton.addEventListener('click', () => {
+            const id = boton.id;
+            fetch(`muestra/${id}`, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+            })
+                .then(res => res.json())
+                .then(data => {
+                    rendermodal_mostrar(data); // Call rendermodal_mostrar here
+                })
+                .catch(error => {
+                    console.error("Error en la solicitud:", error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: error.message
+                    });
+                });
+        });
+    })
+
+
+    const modificar = document.querySelectorAll('.modificar');
+
+    modificar.forEach(boton => {
+        boton.addEventListener('click', () => {
+            modal_update.style.display = "block";
+            const id = boton.id;
+            console.log("ID a enviar al fetch:", id);
+    
+            fetch(`muestra/${id}`, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+            })
+            .then(respuesta => respuesta.ok ? respuesta.json() : Promise.reject(`Error ${respuesta.status} en la solicitud`))
+            .then(data => {
+                console.log("Datos recibidos:", data);
+                Swal.fire({
+                    title: 'Introduce los datos que quieres modificar',
+                    html: rendermodal_update(data),
+                    confirmButtonText: "Actualizar",
+                    showCancelButton: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const fecha = modal_update.querySelector('#fecha2').value;
+                        const codigo = modal_update.querySelector('#codigo2').value;
+                        const organo = modal_update.querySelector("#organo2");
+                        const selectedOrganoOption = organo.options[organo.selectedIndex];
+                        const valueOrgano = selectedOrganoOption.value;
+    
+                        const idTipoElement = document.querySelector("#idTipo2");
+                        const selectedIdTipoOption = idTipoElement.options[idTipoElement.selectedIndex];
+                        const idTipo = selectedIdTipoOption.getAttribute("id");
+    
+                        const idFormatoElement = document.querySelector("#idFormato2");
+                        const selectedIdFormatoOption = idFormatoElement.options[idFormatoElement.selectedIndex];
+                        const idFormato = selectedIdFormatoOption.getAttribute("id");
+    
+                        const idCalidadElement = document.querySelector("#idCalidad2");
+                        const selectedIdCalidadOption = idCalidadElement.options[idCalidadElement.selectedIndex];
+                        const idCalidad = selectedIdCalidadOption.getAttribute("id");
+    
+                        const idUsuarioElement = document.querySelector("#idUsuario2");
+                        const selectedIdUsuarioOption = idUsuarioElement.options[idUsuarioElement.selectedIndex];
+                        const idUsuario = selectedIdUsuarioOption.getAttribute("id");
+    
+                        const idSedeElement = document.querySelector("#idSede2");
+                        const selectedIdSedeOption = idSedeElement.options[idSedeElement.selectedIndex];
+                        const idSede = selectedIdSedeOption.getAttribute("id");
+    
+                        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    
+                        const interpretaciones = [...document.querySelectorAll(".interpretacion")].map((element, index) => ({
+                            id: index+1,
+                            descripcion: element.querySelector(`#descripcion2`)?.value || "",
+                            tipoEstudio: element.querySelector(`#TipoEstudio2`)?.value || null
+                        }));
+                        
+    
+                        console.table(interpretaciones);
+    
+                        console.log("Datos a enviar:", {
+                            fecha, codigo, valueOrgano, idTipo, idFormato, idCalidad, idUsuario, idSede, interpretaciones
+                        });
+    
+                        fetch(`listamuestras/update/${id}`, {
+                            method: "PUT",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': token
+                            },
+                            body: JSON.stringify({
+                                fecha: fecha,  
+                                codigo: codigo,
+                                organo: valueOrgano,
+                                idTipo: idTipo,
+                                idFormato: idFormato,
+                                idCalidad: idCalidad,
+                                idUsuario: idUsuario,
+                                idSede: idSede,
+                                interpretaciones: interpretaciones,
+                            }),
+                        })
+                        .then(res => res.ok ? res.json() : Promise.reject("Error en la solicitud"))
+                        .then((datos) => {
+                            Swal.fire('Éxito', 'Muestra actualizada correctamente', 'success');
+                            console.log(datos)
+                            location.reload();
+                        })
+                        .catch(error => {
+                            console.error("Error en la petición:", error);
+                            Swal.fire('Error', error, 'error');
+                        });
+                    }
+                });
+            })
+            .catch(error => {
+                console.error("Error en la petición:", error);
+                Swal.fire('Error', error, 'error');
+            });
+        });
+    });
+
+    const imagenes = document.querySelectorAll('.imagenes');
+
+    imagenes.forEach(boton => {
+        boton.addEventListener('click', async () => {
+            modal_imagen.style.display = "block";
+            let idMuestras = boton.id; // Obtener el ID de la muestra al hacer clic
+    
+            Swal.fire({
+                title: 'Introduce las imágenes',
+                html: rendermodal_imagen(), // Asegúrate de que esta función está definida
+                confirmButtonText: "Guardar",
+                showCancelButton: true,
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    try {
+                        // Obtener todos los inputs de tipo archivo (imagen)
+                        const imagenInputs = document.querySelectorAll('input[type="file"][name="imagen"]');
+                        const zoomInputs = document.querySelectorAll('select[name="zoom"]');
+                        const formData = new FormData();
+                        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                        
+                        let hasImages = false; // Bandera para verificar si se seleccionaron imágenes
+    
+                        // Recorrer todos los inputs de imagen y agregar las imágenes al FormData con su respectivo zoom
+                        imagenInputs.forEach((imagenInput, index) => {
+                            if (imagenInput.files.length > 0) {
+                                Array.from(imagenInput.files).forEach(file => {
+                                    formData.append('imagenes[]', file);
+                                    formData.append('zoom[]', zoomInputs[index].options[zoomInputs[index].selectedIndex].id); // Asociar zoom a la imagen
+
+                                    console.log( zoomInputs[index].options[zoomInputs[index].selectedIndex].id)
+                                });
+                                hasImages = true;
+                            }
+                        });
+    
+                        // Si no se seleccionaron imágenes, mostrar advertencia
+                        if (!hasImages) {
+                            console.warn("No se ha seleccionado ninguna imagen");
+                            Swal.fire('Advertencia', 'No se ha seleccionado ninguna imagen', 'warning');
+                            return; // No continuar
+                        }
+    
+                        // Agregar los otros datos (idMuestras)
+                        formData.append('idMuestras', idMuestras);
+                        
+                        // Enviar los datos al backend
+                        const imagenResponse = await fetch('guardar_imagen', {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-CSRF-TOKEN': token // Si es necesario
+                            }
+                        });
+    
+                        if (!imagenResponse.ok) {
+                            const errorText = await imagenResponse.text();
+                            throw new Error("Error al subir las imágenes: " + errorText);
+                        }
+    
+                        const imagenData = await imagenResponse.json();
+                        console.log("Imágenes subidas:", imagenData);
+                        Swal.fire('Éxito', 'Imágenes subidas correctamente', 'success');
+    
+                    } catch (error) {
+                        console.error("Error en la petición:", error);
+                        Swal.fire('Error', error.message, 'error');
+                    }
+                }
+                location.reload() 
+            });
+           
+        });
+        
+    });
+
+    const eliminar = document.querySelectorAll('.eliminar');
+    eliminar.forEach(boton => {
+        boton.addEventListener('click', () => {
+    
+            const id = boton.id;
+            const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            fetch('listamuestras/destroy/'+id, {
+                method: "DELETE",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': token
+                }
+            })
+            .then(respuesta => {
+                if (!respuesta.ok) {
+                    // Manejo de errores: Intenta leer el error del servidor (JSON o texto)
+                    return respuesta.text().then(err => {
+                        try {
+                            const jsonError = JSON.parse(err); // Intenta parsear como JSON
+                            throw new Error(jsonError.message || 'Error en la solicitud');
+                        } catch (e) {
+                            throw new Error(err || 'Error en la solicitud'); // Si no es JSON, muestra el texto
+                        }
+                    });
+                }
+                return respuesta.json(); // Si la respuesta es ok, intenta parsear como JSON
+            })
+            .then(data => {
+                console.log(data);
+                Swal.fire('Éxito', 'Muestra Eliminada correctamente', 'success');
+                location.reload()
+            })
+            .catch(error => {
+                console.error("Error en la petición:", error);
+                Swal.fire('Error', error.message, 'error');
+            });
+    });
+    });
+}
 
 
 function rendermodal_mostrar(datos) {
