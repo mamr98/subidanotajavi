@@ -113,29 +113,29 @@
 
 
 
-    <footer class="bg-[#001f3f] text-white py-8">
+    <footer class="bg-[#001f3f] text-white pb-8 pt-4">
         <div class="md:w-1/3"></div>
         <div class="max-w-screen-xl mx-auto text-center md:w-1/3">
-            <div class="flex justify-center space-x-6 mb-4">
-                <a href="#" class="hover:text-white">Sobre nosotros</a>
-                <a href="#" class="hover:text-white">Política de privacidad</a>
-                <a href="#" class="hover:text-white">Términos y condiciones</a>
+            <div class="flex justify-center space-x-5 mb-1">
+                <a href="#" class="hover:text-white ">Sobre nosotros</a>
+                <a href="#" class="hover:text-white ">Política de privacidad</a>
+                <a href="#" class="hover:text-white ">Términos y condiciones</a>
             </div>
             
-            <div class="flex justify-center space-x-6 mb-4">
+            <div class="flex justify-center space-x-6 mb-3">
                 <a href="https://www.instagram.com/institutomedac/?hl=es" target="_blank" class="hover:text-white">
-                    <i class="fab fa-instagram fa-2x"></i>
+                    <i class="fab fa-instagram fa-lg"></i>
                 </a>
                 <a href="https://www.facebook.com/profile.php?id=61572362099718" target="_blank" class="hover:text-white">
-                    <i class="fab fa-facebook fa-2x"></i>
+                    <i class="fab fa-facebook fa-lg"></i>
                 </a>
                 <a href="https://es.linkedin.com/school/davante-medac/" target="_blank" class="hover:text-white">
-                    <i class="fab fa-linkedin fa-2x"></i>
+                    <i class="fab fa-linkedin fa-lg"></i>
                 </a>
             </div>
     
             <div>
-                <p>&copy; 2025 Medac. Todos los derechos reservados.</p>
+                <p>&copy; {{ date('Y') }} Medac. Todos los derechos reservados.</p>
             </div>
         </div>
         <div class="md:w-1/3"></div>

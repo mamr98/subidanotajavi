@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="container d-flex flex-column min-vh-100">
-    <div class="row justify-content-between align-items-center mt-5 pt-5 mb-4 g-3">
+    <div class="row justify-content-between align-items-center mt-3 pt-3 mb-4 g-3">
         <div class="col-md-3 col-6 order-1">
             <h1 class="text-sky-950 text-5xl font-bold mb-0">Usuarios</h1>
         </div>
@@ -98,7 +98,7 @@
                     {{ $usuarios->links() }}
                 </div>
             </div> --}}
-            <div class="row">
+            <div class="row" id="mostrar_usuario">
                 @foreach ($usuarios as $u)
                     <div class="col-md-4">
                         <div class="card shadow-sm">
@@ -123,17 +123,17 @@
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{$u->id}}" style="position: absolute; z-index: 1051;">
                                         <li>
-                                            <button style="padding: 10px 18px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$u->id}}" class="modificar">
+                                            <button style="padding: 10px 18px; background-color: #17A2B8; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$u->id}}" class="modificar">
                                                 Modificar
                                             </button>
                                         </li>
                                         <li>
-                                            <button style="padding: 10px 18px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$u->id}}" class="desactivar">
+                                            <button style="padding: 10px 18px; background-color: #DC3545; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$u->id}}" class="desactivar">
                                                 Desactivar
                                             </button>
                                         </li>
                                         <li>
-                                            <button style="padding: 10px 18px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$u->id}}" class="activar">
+                                            <button style="padding: 10px 18px; background-color: #28A745; color: white; border: none; border-radius: 5px; cursor: pointer; width: 100%; text-align: center;" id="{{$u->id}}" class="activar">
                                                 Activar
                                             </button>
                                         </li>
