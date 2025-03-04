@@ -27,7 +27,7 @@ class UsuarioController extends Controller
     {
         $usuario= new Usuario();
         $usuario->email = $request->input('email');
-        $usuario->password = $request->input('password');
+        $usuario->password = Hash::make($request->input('password'));
         $usuario->estado = $request->input('estado');
         $usuario->idSede = $request->input('idSede');
         $usuario->save();
@@ -77,7 +77,7 @@ class UsuarioController extends Controller
         $usuario = Usuario::find($id);
     
         $usuario->email = $request->input('email');
-        $usuario->password = $request->input('password');
+        $usuario->password =Hash::make($request->input('password'));
         $usuario->estado = $request->input('estado');
         $usuario->idSede = $request->input('idSede');
         $usuario->save();
