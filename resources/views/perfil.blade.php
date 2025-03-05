@@ -62,4 +62,3 @@
     @include('includes.footer')
 @endsection
 
-@vite(['resources/js/perfil.js'])
