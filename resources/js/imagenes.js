@@ -33,7 +33,7 @@ formData.append('imagen', file);
 formData.append('_token', document.querySelector('meta[name="csrf-token"]').content);
 
 // El fetch hace la llamada al controlador y recoge la imagen del cloudinary
-fetch(document.getElementById('profileImage').dataset.uploadRoute, {
+fetch('subir-imagen', {
     method: 'POST',
     body: formData
 })
