@@ -62,4 +62,4 @@
     @include('includes.footer')
 @endsection
 
-@vite(['resources/js/perfil.js'])
+@vite(['resources/js/imagenes.js'])
