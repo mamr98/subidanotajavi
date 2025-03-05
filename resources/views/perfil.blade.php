@@ -62,3 +62,4 @@
     @include('includes.footer')
 @endsection
 
+@vite(['resources/js/imagenes.js'])
