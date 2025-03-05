@@ -3,9 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
-use App\Models\Usuario;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,15 +23,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
 {
-    try {
-        $usuario = Usuario::find(1); 
-        $logo = $usuario && $usuario->imagen ? $usuario->imagen : asset('usuario_defecto.png');
-        Config::set('adminlte.logo_img', $logo);
-    } catch (\Exception $e) {
-        // Si hay un error, usa la imagen por defecto
-        Config::set('adminlte.logo_img', asset('usuario_defecto.png'));
-    }
+    Paginator::useBootstrap();
+    View::composer('*', function ($view) {
+        $usuario = Auth::user();
+        $logo = !empty($usuario?->foto) ? asset($usuario->foto) : asset('usuario_defecto.png');
 
-    Paginator::useBootstrap(); 
+        // Configurar el logo dinámico en AdminLTE
+        config(['adminlte.logo_img' => $logo]);
+    });
 }
 }

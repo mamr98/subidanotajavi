@@ -64,7 +64,10 @@ return [
     */
 
     'logo' => '<b>Laboratorio</b>',
-    'logo_img' => env('APP_LOGO'),
+    'logo_img' => function () {
+        $usuario = Auth::user();
+        return !empty($usuario?->foto) ? asset($usuario->foto) : asset('usuario_defecto.png');
+    },
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
